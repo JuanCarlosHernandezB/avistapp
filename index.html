@@ -229,6 +229,7 @@
             resize: vertical;
             margin-top: 4px;
         }
+
         .btn-primary {
             background: #013366;
             color: white;
@@ -415,6 +416,7 @@
             border: 1px solid #ddd;
         }
 
+        /* Selector visual de especies */
         .grupo-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -506,6 +508,7 @@
             transform: scale(0.95);
         }
 
+        /* Radar */
         .radar-container {
             display: flex;
             flex-direction: column;
@@ -615,9 +618,9 @@
 <div class="app" id="app">
     <div class="flex-between">
         <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">conteo</span></h1>
-        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v7</span>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v8</span>
     </div>
-    <div class="subhead">Seleccione ruta · Radar de sitios · Conteo de aves</div>
+    <div class="subhead">Configure la ruta · Registre el punto · Inicie el conteo</div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-config">⚙️ Configurar</button>
@@ -641,47 +644,51 @@
                 <button id="btn-eliminar-ruta" class="btn-danger" style="flex:0 0 auto; padding:8px 14px;">✕</button>
             </div>
             <div id="info-ruta" class="sitio-info" style="margin-top:4px; display:none;">
-                <span id="ruta-nombre"></span> · <span id="ruta-municipio"></span>, <span id="ruta-estado"></span>
+                <span id="ruta-nombre"></span>
             </div>
         </div>
 
-        <!-- TIEMPO -->
+        <!-- UBICACIÓN (autocompletado por INEGI) -->
         <div class="section">
-            <div class="section-title">⏱️ CONFIGURACIÓN DEL PUNTO</div>
-            <div class="row">
-                <span class="label">Fecha:</span>
-                <input type="date" id="fecha" class="inline-input" style="min-width:130px;">
-            </div>
-            <div class="row">
-                <span class="label">Hora inicio:</span>
-                <input type="time" id="hora_inicio" class="inline-input" style="min-width:100px;">
-                <span class="text-muted" style="margin-left:4px;">(minuto automático)</span>
-            </div>
-            <div class="row">
-                <span class="label">Duración (min):</span>
-                <input type="number" id="duracion" class="inline-input" style="min-width:80px;" value="10" min="1" max="120">
-                <span class="text-muted">minutos</span>
-            </div>
-        </div>
-
-        <!-- SITIO (autocompletado por ruta o GPS) -->
-        <div class="section">
-            <div class="section-title">📍 SITIO</div>
+            <div class="section-title">📍 UBICACIÓN (automática)</div>
             <div class="row">
                 <span class="label">Estado:</span>
-                <input type="text" id="estado_auto" class="inline-input inline-input-lg" placeholder="Automático" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+                <input type="text" id="estado_auto" class="inline-input inline-input-lg" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
             </div>
             <div class="row">
                 <span class="label">Municipio:</span>
-                <input type="text" id="municipio_auto" class="inline-input inline-input-lg" placeholder="Automático" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+                <input type="text" id="municipio_auto" class="inline-input inline-input-lg" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
             </div>
             <div class="row">
                 <span class="label">Localidad:</span>
-                <input type="text" id="localidad_auto" class="inline-input inline-input-lg" placeholder="Automático" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+                <input type="text" id="localidad_auto" class="inline-input inline-input-lg" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
             </div>
             <div class="row">
                 <span class="label">Altitud (m):</span>
                 <input type="text" id="altitud_auto" class="inline-input inline-input-sm" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+            </div>
+            <div class="row" style="margin-top:6px;">
+                <button id="btn-gps" class="btn-secondary" style="width:100%; justify-content:center;">📍 Obtener ubicación GPS</button>
+            </div>
+            <div class="row">
+                <span class="label">Latitud:</span>
+                <span id="gps-lat" class="text-muted">--</span>
+                <span class="label" style="margin-left:12px;">Longitud:</span>
+                <span id="gps-lon" class="text-muted">--</span>
+                <span class="label" style="margin-left:12px;">Precisión:</span>
+                <span id="gps-accuracy" class="text-muted">--</span>
+            </div>
+        </div>
+
+        <!-- SITIO (Sistema y Parcela) -->
+        <div class="section">
+            <div class="section-title">🏷️ SITIO</div>
+            <div class="row">
+                <span class="label">Sistema:</span>
+                <div class="btn-group" id="grupo-sistema" style="flex-wrap: nowrap; gap:6px;">
+                    <button type="button" class="opt-btn" data-value="1" style="flex:1 1 45%;">SAF</button>
+                    <button type="button" class="opt-btn" data-value="2" style="flex:1 1 45%;">MIAF</button>
+                </div>
             </div>
             <div class="row">
                 <span class="label">Parcela:</span>
@@ -695,44 +702,42 @@
                     <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
                 </div>
             </div>
+        </div>
+
+        <!-- TIEMPO -->
+        <div class="section">
+            <div class="section-title">⏱️ TIEMPO</div>
             <div class="row">
-                <span class="label">Punto:</span>
-                <div class="btn-group" id="grupo-punto">
-                    <button type="button" class="opt-btn" data-value="1">PT-01</button>
-                    <button type="button" class="opt-btn" data-value="2">PT-02</button>
-                    <button type="button" class="opt-btn" data-value="3">PT-03</button>
-                    <button type="button" class="opt-btn" data-value="4">PT-04</button>
-                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
-                    <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
-                </div>
+                <span class="label">Fecha:</span>
+                <input type="date" id="fecha" class="inline-input" style="min-width:130px;">
             </div>
             <div class="row">
-                <span class="label">Sistema:</span>
-                <div class="btn-group" id="grupo-sistema" style="flex-wrap: nowrap; gap:6px;">
-                    <button type="button" class="opt-btn" data-value="1" style="flex:1 1 45%;">SAF</button>
-                    <button type="button" class="opt-btn" data-value="2" style="flex:1 1 45%;">MIAF</button>
-                </div>
+                <span class="label">Hora inicio:</span>
+                <input type="time" id="hora_inicio" class="inline-input" style="min-width:100px;">
+            </div>
+            <div class="row">
+                <span class="label">Duración (min):</span>
+                <input type="number" id="duracion" class="inline-input" style="min-width:80px;" value="10" min="1" max="120">
             </div>
         </div>
 
-        <!-- GPS y RADAR -->
-        <div class="section">
-            <div class="section-title">📡 UBICACIÓN Y RADAR</div>
-            <div class="row">
-                <button id="btn-gps" class="btn-secondary" style="width:100%; justify-content:center;">📍 Obtener ubicación GPS</button>
-            </div>
-            <div class="row">
-                <span class="label">Latitud:</span>
-                <span id="gps-lat" class="text-muted">--</span>
-                <span class="label" style="margin-left:12px;">Longitud:</span>
-                <span id="gps-lon" class="text-muted">--</span>
-            </div>
-            <div class="row">
-                <span class="label">Precisión:</span>
-                <span id="gps-accuracy" class="text-muted">--</span>
-            </div>
+        <!-- BOTONES DE ACCIÓN -->
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+            <button id="btn-registrar-punto" class="btn-success">📍 Registrar punto de avistamiento</button>
+            <button id="btn-iniciar-conteo" class="btn-success" disabled>▶️ Iniciar conteo</button>
+            <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
+        </div>
 
-            <!-- RADAR -->
+        <!-- Temporizador (se muestra al iniciar) -->
+        <div id="timer-container" style="display:none; margin-top:12px;">
+            <div class="timer-display" id="timer-display">10:00</div>
+            <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
+            <button id="btn-detener-alarma" class="btn-warning" style="display:none;">🔕 Detener alarma</button>
+        </div>
+
+        <!-- Radar -->
+        <div class="section" style="margin-top:12px;">
+            <div class="section-title">📡 RADAR DE SITIOS</div>
             <div class="radar-container" id="radar-container">
                 <canvas id="radarCanvas" width="350" height="350"></canvas>
                 <div class="radar-controls">
@@ -747,17 +752,6 @@
                 </div>
                 <div id="radar-info" class="sitio-info">📍 Esperando GPS...</div>
             </div>
-        </div>
-
-        <!-- BOTÓN INICIAR (abajo) -->
-        <button id="btn-iniciar-conteo" class="btn-success" disabled style="margin-top:0;">▶️ Iniciar conteo</button>
-        <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
-
-        <!-- Temporizador oculto (se muestra al iniciar) -->
-        <div id="timer-container" style="display:none; margin-top:12px;">
-            <div class="timer-display" id="timer-display">10:00</div>
-            <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
-            <button id="btn-detener-alarma" class="btn-warning" style="display:none;">🔕 Detener alarma</button>
         </div>
     </div>
 
@@ -1022,10 +1016,9 @@
         // 1. CONFIGURACIÓN INICIAL Y DEPENDENCIAS
         // ===================================================================
 
-        // ---- DOM REFS ----
         const $ = id => document.getElementById(id);
 
-        // ---- BASE DE DATOS DE ESPECIES (ejemplo) ----
+        // ---- BASE DE DATOS DE ESPECIES ----
         const especiesDB = {
             'Gorriones': [
                 { id: 'passer_domesticus', nombre_comun: 'Gorrión casero', cientifico: 'Passer domesticus', emoji: '🐦' },
@@ -1097,10 +1090,10 @@
 
         // ---- ESTADO GLOBAL ----
         const state = {
-            rutas: [],              // [{id, nombre, municipio, estado, localidad, altitud}]
-            rutaActiva: null,       // id de la ruta seleccionada
-            sitiosHistoricos: [],   // [{id, rutaId, fecha, hora, nombre, lat, lon, altitud, parcela, punto, sistema}]
-            registros: [],          // [{id, ...}]
+            rutas: [],
+            rutaActiva: null,
+            sitiosHistoricos: [],
+            registros: [],
             conteoActivo: false,
             tiempoRestante: 600,
             duracionTotal: 600,
@@ -1109,32 +1102,31 @@
             alarmaSonando: false,
             fotoData: null,
             gps: { lat: null, lon: null, accuracy: null },
-            inegiData: null,        // datos cargados desde inegi.json
+            inegiData: null,
+            ultimaLocalidad: null,
             especieSeleccionada: null,
             grupoSeleccionado: null,
-            radarEscala: 500,       // metros
+            radarEscala: 500,
         };
 
         // ===================================================================
         // 2. FUNCIONES DE UTILIDAD
         // ===================================================================
 
-        // ---- Distancia Haversine (en metros) ----
         function haversine(lat1, lon1, lat2, lon2) {
-            const R = 6371000; // metros
+            const R = 6371000;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
             const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         }
 
-        // ---- Guardar en localStorage ----
         function guardarDatos() {
             try {
                 localStorage.setItem('avistR_rutas', JSON.stringify(state.rutas));
                 localStorage.setItem('avistR_sitios', JSON.stringify(state.sitiosHistoricos));
                 localStorage.setItem('avistamientos', JSON.stringify(state.registros));
-            } catch(e) { console.warn('Error guardando en localStorage', e); }
+            } catch(e) { console.warn('Error guardando', e); }
         }
 
         function cargarDatos() {
@@ -1145,19 +1137,17 @@
                 if (sitios) state.sitiosHistoricos = JSON.parse(sitios);
                 const regs = localStorage.getItem('avistamientos');
                 if (regs) state.registros = JSON.parse(regs);
-            } catch(e) { console.warn('Error cargando datos', e); }
+            } catch(e) { console.warn('Error cargando', e); }
         }
 
-        // ---- Obtener fecha actual (YYYY-MM-DD) ----
         function hoy() {
             return new Date().toISOString().slice(0,10);
         }
 
         // ===================================================================
-        // 3. CONFIGURACIÓN DE BOTONES Y SELECTORES
+        // 3. CONFIGURACIÓN DE BOTONES
         // ===================================================================
 
-        // ---- setupButtonGroup (para botones opt-btn) ----
         function setupButtonGroup(groupId, hiddenInputId) {
             const container = document.getElementById(groupId);
             if (!container) return;
@@ -1195,7 +1185,6 @@
             }
         }
 
-        // ---- setupCircleGroup (para círculos) ----
         function setupCircleGroup(groupId, hiddenInputId) {
             const container = document.getElementById(groupId);
             if (!container) return;
@@ -1233,11 +1222,9 @@
             }
         }
 
-        // ---- Inicializar grupos ----
         function initGrupos() {
             setupButtonGroup('grupo-parcela', 'parcela_otro');
-            setupButtonGroup('grupo-punto', 'punto_otro');
-            setupButtonGroup('grupo-sistema', null); // SAF/MIAF sin otro
+            setupButtonGroup('grupo-sistema', null);
             setupButtonGroup('grupo-sexo', null);
             setupButtonGroup('grupo-edad', null);
             setupButtonGroup('grupo-forma', null);
@@ -1259,7 +1246,7 @@
             state.rutas.forEach(r => {
                 const opt = document.createElement('option');
                 opt.value = r.id;
-                opt.textContent = r.nombre + ' (' + r.municipio + ')';
+                opt.textContent = r.nombre;
                 select.appendChild(opt);
             });
             if (current && state.rutas.some(r => r.id === current)) {
@@ -1270,8 +1257,6 @@
                 state.rutaActiva = null;
             }
             actualizarInfoRuta();
-            actualizarCamposAutomaticos();
-            actualizarRadar();
             validarInicioConteo();
         }
 
@@ -1281,52 +1266,24 @@
             if (ruta) {
                 info.style.display = 'block';
                 $('ruta-nombre').textContent = ruta.nombre;
-                $('ruta-municipio').textContent = ruta.municipio;
-                $('ruta-estado').textContent = ruta.estado || '';
             } else {
                 info.style.display = 'none';
-            }
-        }
-
-        function actualizarCamposAutomaticos() {
-            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
-            if (ruta) {
-                $('estado_auto').value = ruta.estado || '';
-                $('municipio_auto').value = ruta.municipio || '';
-                $('localidad_auto').value = ruta.localidad || '';
-                $('altitud_auto').value = ruta.altitud || '';
-            } else {
-                // Si no hay ruta, usar los datos del GPS + INEGI si están disponibles
-                // (se actualiza en la función de GPS)
             }
         }
 
         function crearRuta() {
             const nombre = prompt('Nombre de la ruta (ej. "Ruta Papantla"):');
             if (!nombre) return;
-            const municipio = prompt('Municipio/base:');
-            if (!municipio) return;
-            const estado = prompt('Estado (opcional):') || '';
-            const localidad = prompt('Localidad (opcional):') || '';
-            const altitud = prompt('Altitud (m) (opcional):') || '';
-
             const ruta = {
                 id: 'ruta_' + Date.now(),
-                nombre: nombre.trim(),
-                municipio: municipio.trim(),
-                estado: estado.trim(),
-                localidad: localidad.trim(),
-                altitud: altitud.trim()
+                nombre: nombre.trim()
             };
             state.rutas.push(ruta);
             guardarDatos();
             renderRutas();
-            // Seleccionar la nueva ruta
             $('selector-ruta').value = ruta.id;
             state.rutaActiva = ruta.id;
             actualizarInfoRuta();
-            actualizarCamposAutomaticos();
-            actualizarRadar();
             validarInicioConteo();
         }
 
@@ -1337,13 +1294,11 @@
             state.rutaActiva = null;
             guardarDatos();
             renderRutas();
-            actualizarCamposAutomaticos();
-            actualizarRadar();
             validarInicioConteo();
         }
 
         // ===================================================================
-        // 5. INEGI (carga y búsqueda)
+        // 5. INEGI
         // ===================================================================
 
         async function cargarINEGI() {
@@ -1351,7 +1306,7 @@
                 const resp = await fetch('inegi.json');
                 if (!resp.ok) throw new Error('No se pudo cargar inegi.json');
                 state.inegiData = await resp.json();
-                console.log('INEGI cargado:', Object.keys(state.inegiData).length, 'estados');
+                console.log('INEGI cargado');
             } catch(e) {
                 console.warn('Error cargando INEGI:', e.message);
                 state.inegiData = null;
@@ -1363,7 +1318,6 @@
             let mejor = null;
             let distMin = Infinity;
 
-            // Iterar sobre todos los estados y municipios
             for (const [estado, municipios] of Object.entries(state.inegiData)) {
                 for (const [municipio, localidades] of Object.entries(municipios)) {
                     for (const loc of localidades) {
@@ -1376,6 +1330,8 @@
                                 municipio: municipio,
                                 localidad: loc.nombre,
                                 altitud: loc.altitud,
+                                poblacion: loc.poblacion,
+                                viviendas: loc.viviendas,
                                 distancia: d
                             };
                         }
@@ -1386,7 +1342,7 @@
         }
 
         // ===================================================================
-        // 6. GPS y autocompletado
+        // 6. GPS
         // ===================================================================
 
         function obtenerGPS() {
@@ -1407,26 +1363,23 @@
                     $('gps-lon').textContent = state.gps.lon.toFixed(6);
                     $('gps-accuracy').textContent = state.gps.accuracy ? `±${Math.round(state.gps.accuracy)}m` : '--';
 
-                    // Si no hay ruta activa, buscar en INEGI
-                    if (!state.rutaActiva && state.inegiData) {
+                    if (state.inegiData) {
                         const lugar = buscarLocalidadMasCercana(state.gps.lat, state.gps.lon);
-                        if (lugar && lugar.distancia < 10000) { // 10 km de tolerancia
-                            $('estado_auto').value = lugar.estado;
-                            $('municipio_auto').value = lugar.municipio;
-                            $('localidad_auto').value = lugar.localidad;
+                        if (lugar && lugar.distancia < 10000) {
+                            $('estado_auto').value = lugar.estado || '';
+                            $('municipio_auto').value = lugar.municipio || '';
+                            $('localidad_auto').value = lugar.localidad || '';
                             $('altitud_auto').value = lugar.altitud || '';
+                            state.ultimaLocalidad = lugar;
                         } else {
                             $('estado_auto').value = '--';
                             $('municipio_auto').value = '--';
                             $('localidad_auto').value = '--';
                             $('altitud_auto').value = '--';
+                            state.ultimaLocalidad = null;
                         }
-                    } else {
-                        // Si hay ruta, ya está autocompletado
-                        actualizarCamposAutomaticos();
                     }
 
-                    // Actualizar radar
                     actualizarRadar();
                     validarInicioConteo();
 
@@ -1451,29 +1404,24 @@
             const ctx = canvas.getContext('2d');
             const w = canvas.width, h = canvas.height;
             const centroX = w/2, centroY = h/2;
-            const escalaMax = state.radarEscala; // metros
+            const escalaMax = state.radarEscala;
 
             ctx.clearRect(0, 0, w, h);
-
-            // Dibujar fondo
             ctx.fillStyle = '#fafcff';
             ctx.fillRect(0, 0, w, h);
 
-            // Dibujar círculos concéntricos
             for (let r = 0.2; r <= 1; r += 0.2) {
                 ctx.beginPath();
                 ctx.arc(centroX, centroY, r * w/2, 0, 2*Math.PI);
                 ctx.strokeStyle = '#d0d9e3';
                 ctx.lineWidth = 1;
                 ctx.stroke();
-                // Etiqueta de distancia
                 ctx.fillStyle = '#999';
                 ctx.font = '10px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText(Math.round(r * escalaMax) + 'm', centroX, centroY - r * w/2 - 4);
             }
 
-            // Círculo de 350 m (zona de advertencia)
             const radio350 = (350 / escalaMax) * w/2;
             if (radio350 < w/2) {
                 ctx.beginPath();
@@ -1487,7 +1435,6 @@
                 ctx.fill();
             }
 
-            // Si no hay GPS o no hay sitios, mostrar mensaje
             if (state.gps.lat === null || state.gps.lon === null) {
                 ctx.fillStyle = '#999';
                 ctx.font = '16px sans-serif';
@@ -1497,7 +1444,6 @@
                 return;
             }
 
-            // Obtener sitios de la ruta activa
             const sitiosRuta = state.sitiosHistoricos.filter(s => s.rutaId === state.rutaActiva);
             if (sitiosRuta.length === 0) {
                 ctx.fillStyle = '#999';
@@ -1508,7 +1454,6 @@
                 return;
             }
 
-            // Dibujar sitios
             const hoyStr = hoy();
             let sitioMasCercano = null;
             let distMasCercana = Infinity;
@@ -1520,16 +1465,13 @@
                     sitioMasCercano = sitio;
                 }
 
-                // Coordenadas relativas en el canvas
-                const dx = (sitio.lon - state.gps.lon) * (w/2 / (escalaMax / 111320)); // 1 grado ≈ 111320 m
+                const dx = (sitio.lon - state.gps.lon) * (w/2 / (escalaMax / 111320));
                 const dy = -(sitio.lat - state.gps.lat) * (w/2 / (escalaMax / 111320));
                 const rx = centroX + dx;
                 const ry = centroY + dy;
 
-                // Solo dibujar si está dentro del radar
                 if (Math.hypot(rx - centroX, ry - centroY) > w/2) return;
 
-                // Color según fecha
                 let color;
                 if (sitio.fecha === hoyStr) {
                     color = (d < 350) ? '#c0392b' : '#2c3e50';
@@ -1545,19 +1487,16 @@
                 ctx.lineWidth = 1.5;
                 ctx.stroke();
 
-                // Etiqueta
                 ctx.fillStyle = '#1f3a57';
                 ctx.font = '9px sans-serif';
                 ctx.textAlign = 'center';
-                const label = sitio.nombre || sitio.parcela + '-' + sitio.punto;
+                const label = sitio.nombre || sitio.parcela;
                 ctx.fillText(label, rx, ry - 10);
             });
 
-            // Mostrar información del sitio más cercano
             if (sitioMasCercano) {
-                const msg = `📍 Sitio más cercano: ${sitioMasCercano.nombre || sitioMasCercano.parcela + '-' + sitioMasCercano.punto} · Distancia: ${Math.round(distMasCercana)}m`;
+                const msg = `📍 Sitio más cercano: ${sitioMasCercano.nombre || sitioMasCercano.parcela} · Distancia: ${Math.round(distMasCercana)}m`;
                 $('radar-info').textContent = msg;
-                // Marcar si está dentro de 350m
                 if (distMasCercana < 350 && sitioMasCercano.fecha === hoyStr) {
                     $('radar-info').className = 'sitio-info warning';
                 } else {
@@ -1568,7 +1507,6 @@
                 $('radar-info').className = 'sitio-info';
             }
 
-            // Dibujar posición actual (centro)
             ctx.beginPath();
             ctx.arc(centroX, centroY, 5, 0, 2*Math.PI);
             ctx.fillStyle = '#013366';
@@ -1576,15 +1514,8 @@
             ctx.strokeStyle = 'white';
             ctx.lineWidth = 2;
             ctx.stroke();
-
-            // Leyenda de escala
-            ctx.fillStyle = '#013366';
-            ctx.font = '12px sans-serif';
-            ctx.textAlign = 'right';
-            ctx.fillText(escalaMax + 'm', w - 10, 20);
         }
 
-        // ---- Control de zoom del radar ----
         function initRadarZoom() {
             const slider = $('radar-escala');
             const label = $('radar-escala-label');
@@ -1594,7 +1525,6 @@
                 actualizarRadar();
             });
 
-            // Zoom con pellizco (touch)
             let lastDist = 0;
             const canvas = $('radarCanvas');
             canvas.addEventListener('touchstart', function(e) {
@@ -1625,55 +1555,58 @@
         }
 
         // ===================================================================
-        // 8. VALIDACIÓN DE DISTANCIA (bloqueo de inicio)
+        // 8. REGISTRAR PUNTO DE AVISTAMIENTO
         // ===================================================================
 
-        function validarInicioConteo() {
-            const btn = $('btn-iniciar-conteo');
-            const msg = $('iniciar-mensaje');
-
+        function registrarPunto() {
             if (!state.rutaActiva) {
-                btn.disabled = true;
-                msg.style.display = 'block';
-                msg.textContent = '⚠️ Seleccione o cree una ruta primero.';
+                alert('⚠️ Seleccione o cree una ruta primero.');
                 return;
             }
-
             if (state.gps.lat === null || state.gps.lon === null) {
-                btn.disabled = true;
-                msg.style.display = 'block';
-                msg.textContent = '⚠️ Obtenga su ubicación GPS primero.';
+                alert('⚠️ Obtenga su ubicación GPS primero.');
                 return;
             }
 
-            // Buscar sitios del día actual en la ruta activa
-            const hoyStr = hoy();
-            const sitiosHoy = state.sitiosHistoricos.filter(s =>
-                s.rutaId === state.rutaActiva && s.fecha === hoyStr
-            );
+            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || 'PA-00';
+            const sistema = getSelectedValue('grupo-sistema', null) || '0';
+            const fecha = $('fecha').value;
+            const horaInicio = $('hora_inicio').value;
 
-            if (sitiosHoy.length === 0) {
-                // No hay sitios hoy, permitir
-                btn.disabled = false;
-                msg.style.display = 'none';
-                return;
-            }
+            if (!fecha) { alert('Seleccione una fecha'); return; }
+            if (!horaInicio) { alert('Seleccione la hora de inicio'); return; }
 
-            // Calcular distancia al sitio más cercano de hoy
-            let distMin = Infinity;
-            sitiosHoy.forEach(s => {
-                const d = haversine(state.gps.lat, state.gps.lon, s.lat, s.lon);
-                if (d < distMin) distMin = d;
-            });
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const lugar = state.ultimaLocalidad || {};
 
-            if (distMin < 350) {
-                btn.disabled = true;
-                msg.style.display = 'block';
-                msg.textContent = `⚠️ Distancia al sitio más cercano (hoy) es de ${Math.round(distMin)}m. Mínimo requerido: 350m. Muévase a otra ubicación.`;
-            } else {
-                btn.disabled = false;
-                msg.style.display = 'none';
-            }
+            const sitio = {
+                id: 'sitio_' + Date.now(),
+                rutaId: state.rutaActiva,
+                fecha: fecha,
+                hora: horaInicio,
+                nombre: ruta ? ruta.nombre + '_' + parcela + '_' + sistema : 'sitio',
+                parcela: parcela,
+                sistema: sistema,
+                lat: state.gps.lat,
+                lon: state.gps.lon,
+                estado: lugar.estado || '',
+                municipio: lugar.municipio || '',
+                localidad: lugar.localidad || '',
+                altitud: lugar.altitud || '',
+                poblacion: lugar.poblacion || '',
+                viviendas: lugar.viviendas || ''
+            };
+
+            state.sitiosHistoricos.push(sitio);
+            guardarDatos();
+
+            mostrarMensaje('✅ Punto registrado exitosamente', 'ok');
+            $('btn-registrar-punto').disabled = true;
+            $('btn-registrar-punto').textContent = '✅ Punto registrado';
+            $('btn-iniciar-conteo').disabled = false;
+
+            actualizarRadar();
+            validarInicioConteo();
         }
 
         // ===================================================================
@@ -1681,61 +1614,35 @@
         // ===================================================================
 
         function iniciarConteo() {
-            // Validar que la ruta esté seleccionada y GPS disponible
             if (!state.rutaActiva) {
                 alert('Seleccione una ruta primero.');
                 return;
             }
-            if (state.gps.lat === null || state.gps.lon === null) {
-                alert('Obtenga su ubicación GPS primero.');
+
+            const ultimoSitio = state.sitiosHistoricos[state.sitiosHistoricos.length - 1];
+            if (!ultimoSitio) {
+                alert('Primero registre un punto de avistamiento.');
                 return;
             }
 
-            const fecha = $('fecha').value;
-            const horaInicio = $('hora_inicio').value;
+            const fecha = ultimoSitio.fecha;
+            const horaInicio = ultimoSitio.hora;
             const duracion = parseInt($('duracion').value) || 10;
 
-            if (!fecha) { alert('Seleccione una fecha'); return; }
-            if (!horaInicio) { alert('Seleccione la hora de inicio'); return; }
-
-            // Guardar sitio histórico
-            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
-            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || 'PA-00';
-            const punto = getSelectedValue('grupo-punto', 'punto_otro') || 'PT-00';
-            const sistema = getSelectedValue('grupo-sistema', null) || '0';
-
-            const sitio = {
-                id: 'sitio_' + Date.now(),
-                rutaId: state.rutaActiva,
-                fecha: fecha,
-                hora: horaInicio,
-                nombre: ruta ? ruta.nombre + '_' + parcela + '_' + punto : 'sitio',
-                parcela: parcela,
-                punto: punto,
-                sistema: sistema,
-                lat: state.gps.lat,
-                lon: state.gps.lon,
-                altitud: $('altitud_auto').value || ''
-            };
-            state.sitiosHistoricos.push(sitio);
-            guardarDatos();
-
-            // Configurar temporizador
             state.duracionTotal = duracion * 60;
             state.tiempoRestante = state.duracionTotal;
             state.horaInicio = horaInicio;
             state.conteoActivo = true;
 
-            // Mostrar timer
             $('timer-container').style.display = 'block';
             $('btn-iniciar-conteo').style.display = 'none';
+            $('btn-registrar-punto').disabled = true;
 
-            // Actualizar UI de registro
             $('registro-fecha-hora').textContent = `Fecha: ${fecha} · Hora inicio: ${horaInicio}`;
-            $('registro-sitio').textContent = `${parcela} · ${punto} · ${sistema}`;
+            $('registro-sitio').textContent = `${ultimoSitio.parcela} · ${ultimoSitio.sistema}`;
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
             $('registro-ruta').textContent = `Ruta: ${ruta ? ruta.nombre : '--'}`;
 
-            // Ir a pestaña de registro
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelector('[data-tab="tab-registro"]').classList.add('active');
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -1904,6 +1811,15 @@
             return '';
         }
 
+        function getSustratoEspecifico() {
+            const espSelect = $('sustrato_esp');
+            const inputOtro = $('sustrato_otro_texto');
+            if (espSelect.value === 'otro_texto') {
+                return inputOtro.value.trim() || 'Otro (sin especificar)';
+            }
+            return espSelect.value;
+        }
+
         // ===================================================================
         // 11. SELECTOR VISUAL DE ESPECIES
         // ===================================================================
@@ -1918,8 +1834,7 @@
                 btn.dataset.grupo = grupo.id;
                 btn.innerHTML = `<span class="emoji">${grupo.emoji}</span><span>${grupo.nombre}</span>`;
                 btn.addEventListener('click', function() {
-                    const grupoId = this.dataset.grupo;
-                    seleccionarGrupo(grupoId);
+                    seleccionarGrupo(this.dataset.grupo);
                 });
                 grid.appendChild(btn);
             });
@@ -1927,16 +1842,13 @@
             $('btn-grupo-otro').addEventListener('click', function() {
                 seleccionarEspecieManual('otro');
             });
-
             $('btn-volver-grupos').addEventListener('click', function() {
                 mostrarPaso('grupos');
                 $('grupo-grid').querySelectorAll('.grupo-btn').forEach(b => b.classList.remove('selected'));
             });
-
             $('btn-especie-otro').addEventListener('click', function() {
                 seleccionarEspecieManual('otro');
             });
-
             $('btn-cambiar-especie').addEventListener('click', function() {
                 mostrarPaso('grupos');
                 $('grupo-grid').querySelectorAll('.grupo-btn').forEach(b => b.classList.remove('selected'));
@@ -1954,7 +1866,7 @@
             const grid = $('especie-grid');
             grid.innerHTML = '';
             if (especies.length === 0) {
-                grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1; text-align:center;">No hay especies registradas en este grupo</p>';
+                grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1; text-align:center;">No hay especies registradas</p>';
             } else {
                 especies.forEach(esp => {
                     const btn = document.createElement('button');
@@ -1973,7 +1885,6 @@
                     grid.appendChild(btn);
                 });
             }
-
             mostrarPaso('especies');
         }
 
@@ -2019,7 +1930,7 @@
         }
 
         // ===================================================================
-        // 12. SUSTRATO DINÁMICO (select)
+        // 12. SUSTRATO DINÁMICO
         // ===================================================================
 
         function initSustratoDinamico() {
@@ -2072,15 +1983,6 @@
             });
         }
 
-        function getSustratoEspecifico() {
-            const espSelect = $('sustrato_esp');
-            const inputOtro = $('sustrato_otro_texto');
-            if (espSelect.value === 'otro_texto') {
-                return inputOtro.value.trim() || 'Otro (sin especificar)';
-            }
-            return espSelect.value;
-        }
-
         // ===================================================================
         // 13. FOTO
         // ===================================================================
@@ -2130,7 +2032,6 @@
                 return;
             }
 
-            // Calcular minuto automático
             let minuto = 0;
             if (state.horaInicio) {
                 const ahora = new Date();
@@ -2142,29 +2043,27 @@
                 if (minuto < 1) minuto = 1;
             }
 
-            // Obtener datos de la ruta activa
+            const ultimoSitio = state.sitiosHistoricos[state.sitiosHistoricos.length - 1] || {};
             const ruta = state.rutas.find(r => r.id === state.rutaActiva);
-            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || '';
-            const punto = getSelectedValue('grupo-punto', 'punto_otro') || '';
-            const sistema = getSelectedValue('grupo-sistema', null) || '';
 
             const registro = {
                 id: Date.now(),
-                fecha: $('fecha').value,
+                fecha: ultimoSitio.fecha || $('fecha').value,
                 hora_inicio: state.horaInicio,
                 minuto_observacion: minuto,
                 ruta: ruta ? ruta.nombre : '',
-                municipio: ruta ? ruta.municipio : $('municipio_auto').value,
-                estado: ruta ? ruta.estado : $('estado_auto').value,
-                localidad: ruta ? ruta.localidad : $('localidad_auto').value,
-                altitud: ruta ? ruta.altitud : $('altitud_auto').value,
-                parcela: parcela,
-                punto: punto,
-                sistema: sistema,
-                lat: state.gps.lat,
-                lon: state.gps.lon,
+                estado: ultimoSitio.estado || $('estado_auto').value,
+                municipio: ultimoSitio.municipio || $('municipio_auto').value,
+                localidad: ultimoSitio.localidad || $('localidad_auto').value,
+                altitud: ultimoSitio.altitud || $('altitud_auto').value,
+                poblacion: ultimoSitio.poblacion || '',
+                viviendas: ultimoSitio.viviendas || '',
+                parcela: ultimoSitio.parcela || '',
+                sistema: ultimoSitio.sistema || '',
+                lat: ultimoSitio.lat || state.gps.lat,
+                lon: ultimoSitio.lon || state.gps.lon,
                 codigo: codigo,
-                nombre_comun: nombreComun || $('especie-nombre_comun').value,
+                nombre_comun: nombreComun,
                 cientifico: $('especie-cientifico').value,
                 individuos: getSelectedCircle('grupo-individuos', 'individuos_otro'),
                 distancia: $('reg-distancia').value.trim(),
@@ -2198,7 +2097,6 @@
             actualizarContadores();
             limpiarRegistro();
 
-            // Hacer scroll al inicio de la pestaña de registro
             document.getElementById('tab-registro').scrollTop = 0;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -2217,7 +2115,6 @@
                 if (el) { el.value = ''; el.style.display = 'none'; }
             });
 
-            // Resetear selects de sustrato
             $('sustrato_tipo').value = '';
             $('sustrato_esp').innerHTML = '<option value="">Primero seleccione un tipo</option>';
 
@@ -2237,7 +2134,45 @@
         }
 
         // ===================================================================
-        // 15. LISTA DE REGISTROS Y EXPORTACIÓN
+        // 15. VALIDACIÓN DE INICIO DE CONTEO
+        // ===================================================================
+
+        function validarInicioConteo() {
+            const btn = $('btn-iniciar-conteo');
+            const msg = $('iniciar-mensaje');
+
+            if (!state.rutaActiva) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Seleccione o cree una ruta primero.';
+                return;
+            }
+
+            if (state.gps.lat === null || state.gps.lon === null) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Obtenga su ubicación GPS primero.';
+                return;
+            }
+
+            const hoyStr = hoy();
+            const puntoHoy = state.sitiosHistoricos.some(s =>
+                s.rutaId === state.rutaActiva && s.fecha === hoyStr
+            );
+
+            if (!puntoHoy) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Registre un punto de avistamiento primero (botón verde).';
+                return;
+            }
+
+            btn.disabled = false;
+            msg.style.display = 'none';
+        }
+
+        // ===================================================================
+        // 16. LISTA DE REGISTROS Y EXPORTACIÓN
         // ===================================================================
 
         function actualizarContadores() {
@@ -2308,8 +2243,8 @@
             }
 
             const columnas = [
-                'id','fecha','hora_inicio','minuto_observacion','ruta','municipio','estado','localidad',
-                'altitud','parcela','punto','sistema','lat','lon',
+                'id','fecha','hora_inicio','minuto_observacion','ruta','estado','municipio','localidad',
+                'altitud','poblacion','viviendas','parcela','sistema','lat','lon',
                 'codigo','nombre_comun','cientifico','individuos','distancia','altura',
                 'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
                 'horizontal','comportamiento','alimento','especie_vegetal',
@@ -2342,7 +2277,7 @@
         }
 
         // ===================================================================
-        // 16. TABS
+        // 17. TABS
         // ===================================================================
 
         function initTabs() {
@@ -2369,54 +2304,37 @@
         }
 
         // ===================================================================
-        // 17. INICIALIZACIÓN
+        // 18. INICIALIZACIÓN
         // ===================================================================
 
         async function init() {
-            // Cargar datos guardados
             cargarDatos();
-
-            // Cargar INEGI
             await cargarINEGI();
 
-            // Fecha y hora por defecto
             const ahora = new Date();
             $('fecha').value = ahora.toISOString().slice(0,10);
             $('hora_inicio').value = ahora.toTimeString().slice(0,5);
 
-            // Inicializar grupos de botones
             initGrupos();
-
-            // Inicializar selector de especies
             initSelectorEspecies();
-
-            // Inicializar sustrato dinámico
             initSustratoDinamico();
-
-            // Inicializar radar (zoom)
             initRadarZoom();
-
-            // Inicializar pestañas
             initTabs();
 
-            // Renderizar rutas
             renderRutas();
-
-            // Cargar registros
             actualizarContadores();
 
-            // Eventos
             $('btn-crear-ruta').addEventListener('click', crearRuta);
             $('btn-eliminar-ruta').addEventListener('click', eliminarRuta);
             $('selector-ruta').addEventListener('change', function() {
                 state.rutaActiva = this.value || null;
                 actualizarInfoRuta();
-                actualizarCamposAutomaticos();
-                actualizarRadar();
                 validarInicioConteo();
+                actualizarRadar();
             });
 
             $('btn-gps').addEventListener('click', obtenerGPS);
+            $('btn-registrar-punto').addEventListener('click', registrarPunto);
             $('btn-iniciar-conteo').addEventListener('click', iniciarConteo);
             $('btn-detener-alarma').addEventListener('click', detenerAlarma);
             $('btn-finalizar-conteo').addEventListener('click', finalizarConteo);
@@ -2430,10 +2348,8 @@
             $('btn-exportar-csv').addEventListener('click', exportarCSV);
             $('btn-eliminar-todos').addEventListener('click', eliminarTodos);
 
-            // Validar estado inicial
             validarInicioConteo();
 
-            // Actualizar radar periódicamente (cada 5 seg) si hay GPS
             setInterval(() => {
                 if (state.gps.lat !== null && state.gps.lon !== null) {
                     actualizarRadar();
@@ -2442,7 +2358,6 @@
             }, 5000);
         }
 
-        // ---- Inicio ----
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
