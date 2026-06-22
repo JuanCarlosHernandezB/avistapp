@@ -19,6 +19,7 @@
         body {
             background: #E8E8E8;
             padding: 0;
+            margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -28,10 +29,10 @@
             width: 100%;
             background: #ffffff;
             border-radius: 0;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            padding: 20px 16px 30px;
+            box-shadow: none;
+            padding: 16px 12px 30px;
             position: relative;
-            margin-bottom: 0;
+            margin: 0;
         }
         h1 {
             font-size: 22px;
@@ -84,8 +85,6 @@
             0% { opacity: 0.5; transform: translateY(4px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-
-        /* ===== SECCIONES DEL FORMULARIO ===== */
         .section {
             border: 1px solid #d0d9e3;
             border-radius: 16px;
@@ -118,12 +117,6 @@
             color: #1f3a57;
             min-width: 85px;
         }
-        .label-sm {
-            min-width: 60px;
-            font-size: 12px;
-        }
-
-        /* ===== NUEVOS BOTONES VERTICALES ===== */
         .btn-stack {
             display: flex;
             flex-direction: column;
@@ -135,7 +128,7 @@
             background: #013366;
             color: white;
             border: none;
-            padding: 12px 16px;
+            padding: 14px 16px;
             border-radius: 10px;
             font-size: 15px;
             font-weight: 500;
@@ -168,7 +161,6 @@
             padding: 0 10px;
             font-size: 11px;
         }
-
         .inline-input {
             border: none;
             border-bottom: 2px solid #013366;
@@ -185,7 +177,6 @@
         }
         .inline-input-sm { min-width: 50px; max-width: 80px; }
         .inline-input-lg { min-width: 100px; max-width: 180px; }
-
         .checkbox-group {
             display: flex;
             gap: 16px;
@@ -202,7 +193,6 @@
             height: 22px;
             accent-color: #013366;
         }
-
         .notas-area {
             width: 100%;
             border: 1px solid #bcc9d6;
@@ -263,7 +253,6 @@
         .btn-danger:active {
             background: #a93226;
         }
-
         .toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -272,8 +261,6 @@
             align-items: center;
             margin-top: 12px;
         }
-
-        /* ===== TABLA DE REGISTROS ===== */
         .registros-container {
             overflow-x: auto;
         }
@@ -294,9 +281,6 @@
             border-bottom: 1px solid #e0e6ed;
             vertical-align: top;
         }
-        .registros-container tr:last-child td {
-            border-bottom: none;
-        }
         .badge-count {
             background: #FFB74D;
             color: #013366;
@@ -313,10 +297,8 @@
             padding: 30px 0;
             font-size: 15px;
         }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 500px) {
-            .app { padding: 14px 10px; }
+            .app { padding: 10px 8px; }
             .option-btn { font-size: 14px; padding: 14px 14px; }
             .label { min-width: 70px; font-size: 12px; }
             .inline-input { font-size: 14px; min-width: 50px; }
@@ -342,18 +324,15 @@
     </div>
     <div class="subhead">Seleccione la opción que corresponda · Desplácese hacia abajo</div>
 
-    <!-- PESTAÑAS -->
+    <!-- TABS -->
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-registro">📝 Registrar</button>
         <button class="tab-btn" data-tab="tab-registros">📋 Mis registros <span id="contador-badge" class="badge-count">0</span></button>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- TAB 1: REGISTRO -->
-    <!-- ========================================================= -->
+    <!-- TAB REGISTRO -->
     <div id="tab-registro" class="tab-content active">
         <form id="formRegistro" autocomplete="off">
-
             <!-- SECCIÓN: SITIO -->
             <div class="section">
                 <div class="section-title">📍 SITIO</div>
@@ -662,9 +641,7 @@
         </form>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- TAB 2: REGISTROS GUARDADOS -->
-    <!-- ========================================================= -->
+    <!-- TAB REGISTROS GUARDADOS -->
     <div id="tab-registros" class="tab-content">
         <div class="flex-between mb-1">
             <span style="font-weight:600; font-size:15px;">Registros locales</span>
@@ -682,7 +659,7 @@
 </div>
 
 <!-- ========================================================= -->
-<!-- JAVASCRIPT – LÓGICA COMPLETA + CONDICIONANTES -->
+<!-- JAVASCRIPT (igual que v2, no lo repito para no alargar) -->
 <!-- ========================================================= -->
 <script>
     (function() {
@@ -690,7 +667,6 @@
 
         const form = document.getElementById('formRegistro');
 
-        // ---- Configurar grupos de botones (vertical) ----
         function setupButtonGroup(groupId, hiddenInputId) {
             const container = document.getElementById(groupId);
             if (!container) return;
@@ -701,23 +677,16 @@
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const value = this.dataset.value;
-
-                    // Si es "otro"
                     if (value === 'otro' && hiddenInput) {
                         buttons.forEach(b => b.classList.remove('selected'));
                         hiddenInput.style.display = 'block';
                         hiddenInput.focus();
-                        // Limpiar selección del hidden
                         return;
                     }
-
-                    // Si hay hidden input, ocultarlo
                     if (hiddenInput) {
                         hiddenInput.style.display = 'none';
                         hiddenInput.value = '';
                     }
-
-                    // Deseleccionar todos y seleccionar este
                     buttons.forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                 });
@@ -737,7 +706,6 @@
             }
         }
 
-        // Inicializar todos los grupos
         setupButtonGroup('grupo-muestreo', 'muestreo_otro');
         setupButtonGroup('grupo-municipio', 'municipio_otro');
         setupButtonGroup('grupo-parcela', 'parcela_otro');
@@ -757,7 +725,6 @@
         setupButtonGroup('grupo-comportamiento', null);
         setupButtonGroup('grupo-alimento', null);
 
-        // ---- FUNCIONES DE UTILIDAD ----
         function getSelectedValue(groupId, inputId) {
             const container = document.getElementById(groupId);
             if (!container) return '';
@@ -788,17 +755,11 @@
             return '';
         }
 
-        // ---- CONDICIONANTES DINÁMICAS ----
         function updateSustratoOptions(alturaVal) {
             const btnVolando = document.getElementById('btn-volando');
             if (!btnVolando) return;
-            const container = document.getElementById('grupo-sustrato_tipo');
-            if (!container) return;
-
-            // Si altura es 0 (número o string '0'), ocultar Volando
             if (alturaVal === '0' || alturaVal === 0) {
                 btnVolando.classList.add('hidden');
-                // Si estaba seleccionado, deseleccionarlo
                 if (btnVolando.classList.contains('selected')) {
                     btnVolando.classList.remove('selected');
                 }
@@ -812,7 +773,6 @@
             if (!container) return;
             const buttons = container.querySelectorAll('.option-btn');
             const isAlimentandose = (comportamientoVal === '1');
-
             buttons.forEach(btn => {
                 if (isAlimentandose) {
                     btn.classList.remove('disabled');
@@ -821,7 +781,6 @@
                     btn.classList.remove('selected');
                 }
             });
-            // Si no está alimentándose, limpiar el input "otro" de alimento
             if (!isAlimentandose) {
                 const inp = document.getElementById('alimento_otro');
                 if (inp) { inp.value = ''; inp.style.display = 'none'; }
@@ -831,7 +790,6 @@
         function updateFormaStatus(sustratoVal) {
             const grupos = ['grupo-forma', 'grupo-vertical', 'grupo-horizontal'];
             const isVegetacion = (sustratoVal === '2' || sustratoVal === '3');
-
             grupos.forEach(gid => {
                 const container = document.getElementById(gid);
                 if (!container) return;
@@ -842,7 +800,6 @@
                     } else {
                         btn.classList.add('disabled');
                         btn.classList.remove('selected');
-                        // Si el valor es "No aplica" (4 en forma, 4 en vertical, 3 en horizontal) lo seleccionamos automáticamente
                         if (gid === 'grupo-forma' && btn.dataset.value === '4') {
                             btn.classList.add('selected');
                         } else if (gid === 'grupo-vertical' && btn.dataset.value === '4') {
@@ -855,23 +812,18 @@
             });
         }
 
-        // ---- ESCUCHAR CAMBIOS EN LOS GRUPOS ----
-        // 1. Altura
         document.getElementById('grupo-altura').addEventListener('click', function(e) {
             const btn = e.target.closest('.option-btn');
             if (!btn) return;
-            // Esperar a que se actualice la selección (usamos setTimeout)
             setTimeout(() => {
                 const val = getSelectedValue('grupo-altura', 'altura_otro');
                 updateSustratoOptions(val);
             }, 50);
         });
         document.getElementById('altura_otro').addEventListener('input', function() {
-            const val = this.value.trim();
-            updateSustratoOptions(val);
+            updateSustratoOptions(this.value.trim());
         });
 
-        // 2. Comportamiento
         document.getElementById('grupo-comportamiento').addEventListener('click', function(e) {
             const btn = e.target.closest('.option-btn');
             if (!btn) return;
@@ -881,7 +833,6 @@
             }, 50);
         });
 
-        // 3. Sustrato Tipo
         document.getElementById('grupo-sustrato_tipo').addEventListener('click', function(e) {
             const btn = e.target.closest('.option-btn');
             if (!btn) return;
@@ -891,17 +842,14 @@
             }, 50);
         });
 
-        // ---- GUARDAR REGISTRO ----
         function guardarRegistro() {
             const fecha = document.getElementById('fecha').value;
             const hora = document.getElementById('hora').value;
             if (!fecha) { mostrarMensaje('⚠️ Seleccione fecha', 'error'); return; }
             if (!hora) { mostrarMensaje('⚠️ Seleccione hora', 'error'); return; }
-
             const codigo = document.getElementById('codigo').value.trim();
             if (!codigo) { mostrarMensaje('⚠️ Ingrese el código de la especie', 'error'); return; }
 
-            // Recolectar datos
             const registro = {
                 id: Date.now(),
                 fecha, hora,
@@ -938,22 +886,18 @@
                 notas: document.getElementById('notas').value.trim()
             };
 
-            // Guardar en localStorage
             let registros = [];
             try {
                 const stored = localStorage.getItem('avistamientos');
                 registros = stored ? JSON.parse(stored) : [];
             } catch (e) { registros = []; }
-
             registros.push(registro);
             localStorage.setItem('avistamientos', JSON.stringify(registros));
-
             mostrarMensaje('✅ Registro guardado correctamente', 'ok');
             actualizarContadores();
             limpiarFormulario();
         }
 
-        // ---- LIMPIAR FORMULARIO ----
         function limpiarFormulario() {
             document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
             const otros = [
@@ -973,13 +917,11 @@
             document.getElementById('verificado_no').checked = false;
             document.getElementById('foto_si').checked = false;
             document.getElementById('foto_no').checked = false;
-            // Re-ejecutar condicionantes para estado inicial
-            updateSustratoOptions(''); // ocultar volando si altura no seleccionada
+            updateSustratoOptions('');
             updateAlimentoStatus('');
             updateFormaStatus('');
         }
 
-        // ---- MOSTRAR MENSAJE ----
         function mostrarMensaje(texto, tipo) {
             const el = document.getElementById('mensaje-guardado');
             el.textContent = texto;
@@ -988,7 +930,6 @@
             setTimeout(() => { el.style.display = 'none'; }, 4000);
         }
 
-        // ---- ACTUALIZAR CONTADORES Y LISTA ----
         function actualizarContadores() {
             const registros = obtenerRegistros();
             const count = registros.length;
@@ -1010,13 +951,10 @@
                 container.innerHTML = '<div class="empty-msg">📭 No hay registros guardados</div>';
                 return;
             }
-
-            let html = `<table>
-                <thead><tr>
-                    <th>#</th><th>Fecha</th><th>Hora</th><th>Código</th>
-                    <th>Ind.</th><th>Comport.</th><th>Acción</th>
-                </tr></thead><tbody>`;
-
+            let html = `<table><thead><tr>
+                <th>#</th><th>Fecha</th><th>Hora</th><th>Código</th>
+                <th>Ind.</th><th>Comport.</th><th>Acción</th>
+            </tr></thead><tbody>`;
             registros.slice().reverse().forEach((r, idx) => {
                 const num = registros.length - idx;
                 html += `<tr>
@@ -1029,10 +967,8 @@
                     <td><button class="btn-danger" style="padding:4px 10px; font-size:11px;" data-id="${r.id}">✕</button></td>
                 </tr>`;
             });
-
             html += '</tbody></table>';
             container.innerHTML = html;
-
             container.querySelectorAll('[data-id]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = parseInt(this.dataset.id);
@@ -1056,14 +992,9 @@
             mostrarMensaje('🗑️ Todos los registros eliminados', 'ok');
         }
 
-        // ---- EXPORTAR CSV ----
         function exportarCSV() {
             const registros = obtenerRegistros();
-            if (registros.length === 0) {
-                alert('No hay registros para exportar');
-                return;
-            }
-
+            if (registros.length === 0) { alert('No hay registros para exportar'); return; }
             const columnas = [
                 'id','fecha','hora','muestreo','municipio','parcela','punto','sistema',
                 'codigo','nombre_comun','individuos','minuto','distancia','altura',
@@ -1071,7 +1002,6 @@
                 'horizontal','comportamiento','alimento','especie_vegetal',
                 'verificado','foto','notas'
             ];
-
             let csv = columnas.join(',') + '\n';
             registros.forEach(r => {
                 const fila = columnas.map(col => {
@@ -1083,7 +1013,6 @@
                 });
                 csv += fila.join(',') + '\n';
             });
-
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
@@ -1096,14 +1025,12 @@
             mostrarMensaje('📤 CSV exportado', 'ok');
         }
 
-        // ---- TABS ----
         function initTabs() {
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = {
                 'tab-registro': document.getElementById('tab-registro'),
                 'tab-registros': document.getElementById('tab-registros')
             };
-
             tabs.forEach(btn => {
                 btn.addEventListener('click', function() {
                     tabs.forEach(b => b.classList.remove('active'));
@@ -1119,24 +1046,18 @@
             });
         }
 
-        // ---- INICIALIZACIÓN ----
         function init() {
             const ahora = new Date();
             document.getElementById('fecha').value = ahora.toISOString().slice(0,10);
             document.getElementById('hora').value = ahora.toTimeString().slice(0,5);
-
             initTabs();
             actualizarContadores();
-
-            // Estado inicial de condicionantes
             updateSustratoOptions('');
             updateAlimentoStatus('');
             updateFormaStatus('');
-
             document.getElementById('btnGuardar').addEventListener('click', guardarRegistro);
             document.getElementById('btnExportarCSV').addEventListener('click', exportarCSV);
             document.getElementById('btnEliminarTodos').addEventListener('click', eliminarTodos);
-
             form.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
                     e.preventDefault();
@@ -1150,7 +1071,6 @@
         } else {
             init();
         }
-
     })();
 </script>
 
