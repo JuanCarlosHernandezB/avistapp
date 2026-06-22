@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AvistaR · Formulario de campo</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a3e60">
+    <meta name="theme-color" content="#013366">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
@@ -17,7 +17,7 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
         body {
-            background: #f0f4f8;
+            background: #E8E8E8;
             padding: 12px;
             min-height: 100vh;
             display: flex;
@@ -28,14 +28,14 @@
             width: 100%;
             background: #ffffff;
             border-radius: 24px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
             padding: 20px 16px 30px;
             position: relative;
             margin-bottom: 20px;
         }
         h1 {
             font-size: 22px;
-            color: #1a3e60;
+            color: #013366;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -52,7 +52,7 @@
             display: flex;
             gap: 8px;
             margin-bottom: 20px;
-            background: #e8edf3;
+            background: #d5dce4;
             border-radius: 40px;
             padding: 4px;
         }
@@ -64,14 +64,14 @@
             border-radius: 30px;
             font-weight: 600;
             font-size: 15px;
-            color: #3a5a7a;
+            color: #2c3e50;
             transition: 0.2s;
             cursor: pointer;
         }
         .tab-btn.active {
-            background: #1a3e60;
+            background: #013366;
             color: white;
-            box-shadow: 0 2px 8px rgba(26,62,96,0.3);
+            box-shadow: 0 2px 8px rgba(1, 51, 102, 0.4);
         }
         .tab-content {
             display: none;
@@ -89,19 +89,19 @@
         .section {
             border: 1px solid #d0d9e3;
             border-radius: 16px;
-            padding: 14px 14px 10px;
+            padding: 16px 14px 12px;
             margin-bottom: 18px;
             background: #fafcff;
         }
         .section-title {
             font-size: 15px;
             font-weight: 700;
-            color: #1a3e60;
+            color: #013366;
             background: white;
             display: inline-block;
             padding: 0 12px;
-            margin-top: -24px;
-            margin-bottom: 8px;
+            margin-top: -26px;
+            margin-bottom: 10px;
             border-radius: 20px;
             letter-spacing: 0.3px;
         }
@@ -122,55 +122,66 @@
             min-width: 60px;
             font-size: 12px;
         }
-        .circle-group {
+
+        /* ===== NUEVOS BOTONES VERTICALES ===== */
+        .btn-stack {
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 4px;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+            margin-top: 4px;
         }
-        .circle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: 2px solid #2c3e50;
-            font-size: 14px;
-            font-weight: 700;
-            background: white;
-            color: #1a1a1a;
-            cursor: pointer;
-            transition: 0.1s;
-            user-select: none;
-            touch-action: manipulation;
-        }
-        .circle:active {
-            transform: scale(0.92);
-        }
-        .circle.selected {
-            background: #1a3e60;
-            border-color: #1a3e60;
+        .option-btn {
+            background: #013366;
             color: white;
-            box-shadow: 0 0 0 2px rgba(26,62,96,0.3);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            touch-action: manipulation;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .circle-otro {
-            border-style: dashed;
-            border-color: #888;
+        .option-btn:active {
+            transform: scale(0.98);
         }
+        .option-btn.selected {
+            background: #004d99;
+            border: 2px solid #FFB74D;
+            box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.3);
+        }
+        .option-btn.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.8);
+        }
+        .option-btn .badge-opt {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 0 10px;
+            font-size: 11px;
+        }
+
         .inline-input {
             border: none;
-            border-bottom: 2px solid #2c3e50;
+            border-bottom: 2px solid #013366;
             background: transparent;
-            font-size: 14px;
-            padding: 2px 4px;
+            font-size: 15px;
+            padding: 4px 6px;
             min-width: 60px;
-            max-width: 120px;
+            max-width: 140px;
             font-weight: 500;
             outline: none;
         }
         .inline-input:focus {
-            border-bottom-color: #1a3e60;
+            border-bottom-color: #FFB74D;
         }
         .inline-input-sm { min-width: 50px; max-width: 80px; }
         .inline-input-lg { min-width: 100px; max-width: 180px; }
@@ -187,9 +198,9 @@
             font-size: 14px;
         }
         .checkbox-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #1a3e60;
+            width: 22px;
+            height: 22px;
+            accent-color: #013366;
         }
 
         .notas-area {
@@ -204,25 +215,26 @@
             margin-top: 4px;
         }
         .btn-primary {
-            background: #1a3e60;
+            background: #013366;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border-radius: 40px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 17px;
             width: 100%;
             cursor: pointer;
             transition: 0.2s;
             margin-top: 6px;
+            box-shadow: 0 4px 10px rgba(1, 51, 102, 0.3);
         }
         .btn-primary:active {
             transform: scale(0.97);
-            background: #0f2a42;
+            background: #002244;
         }
         .btn-secondary {
             background: #e8edf3;
-            color: #1a3e60;
+            color: #013366;
             border: 1px solid #bcc9d6;
             padding: 10px 16px;
             border-radius: 30px;
@@ -271,8 +283,8 @@
             font-size: 13px;
         }
         .registros-container th {
-            background: #e8edf3;
-            color: #1a3e60;
+            background: #013366;
+            color: white;
             padding: 8px 6px;
             text-align: left;
             white-space: nowrap;
@@ -286,13 +298,14 @@
             border-bottom: none;
         }
         .badge-count {
-            background: #1a3e60;
-            color: white;
+            background: #FFB74D;
+            color: #013366;
             border-radius: 40px;
             padding: 2px 12px;
             font-size: 13px;
             display: inline-block;
             margin-left: 6px;
+            font-weight: 700;
         }
         .empty-msg {
             color: #777;
@@ -304,20 +317,19 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 500px) {
             .app { padding: 14px 10px; }
-            .circle { width: 30px; height: 30px; font-size: 12px; }
+            .option-btn { font-size: 14px; padding: 14px 14px; }
             .label { min-width: 70px; font-size: 12px; }
-            .inline-input { font-size: 13px; min-width: 50px; }
+            .inline-input { font-size: 14px; min-width: 50px; }
             .row { gap: 4px 8px; }
-            .section { padding: 12px 10px 8px; }
+            .section { padding: 14px 10px 10px; }
         }
-
-        /* ===== UTILS ===== */
         .mt-1 { margin-top: 8px; }
         .mb-1 { margin-bottom: 8px; }
         .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
         .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .text-muted { color: #666; font-size: 12px; }
         .text-center { text-align: center; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -326,9 +338,9 @@
     <!-- HEADER -->
     <div class="flex-between">
         <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">campo</span></h1>
-        <span style="font-size:12px; background:#e8edf3; padding:4px 14px; border-radius:30px; font-weight:600; color:#1a3e60;">OFFLINE</span>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">OFFLINE v2</span>
     </div>
-    <div class="subhead">Marque el número correspondiente · sin internet</div>
+    <div class="subhead">Seleccione la opción que corresponda · Desplácese hacia abajo</div>
 
     <!-- PESTAÑAS -->
     <div class="tabs">
@@ -353,64 +365,64 @@
                 </div>
                 <div class="row">
                     <span class="label">Muestreo:</span>
-                    <div class="circle-group" id="grupo-muestreo">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle" data-value="6">6</span>
-                        <span class="circle" data-value="7">7</span>
-                        <span class="circle" data-value="8">8</span>
-                        <span class="circle" data-value="9">9</span>
-                        <span class="circle" data-value="10">10</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="text" id="muestreo_otro" class="inline-input inline-input-sm" placeholder="Nº" style="display:none;">
+                    <div class="btn-stack" id="grupo-muestreo">
+                        <button type="button" class="option-btn" data-value="1">1 <span class="badge-opt">01</span></button>
+                        <button type="button" class="option-btn" data-value="2">2 <span class="badge-opt">02</span></button>
+                        <button type="button" class="option-btn" data-value="3">3 <span class="badge-opt">03</span></button>
+                        <button type="button" class="option-btn" data-value="4">4 <span class="badge-opt">04</span></button>
+                        <button type="button" class="option-btn" data-value="5">5 <span class="badge-opt">05</span></button>
+                        <button type="button" class="option-btn" data-value="6">6 <span class="badge-opt">06</span></button>
+                        <button type="button" class="option-btn" data-value="7">7 <span class="badge-opt">07</span></button>
+                        <button type="button" class="option-btn" data-value="8">8 <span class="badge-opt">08</span></button>
+                        <button type="button" class="option-btn" data-value="9">9 <span class="badge-opt">09</span></button>
+                        <button type="button" class="option-btn" data-value="10">10 <span class="badge-opt">10</span></button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro número</button>
+                        <input type="text" id="muestreo_otro" class="inline-input inline-input-sm" placeholder="Escriba Nº" style="margin-top:4px; display:none;">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Municipio:</span>
-                    <div class="circle-group" id="grupo-municipio">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle" data-value="6">6</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="text" id="municipio_otro" class="inline-input inline-input-sm" placeholder="Texto" style="display:none;">
+                    <div class="btn-stack" id="grupo-municipio">
+                        <button type="button" class="option-btn" data-value="1">Texcoco</button>
+                        <button type="button" class="option-btn" data-value="2">Chapingo</button>
+                        <button type="button" class="option-btn" data-value="3">Atenco</button>
+                        <button type="button" class="option-btn" data-value="4">Chimalhuacán</button>
+                        <button type="button" class="option-btn" data-value="5">Papantla</button>
+                        <button type="button" class="option-btn" data-value="6">Chicontepec</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro municipio</button>
+                        <input type="text" id="municipio_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Parcela:</span>
-                    <div class="circle-group" id="grupo-parcela">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Texto" style="display:none;">
+                    <div class="btn-stack" id="grupo-parcela">
+                        <button type="button" class="option-btn" data-value="1">PA-01</button>
+                        <button type="button" class="option-btn" data-value="2">PA-02</button>
+                        <button type="button" class="option-btn" data-value="3">PA-03</button>
+                        <button type="button" class="option-btn" data-value="4">PA-04</button>
+                        <button type="button" class="option-btn" data-value="5">PA-05</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro parcela</button>
+                        <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Punto:</span>
-                    <div class="circle-group" id="grupo-punto">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Texto" style="display:none;">
+                    <div class="btn-stack" id="grupo-punto">
+                        <button type="button" class="option-btn" data-value="1">PT-01</button>
+                        <button type="button" class="option-btn" data-value="2">PT-02</button>
+                        <button type="button" class="option-btn" data-value="3">PT-03</button>
+                        <button type="button" class="option-btn" data-value="4">PT-04</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro punto</button>
+                        <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Sistema:</span>
-                    <div class="circle-group" id="grupo-sistema">
-                        <span class="circle" data-value="1">1</span><span style="font-size:11px; color:#555;">SAF</span>
-                        <span class="circle" data-value="2">2</span><span style="font-size:11px; color:#555;">MIAF</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="text" id="sistema_otro" class="inline-input inline-input-sm" placeholder="Texto" style="display:none;">
+                    <div class="btn-stack" id="grupo-sistema">
+                        <button type="button" class="option-btn" data-value="1">SAF</button>
+                        <button type="button" class="option-btn" data-value="2">MIAF</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro sistema</button>
+                        <input type="text" id="sistema_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
                     </div>
                 </div>
             </div>
@@ -420,7 +432,7 @@
                 <div class="section-title">🐦 ESPECIE</div>
                 <div class="row">
                     <span class="label">Código (6 letras):</span>
-                    <input type="text" id="codigo" class="inline-input inline-input-lg" placeholder="Ej. TURMER" maxlength="10">
+                    <input type="text" id="codigo" class="inline-input inline-input-lg" placeholder="Ej. TURMER" maxlength="10" required>
                 </div>
                 <div class="row">
                     <span class="label">Nombre común:</span>
@@ -433,105 +445,98 @@
                 <div class="section-title">🔎 ESPECÍMEN</div>
                 <div class="row">
                     <span class="label">Individuos:</span>
-                    <div class="circle-group" id="grupo-individuos">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle" data-value="6">6</span>
-                        <span class="circle" data-value="7">7</span>
-                        <span class="circle" data-value="8">8</span>
-                        <span class="circle" data-value="9">9</span>
-                        <span class="circle" data-value="10">10</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="number" id="individuos_otro" class="inline-input inline-input-sm" placeholder="Cant." style="display:none; width:60px;" min="1">
+                    <div class="btn-stack" id="grupo-individuos">
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Más de 10</button>
+                        <input type="number" id="individuos_otro" class="inline-input inline-input-sm" placeholder="Cant." style="margin-top:4px; display:none;" min="1">
                     </div>
                 </div>
                 <div class="row">
-                    <span class="label">Minuto:</span>
-                    <div class="circle-group" id="grupo-minuto">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle" data-value="6">6</span>
-                        <span class="circle" data-value="7">7</span>
-                        <span class="circle" data-value="8">8</span>
-                        <span class="circle" data-value="9">9</span>
-                        <span class="circle" data-value="10">10</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="number" id="minuto_otro" class="inline-input inline-input-sm" placeholder="Min" style="display:none; width:60px;" min="1">
+                    <span class="label">Minuto (1-10):</span>
+                    <div class="btn-stack" id="grupo-minuto">
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="number" id="minuto_otro" class="inline-input inline-input-sm" placeholder="Min" style="margin-top:4px; display:none;" min="1">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Distancia (m):</span>
-                    <div class="circle-group" id="grupo-distancia">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle" data-value="6">6</span>
-                        <span class="circle" data-value="7">7</span>
-                        <span class="circle" data-value="8">8</span>
-                        <span class="circle" data-value="9">9</span>
-                        <span class="circle" data-value="10">10</span>
-                        <span class="circle" data-value="11">11</span>
-                        <span class="circle" data-value="12">12</span>
-                        <span class="circle" data-value="13">13</span>
-                        <span class="circle" data-value="14">14</span>
-                        <span class="circle" data-value="15">15</span>
-                        <span class="circle" data-value="20">20</span>
-                        <span class="circle" data-value="25">25</span>
-                        <span class="circle" data-value="30">30</span>
-                        <span class="circle" data-value="40">40</span>
-                        <span class="circle" data-value="50">50</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="number" id="distancia_otro" class="inline-input inline-input-sm" placeholder="m" style="display:none; width:60px;" min="1">
+                    <div class="btn-stack" id="grupo-distancia">
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="15">15</button>
+                        <button type="button" class="option-btn" data-value="20">20</button>
+                        <button type="button" class="option-btn" data-value="25">25</button>
+                        <button type="button" class="option-btn" data-value="30">30</button>
+                        <button type="button" class="option-btn" data-value="40">40</button>
+                        <button type="button" class="option-btn" data-value="50">50</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="number" id="distancia_otro" class="inline-input inline-input-sm" placeholder="m" style="margin-top:4px; display:none;" min="1">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Altura (m):</span>
-                    <div class="circle-group" id="grupo-altura">
-                        <span class="circle" data-value="0">0</span>
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle" data-value="6">6</span>
-                        <span class="circle" data-value="7">7</span>
-                        <span class="circle" data-value="8">8</span>
-                        <span class="circle" data-value="9">9</span>
-                        <span class="circle" data-value="10">10</span>
-                        <span class="circle" data-value="11">11</span>
-                        <span class="circle" data-value="15">15</span>
-                        <span class="circle" data-value="20">20</span>
-                        <span class="circle" data-value="25">25</span>
-                        <span class="circle" data-value="30">30</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="number" id="altura_otro" class="inline-input inline-input-sm" placeholder="m" style="display:none; width:60px;" min="0">
+                    <div class="btn-stack" id="grupo-altura">
+                        <button type="button" class="option-btn" data-value="0">0 (Suelo)</button>
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="15">15</button>
+                        <button type="button" class="option-btn" data-value="20">20</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="number" id="altura_otro" class="inline-input inline-input-sm" placeholder="m" style="margin-top:4px; display:none;" min="0">
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Sexo:</span>
-                    <div class="circle-group" id="grupo-sexo">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Macho</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Hembra</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Ambos</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">Indet.</span>
+                    <div class="btn-stack" id="grupo-sexo">
+                        <button type="button" class="option-btn" data-value="1">Macho</button>
+                        <button type="button" class="option-btn" data-value="2">Hembra</button>
+                        <button type="button" class="option-btn" data-value="3">Ambos</button>
+                        <button type="button" class="option-btn" data-value="4">Indeterminado</button>
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Edad:</span>
-                    <div class="circle-group" id="grupo-edad">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Cría</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Volantón</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Juvenil</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">Adulto</span>
-                        <span class="circle" data-value="5">5</span><span class="text-muted">Senil</span>
+                    <div class="btn-stack" id="grupo-edad">
+                        <button type="button" class="option-btn" data-value="1">Cría</button>
+                        <button type="button" class="option-btn" data-value="2">Volantón</button>
+                        <button type="button" class="option-btn" data-value="3">Juvenil</button>
+                        <button type="button" class="option-btn" data-value="4">Adulto</button>
+                        <button type="button" class="option-btn" data-value="5">Senil</button>
                     </div>
                 </div>
             </div>
@@ -541,52 +546,53 @@
                 <div class="section-title">🌿 SUSTRATO</div>
                 <div class="row">
                     <span class="label">Tipo:</span>
-                    <div class="circle-group" id="grupo-sustrato_tipo">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Suelo</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Veg.muerta</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Veg.viva</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">Infra.</span>
-                        <span class="circle" data-value="5">5</span><span class="text-muted">Agua</span>
-                        <span class="circle" data-value="6">6</span><span class="text-muted">Volando</span>
-                        <span class="circle" data-value="7">7</span><span class="text-muted">Otro</span>
+                    <div class="btn-stack" id="grupo-sustrato_tipo">
+                        <button type="button" class="option-btn" data-value="1">Suelo</button>
+                        <button type="button" class="option-btn" data-value="2">Vegetación muerta</button>
+                        <button type="button" class="option-btn" data-value="3">Vegetación viva</button>
+                        <button type="button" class="option-btn" data-value="4">Infraestructura</button>
+                        <button type="button" class="option-btn" data-value="5">Cuerpo de agua</button>
+                        <button type="button" class="option-btn" data-value="6" id="btn-volando">Volando</button>
+                        <button type="button" class="option-btn" data-value="7">Otro</button>
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Específico:</span>
-                    <div class="circle-group" id="grupo-sustrato_esp">
-                        <span class="circle" data-value="1">1</span>
-                        <span class="circle" data-value="2">2</span>
-                        <span class="circle" data-value="3">3</span>
-                        <span class="circle" data-value="4">4</span>
-                        <span class="circle" data-value="5">5</span>
-                        <span class="circle circle-otro" data-value="otro">+</span>
-                        <input type="text" id="sustrato_esp_otro" class="inline-input inline-input-sm" placeholder="Texto" style="display:none;">
+                    <div class="btn-stack" id="grupo-sustrato_esp">
+                        <button type="button" class="option-btn" data-value="1">Opción 1</button>
+                        <button type="button" class="option-btn" data-value="2">Opción 2</button>
+                        <button type="button" class="option-btn" data-value="3">Opción 3</button>
+                        <button type="button" class="option-btn" data-value="4">Opción 4</button>
+                        <button type="button" class="option-btn" data-value="5">Opción 5</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="text" id="sustrato_esp_otro" class="inline-input inline-input-sm" placeholder="Escriba" style="margin-top:4px; display:none;">
                     </div>
+                    <span class="text-muted" style="margin-top:4px;">(Depende del tipo, use la guía)</span>
                 </div>
                 <div class="row">
                     <span class="label">Forma estructural:</span>
-                    <div class="circle-group" id="grupo-forma">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Herbácea</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Arbustiva</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Arbórea</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">No aplica</span>
+                    <div class="btn-stack" id="grupo-forma">
+                        <button type="button" class="option-btn" data-value="1">Herbácea</button>
+                        <button type="button" class="option-btn" data-value="2">Arbustiva</button>
+                        <button type="button" class="option-btn" data-value="3">Arbórea</button>
+                        <button type="button" class="option-btn" data-value="4">No aplica</button>
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Posición vertical:</span>
-                    <div class="circle-group" id="grupo-vertical">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Alto</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Medio</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Bajo</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">No aplica</span>
+                    <div class="btn-stack" id="grupo-vertical">
+                        <button type="button" class="option-btn" data-value="1">Alto</button>
+                        <button type="button" class="option-btn" data-value="2">Medio</button>
+                        <button type="button" class="option-btn" data-value="3">Bajo</button>
+                        <button type="button" class="option-btn" data-value="4">No aplica</button>
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Posición horizontal:</span>
-                    <div class="circle-group" id="grupo-horizontal">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Interno</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Externo</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">No aplica</span>
+                    <div class="btn-stack" id="grupo-horizontal">
+                        <button type="button" class="option-btn" data-value="1">Interno</button>
+                        <button type="button" class="option-btn" data-value="2">Externo</button>
+                        <button type="button" class="option-btn" data-value="3">No aplica</button>
                     </div>
                 </div>
                 <div class="row">
@@ -600,30 +606,30 @@
                 <div class="section-title">🧠 COMPORTAMIENTO</div>
                 <div class="row">
                     <span class="label">Comportamiento:</span>
-                    <div class="circle-group" id="grupo-comportamiento" style="gap:3px;">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Alim.</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Cam.</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Cant.</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">Cort.</span>
-                        <span class="circle" data-value="5">5</span><span class="text-muted">Nidif.</span>
-                        <span class="circle" data-value="6">6</span><span class="text-muted">Percha</span>
-                        <span class="circle" data-value="7">7</span><span class="text-muted">Reprod.</span>
-                        <span class="circle" data-value="8">8</span><span class="text-muted">Vigil.</span>
-                        <span class="circle" data-value="9">9</span><span class="text-muted">V.corto</span>
-                        <span class="circle" data-value="10">10</span><span class="text-muted">V.largo</span>
-                        <span class="circle" data-value="11">11</span><span class="text-muted">No det.</span>
+                    <div class="btn-stack" id="grupo-comportamiento">
+                        <button type="button" class="option-btn" data-value="1">Alimentándose</button>
+                        <button type="button" class="option-btn" data-value="2">Caminando</button>
+                        <button type="button" class="option-btn" data-value="3">Cantando</button>
+                        <button type="button" class="option-btn" data-value="4">Cortejo</button>
+                        <button type="button" class="option-btn" data-value="5">Nidificando</button>
+                        <button type="button" class="option-btn" data-value="6">Percha</button>
+                        <button type="button" class="option-btn" data-value="7">Reproducción</button>
+                        <button type="button" class="option-btn" data-value="8">Vigilancia</button>
+                        <button type="button" class="option-btn" data-value="9">Vuelo corto</button>
+                        <button type="button" class="option-btn" data-value="10">Vuelo largo</button>
+                        <button type="button" class="option-btn" data-value="11">No determinado</button>
                     </div>
                 </div>
                 <div class="row">
                     <span class="label">Tipo alimento:</span>
-                    <div class="circle-group" id="grupo-alimento">
-                        <span class="circle" data-value="1">1</span><span class="text-muted">Invert.</span>
-                        <span class="circle" data-value="2">2</span><span class="text-muted">Frutos</span>
-                        <span class="circle" data-value="3">3</span><span class="text-muted">Néctar</span>
-                        <span class="circle" data-value="4">4</span><span class="text-muted">Semillas</span>
-                        <span class="circle" data-value="5">5</span><span class="text-muted">Vert.</span>
-                        <span class="circle" data-value="6">6</span><span class="text-muted">Otro</span>
-                        <input type="text" id="alimento_otro" class="inline-input inline-input-sm" placeholder="Espec." style="margin-left:4px;">
+                    <div class="btn-stack" id="grupo-alimento">
+                        <button type="button" class="option-btn" data-value="1">Invertebrados</button>
+                        <button type="button" class="option-btn" data-value="2">Frutos</button>
+                        <button type="button" class="option-btn" data-value="3">Néctar</button>
+                        <button type="button" class="option-btn" data-value="4">Semillas</button>
+                        <button type="button" class="option-btn" data-value="5">Vertebrados</button>
+                        <button type="button" class="option-btn" data-value="6">Otro</button>
+                        <input type="text" id="alimento_otro" class="inline-input inline-input-sm" placeholder="Especifique" style="margin-top:4px; display:none;">
                     </div>
                 </div>
             </div>
@@ -650,7 +656,7 @@
             </div>
 
             <button type="button" id="btnGuardar" class="btn-primary">💾 Guardar registro</button>
-            <div style="margin-top:8px; text-align:center; font-size:12px; color:#777;">
+            <div style="margin-top:8px; text-align:center; font-size:13px; color:#777;">
                 <span id="mensaje-guardado" style="display:none; color:#1a7a3a; font-weight:600;">✅ Registro guardado</span>
             </div>
         </form>
@@ -662,7 +668,7 @@
     <div id="tab-registros" class="tab-content">
         <div class="flex-between mb-1">
             <span style="font-weight:600; font-size:15px;">Registros locales</span>
-            <span id="contador-registros" style="background:#e8edf3; padding:2px 14px; border-radius:30px;">0</span>
+            <span id="contador-registros" style="background:#013366; color:white; padding:2px 14px; border-radius:30px;">0</span>
         </div>
         <div class="toolbar">
             <button id="btnExportarCSV" class="btn-secondary">📤 Exportar CSV</button>
@@ -676,91 +682,86 @@
 </div>
 
 <!-- ========================================================= -->
-<!-- JAVASCRIPT – LÓGICA COMPLETA -->
+<!-- JAVASCRIPT – LÓGICA COMPLETA + CONDICIONANTES -->
 <!-- ========================================================= -->
 <script>
     (function() {
         'use strict';
 
-        // ---- DOM refs ----
         const form = document.getElementById('formRegistro');
 
-        // ---- Helper: grupo de círculos ----
-        function setupCircleGroup(groupId, hiddenInputId) {
+        // ---- Configurar grupos de botones (vertical) ----
+        function setupButtonGroup(groupId, hiddenInputId) {
             const container = document.getElementById(groupId);
             if (!container) return;
-            const circles = container.querySelectorAll('.circle');
+            const buttons = container.querySelectorAll('.option-btn');
             const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
 
-            circles.forEach(circle => {
-                circle.addEventListener('click', function(e) {
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const value = this.dataset.value;
 
-                    // Si es "otro", mostramos el input oculto
+                    // Si es "otro"
                     if (value === 'otro' && hiddenInput) {
-                        // Deseleccionar todos los círculos
-                        circles.forEach(c => c.classList.remove('selected'));
-                        hiddenInput.style.display = 'inline-block';
+                        buttons.forEach(b => b.classList.remove('selected'));
+                        hiddenInput.style.display = 'block';
                         hiddenInput.focus();
+                        // Limpiar selección del hidden
                         return;
                     }
 
-                    // Si hay un "otro" seleccionado, ocultamos el input
+                    // Si hay hidden input, ocultarlo
                     if (hiddenInput) {
                         hiddenInput.style.display = 'none';
                         hiddenInput.value = '';
                     }
 
-                    // Deseleccionar todos
-                    circles.forEach(c => c.classList.remove('selected'));
-                    // Seleccionar este
+                    // Deseleccionar todos y seleccionar este
+                    buttons.forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                 });
             });
 
-            // Si el hidden input pierde el foco y está vacío, lo ocultamos
             if (hiddenInput) {
                 hiddenInput.addEventListener('blur', function() {
                     if (this.value.trim() === '') {
                         this.style.display = 'none';
                     }
                 });
-                // Si se escribe algo, se considera seleccionado
                 hiddenInput.addEventListener('input', function() {
                     if (this.value.trim() !== '') {
-                        circles.forEach(c => c.classList.remove('selected'));
+                        buttons.forEach(b => b.classList.remove('selected'));
                     }
                 });
             }
         }
 
         // Inicializar todos los grupos
-        setupCircleGroup('grupo-muestreo', 'muestreo_otro');
-        setupCircleGroup('grupo-municipio', 'municipio_otro');
-        setupCircleGroup('grupo-parcela', 'parcela_otro');
-        setupCircleGroup('grupo-punto', 'punto_otro');
-        setupCircleGroup('grupo-sistema', 'sistema_otro');
-        setupCircleGroup('grupo-individuos', 'individuos_otro');
-        setupCircleGroup('grupo-minuto', 'minuto_otro');
-        setupCircleGroup('grupo-distancia', 'distancia_otro');
-        setupCircleGroup('grupo-altura', 'altura_otro');
-        // Los grupos sin "otro" pero con selección simple
-        setupCircleGroup('grupo-sexo', null);
-        setupCircleGroup('grupo-edad', null);
-        setupCircleGroup('grupo-sustrato_tipo', null);
-        setupCircleGroup('grupo-sustrato_esp', 'sustrato_esp_otro');
-        setupCircleGroup('grupo-forma', null);
-        setupCircleGroup('grupo-vertical', null);
-        setupCircleGroup('grupo-horizontal', null);
-        setupCircleGroup('grupo-comportamiento', null);
-        setupCircleGroup('grupo-alimento', null);
+        setupButtonGroup('grupo-muestreo', 'muestreo_otro');
+        setupButtonGroup('grupo-municipio', 'municipio_otro');
+        setupButtonGroup('grupo-parcela', 'parcela_otro');
+        setupButtonGroup('grupo-punto', 'punto_otro');
+        setupButtonGroup('grupo-sistema', 'sistema_otro');
+        setupButtonGroup('grupo-individuos', 'individuos_otro');
+        setupButtonGroup('grupo-minuto', 'minuto_otro');
+        setupButtonGroup('grupo-distancia', 'distancia_otro');
+        setupButtonGroup('grupo-altura', 'altura_otro');
+        setupButtonGroup('grupo-sexo', null);
+        setupButtonGroup('grupo-edad', null);
+        setupButtonGroup('grupo-sustrato_tipo', null);
+        setupButtonGroup('grupo-sustrato_esp', 'sustrato_esp_otro');
+        setupButtonGroup('grupo-forma', null);
+        setupButtonGroup('grupo-vertical', null);
+        setupButtonGroup('grupo-horizontal', null);
+        setupButtonGroup('grupo-comportamiento', null);
+        setupButtonGroup('grupo-alimento', null);
 
-        // ---- Funciones de utilidad ----
+        // ---- FUNCIONES DE UTILIDAD ----
         function getSelectedValue(groupId, inputId) {
             const container = document.getElementById(groupId);
             if (!container) return '';
-            const selected = container.querySelector('.circle.selected');
+            const selected = container.querySelector('.option-btn.selected');
             if (selected) {
                 const val = selected.dataset.value;
                 if (val === 'otro') {
@@ -770,7 +771,6 @@
                 }
                 return val;
             }
-            // Revisar si hay input oculto con valor
             if (inputId) {
                 const inp = document.getElementById(inputId);
                 if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
@@ -788,27 +788,123 @@
             return '';
         }
 
-        function getFechaHora() {
-            const fecha = document.getElementById('fecha').value;
-            const hora = document.getElementById('hora').value;
-            return { fecha, hora };
+        // ---- CONDICIONANTES DINÁMICAS ----
+        function updateSustratoOptions(alturaVal) {
+            const btnVolando = document.getElementById('btn-volando');
+            if (!btnVolando) return;
+            const container = document.getElementById('grupo-sustrato_tipo');
+            if (!container) return;
+
+            // Si altura es 0 (número o string '0'), ocultar Volando
+            if (alturaVal === '0' || alturaVal === 0) {
+                btnVolando.classList.add('hidden');
+                // Si estaba seleccionado, deseleccionarlo
+                if (btnVolando.classList.contains('selected')) {
+                    btnVolando.classList.remove('selected');
+                }
+            } else {
+                btnVolando.classList.remove('hidden');
+            }
         }
 
-        // ---- Guardar registro ----
+        function updateAlimentoStatus(comportamientoVal) {
+            const container = document.getElementById('grupo-alimento');
+            if (!container) return;
+            const buttons = container.querySelectorAll('.option-btn');
+            const isAlimentandose = (comportamientoVal === '1');
+
+            buttons.forEach(btn => {
+                if (isAlimentandose) {
+                    btn.classList.remove('disabled');
+                } else {
+                    btn.classList.add('disabled');
+                    btn.classList.remove('selected');
+                }
+            });
+            // Si no está alimentándose, limpiar el input "otro" de alimento
+            if (!isAlimentandose) {
+                const inp = document.getElementById('alimento_otro');
+                if (inp) { inp.value = ''; inp.style.display = 'none'; }
+            }
+        }
+
+        function updateFormaStatus(sustratoVal) {
+            const grupos = ['grupo-forma', 'grupo-vertical', 'grupo-horizontal'];
+            const isVegetacion = (sustratoVal === '2' || sustratoVal === '3');
+
+            grupos.forEach(gid => {
+                const container = document.getElementById(gid);
+                if (!container) return;
+                const buttons = container.querySelectorAll('.option-btn');
+                buttons.forEach(btn => {
+                    if (isVegetacion) {
+                        btn.classList.remove('disabled');
+                    } else {
+                        btn.classList.add('disabled');
+                        btn.classList.remove('selected');
+                        // Si el valor es "No aplica" (4 en forma, 4 en vertical, 3 en horizontal) lo seleccionamos automáticamente
+                        if (gid === 'grupo-forma' && btn.dataset.value === '4') {
+                            btn.classList.add('selected');
+                        } else if (gid === 'grupo-vertical' && btn.dataset.value === '4') {
+                            btn.classList.add('selected');
+                        } else if (gid === 'grupo-horizontal' && btn.dataset.value === '3') {
+                            btn.classList.add('selected');
+                        }
+                    }
+                });
+            });
+        }
+
+        // ---- ESCUCHAR CAMBIOS EN LOS GRUPOS ----
+        // 1. Altura
+        document.getElementById('grupo-altura').addEventListener('click', function(e) {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            // Esperar a que se actualice la selección (usamos setTimeout)
+            setTimeout(() => {
+                const val = getSelectedValue('grupo-altura', 'altura_otro');
+                updateSustratoOptions(val);
+            }, 50);
+        });
+        document.getElementById('altura_otro').addEventListener('input', function() {
+            const val = this.value.trim();
+            updateSustratoOptions(val);
+        });
+
+        // 2. Comportamiento
+        document.getElementById('grupo-comportamiento').addEventListener('click', function(e) {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            setTimeout(() => {
+                const val = getSelectedValue('grupo-comportamiento', null);
+                updateAlimentoStatus(val);
+            }, 50);
+        });
+
+        // 3. Sustrato Tipo
+        document.getElementById('grupo-sustrato_tipo').addEventListener('click', function(e) {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            setTimeout(() => {
+                const val = getSelectedValue('grupo-sustrato_tipo', null);
+                updateFormaStatus(val);
+            }, 50);
+        });
+
+        // ---- GUARDAR REGISTRO ----
         function guardarRegistro() {
-            // Validar campos mínimos
-            const { fecha, hora } = getFechaHora();
+            const fecha = document.getElementById('fecha').value;
+            const hora = document.getElementById('hora').value;
             if (!fecha) { mostrarMensaje('⚠️ Seleccione fecha', 'error'); return; }
             if (!hora) { mostrarMensaje('⚠️ Seleccione hora', 'error'); return; }
 
             const codigo = document.getElementById('codigo').value.trim();
             if (!codigo) { mostrarMensaje('⚠️ Ingrese el código de la especie', 'error'); return; }
 
-            // Recolectar todos los valores
+            // Recolectar datos
             const registro = {
                 id: Date.now(),
-                fecha,
-                hora,
+                fecha, hora,
                 muestreo: getSelectedValue('grupo-muestreo', 'muestreo_otro'),
                 municipio: getSelectedValue('grupo-municipio', 'municipio_otro'),
                 parcela: getSelectedValue('grupo-parcela', 'parcela_otro'),
@@ -857,25 +953,18 @@
             limpiarFormulario();
         }
 
-        // ---- Limpiar formulario (conserva fecha/hora) ----
+        // ---- LIMPIAR FORMULARIO ----
         function limpiarFormulario() {
-            // Deseleccionar todos los círculos
-            document.querySelectorAll('.circle').forEach(c => c.classList.remove('selected'));
-            // Ocultar inputs "otro"
-            document.querySelectorAll('.inline-input[style*="display:none"]').forEach(el => {
-                // solo si están ocultos por defecto
-            });
-            // Resetear inputs ocultos
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
             const otros = [
                 'muestreo_otro', 'municipio_otro', 'parcela_otro', 'punto_otro',
                 'sistema_otro', 'individuos_otro', 'minuto_otro', 'distancia_otro',
-                'altura_otro', 'sustrato_esp_otro'
+                'altura_otro', 'sustrato_esp_otro', 'alimento_otro'
             ];
             otros.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) { el.value = ''; el.style.display = 'none'; }
             });
-            document.getElementById('alimento_otro').value = '';
             document.getElementById('codigo').value = '';
             document.getElementById('nombre_comun').value = '';
             document.getElementById('especie_vegetal').value = '';
@@ -884,10 +973,13 @@
             document.getElementById('verificado_no').checked = false;
             document.getElementById('foto_si').checked = false;
             document.getElementById('foto_no').checked = false;
-            // Fecha y hora se mantienen
+            // Re-ejecutar condicionantes para estado inicial
+            updateSustratoOptions(''); // ocultar volando si altura no seleccionada
+            updateAlimentoStatus('');
+            updateFormaStatus('');
         }
 
-        // ---- Mostrar mensaje ----
+        // ---- MOSTRAR MENSAJE ----
         function mostrarMensaje(texto, tipo) {
             const el = document.getElementById('mensaje-guardado');
             el.textContent = texto;
@@ -896,7 +988,7 @@
             setTimeout(() => { el.style.display = 'none'; }, 4000);
         }
 
-        // ---- Actualizar contadores y lista ----
+        // ---- ACTUALIZAR CONTADORES Y LISTA ----
         function actualizarContadores() {
             const registros = obtenerRegistros();
             const count = registros.length;
@@ -922,8 +1014,7 @@
             let html = `<table>
                 <thead><tr>
                     <th>#</th><th>Fecha</th><th>Hora</th><th>Código</th>
-                    <th>Ind.</th><th>Min</th><th>Dist</th><th>Alt</th>
-                    <th>Comport.</th><th>Acción</th>
+                    <th>Ind.</th><th>Comport.</th><th>Acción</th>
                 </tr></thead><tbody>`;
 
             registros.slice().reverse().forEach((r, idx) => {
@@ -934,9 +1025,6 @@
                     <td>${r.hora || ''}</td>
                     <td><strong>${r.codigo || ''}</strong></td>
                     <td>${r.individuos || ''}</td>
-                    <td>${r.minuto || ''}</td>
-                    <td>${r.distancia || ''}</td>
-                    <td>${r.altura || ''}</td>
                     <td>${r.comportamiento || ''}</td>
                     <td><button class="btn-danger" style="padding:4px 10px; font-size:11px;" data-id="${r.id}">✕</button></td>
                 </tr>`;
@@ -945,7 +1033,6 @@
             html += '</tbody></table>';
             container.innerHTML = html;
 
-            // Eventos para eliminar individual
             container.querySelectorAll('[data-id]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = parseInt(this.dataset.id);
@@ -969,7 +1056,7 @@
             mostrarMensaje('🗑️ Todos los registros eliminados', 'ok');
         }
 
-        // ---- Exportar CSV ----
+        // ---- EXPORTAR CSV ----
         function exportarCSV() {
             const registros = obtenerRegistros();
             if (registros.length === 0) {
@@ -977,7 +1064,6 @@
                 return;
             }
 
-            // Definir columnas fijas
             const columnas = [
                 'id','fecha','hora','muestreo','municipio','parcela','punto','sistema',
                 'codigo','nombre_comun','individuos','minuto','distancia','altura',
@@ -1010,7 +1096,7 @@
             mostrarMensaje('📤 CSV exportado', 'ok');
         }
 
-        // ---- Pestañas ----
+        // ---- TABS ----
         function initTabs() {
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = {
@@ -1026,7 +1112,6 @@
                     Object.keys(contents).forEach(key => {
                         contents[key].classList.toggle('active', key === target);
                     });
-                    // Actualizar lista al cambiar a la pestaña de registros
                     if (target === 'tab-registros') {
                         actualizarContadores();
                     }
@@ -1034,28 +1119,24 @@
             });
         }
 
-        // ---- Inicialización ----
+        // ---- INICIALIZACIÓN ----
         function init() {
-            // Fecha y hora por defecto
             const ahora = new Date();
-            const fechaStr = ahora.toISOString().slice(0,10);
-            document.getElementById('fecha').value = fechaStr;
-            const horaStr = ahora.toTimeString().slice(0,5);
-            document.getElementById('hora').value = horaStr;
+            document.getElementById('fecha').value = ahora.toISOString().slice(0,10);
+            document.getElementById('hora').value = ahora.toTimeString().slice(0,5);
 
             initTabs();
             actualizarContadores();
 
-            // Evento guardar
+            // Estado inicial de condicionantes
+            updateSustratoOptions('');
+            updateAlimentoStatus('');
+            updateFormaStatus('');
+
             document.getElementById('btnGuardar').addEventListener('click', guardarRegistro);
-
-            // Evento exportar
             document.getElementById('btnExportarCSV').addEventListener('click', exportarCSV);
-
-            // Evento eliminar todos
             document.getElementById('btnEliminarTodos').addEventListener('click', eliminarTodos);
 
-            // Tecla Enter en campos para guardar (opcional)
             form.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
                     e.preventDefault();
@@ -1064,7 +1145,6 @@
             });
         }
 
-        // Esperar a que el DOM esté listo
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
@@ -1075,4 +1155,4 @@
 </script>
 
 </body>
-</html>
+</html>v2 con condicionantes y botones verticales
