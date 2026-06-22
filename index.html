@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
+        /* ===== RESET Y ESTILOS GLOBALES (igual que antes) ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -116,7 +117,35 @@
             color: #1f3a57;
             min-width: 75px;
         }
-
+        .inline-input {
+            border: none;
+            border-bottom: 2px solid #013366;
+            background: transparent;
+            font-size: 16px;
+            padding: 4px 6px;
+            min-width: 60px;
+            max-width: 100px;
+            font-weight: 500;
+            outline: none;
+        }
+        .inline-input:focus {
+            border-bottom-color: #FFB74D;
+        }
+        .inline-input-sm { min-width: 50px; max-width: 70px; }
+        .inline-input-lg { min-width: 100px; max-width: 160px; }
+        .inline-input-full { max-width: none; width: 100%; }
+        .inline-input-readonly {
+            background: #f0f4f8;
+            color: #013366;
+            font-weight: 600;
+            border-bottom: 2px solid #013366;
+            padding: 4px 6px;
+            font-size: 16px;
+            min-width: 60px;
+            max-width: 200px;
+            border: none;
+            border-bottom: 2px solid #013366;
+        }
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -183,24 +212,6 @@
             background: #f0f0f0;
         }
 
-        .inline-input {
-            border: none;
-            border-bottom: 2px solid #013366;
-            background: transparent;
-            font-size: 16px;
-            padding: 4px 6px;
-            min-width: 60px;
-            max-width: 100px;
-            font-weight: 500;
-            outline: none;
-        }
-        .inline-input:focus {
-            border-bottom-color: #FFB74D;
-        }
-        .inline-input-sm { min-width: 50px; max-width: 70px; }
-        .inline-input-lg { min-width: 100px; max-width: 160px; }
-        .inline-input-full { max-width: none; width: 100%; }
-
         .checkbox-group {
             display: flex;
             gap: 16px;
@@ -217,7 +228,6 @@
             height: 22px;
             accent-color: #013366;
         }
-
         .notas-area {
             width: 100%;
             border: 1px solid #bcc9d6;
@@ -230,24 +240,6 @@
             margin-top: 4px;
         }
 
-        .btn-primary {
-            background: #013366;
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 17px;
-            width: 100%;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 6px;
-            box-shadow: 0 4px 10px rgba(1, 51, 102, 0.3);
-        }
-        .btn-primary:active {
-            transform: scale(0.97);
-            background: #002244;
-        }
         .btn-success {
             background: #27ae60;
             color: white;
@@ -338,6 +330,24 @@
         .btn-photo:active {
             transform: scale(0.97);
         }
+        .btn-primary {
+            background: #013366;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 17px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 6px;
+            box-shadow: 0 4px 10px rgba(1, 51, 102, 0.3);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: #002244;
+        }
 
         .toolbar {
             display: flex;
@@ -347,7 +357,6 @@
             align-items: center;
             margin-top: 12px;
         }
-
         .registros-container {
             overflow-x: auto;
         }
@@ -617,10 +626,10 @@
 
 <div class="app" id="app">
     <div class="flex-between">
-        <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">conteo</span></h1>
-        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v8</span>
+        <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">campo</span></h1>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v9</span>
     </div>
-    <div class="subhead">Configure la ruta · Registre el punto · Inicie el conteo</div>
+    <div class="subhead">Configure la ruta · Obtenga GPS · Registre el punto · Inicie avistamientos</div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-config">⚙️ Configurar</button>
@@ -629,10 +638,11 @@
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAB 1: CONFIGURACIÓN -->
+    <!-- TAB 1: CONFIGURACIÓN (NUEVO ORDEN) -->
     <!-- ========================================================= -->
     <div id="tab-config" class="tab-content active">
-        <!-- RUTAS -->
+
+        <!-- 1. RUTA -->
         <div class="section">
             <div class="section-title">🗺️ RUTA DE MUESTREO</div>
             <div class="row">
@@ -648,27 +658,11 @@
             </div>
         </div>
 
-        <!-- UBICACIÓN (autocompletado por INEGI) -->
+        <!-- 2. ACTUALIZAR GPS + LAT/LON/PRECISIÓN -->
         <div class="section">
-            <div class="section-title">📍 UBICACIÓN (automática)</div>
+            <div class="section-title">📡 UBICACIÓN GPS</div>
             <div class="row">
-                <span class="label">Estado:</span>
-                <input type="text" id="estado_auto" class="inline-input inline-input-lg" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
-            </div>
-            <div class="row">
-                <span class="label">Municipio:</span>
-                <input type="text" id="municipio_auto" class="inline-input inline-input-lg" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
-            </div>
-            <div class="row">
-                <span class="label">Localidad:</span>
-                <input type="text" id="localidad_auto" class="inline-input inline-input-lg" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
-            </div>
-            <div class="row">
-                <span class="label">Altitud (m):</span>
-                <input type="text" id="altitud_auto" class="inline-input inline-input-sm" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
-            </div>
-            <div class="row" style="margin-top:6px;">
-                <button id="btn-gps" class="btn-secondary" style="width:100%; justify-content:center;">📍 Obtener ubicación GPS</button>
+                <button id="btn-gps" class="btn-secondary" style="width:100%; justify-content:center;">📍 Actualizar GPS</button>
             </div>
             <div class="row">
                 <span class="label">Latitud:</span>
@@ -680,7 +674,51 @@
             </div>
         </div>
 
-        <!-- SITIO (Sistema y Parcela) -->
+        <!-- 3. RADAR DE SITIOS -->
+        <div class="section">
+            <div class="section-title">📡 RADAR DE SITIOS</div>
+            <div class="radar-container" id="radar-container">
+                <canvas id="radarCanvas" width="350" height="350"></canvas>
+                <div class="radar-controls">
+                    <span class="scale-label" id="radar-escala-label">500 m</span>
+                    <input type="range" id="radar-escala" min="100" max="2000" value="500" step="50">
+                    <span class="scale-label">Zoom</span>
+                </div>
+                <div class="radar-legend">
+                    <span><span class="dot dot-red"></span> Hoy (dentro de 350m)</span>
+                    <span><span class="dot dot-blue"></span> Hoy (fuera)</span>
+                    <span><span class="dot dot-green"></span> Días anteriores</span>
+                </div>
+                <div id="radar-info" class="sitio-info">📍 Esperando GPS...</div>
+            </div>
+        </div>
+
+        <!-- 4. DATOS DE INEGI (en orden: Altitud punto, Localidad, Altitud localidad, Municipio, Estado) -->
+        <div class="section">
+            <div class="section-title">📍 DATOS DEL SITIO (INEGI)</div>
+            <div class="row">
+                <span class="label">Altitud del punto (m):</span>
+                <input type="text" id="altitud_punto" class="inline-input-readonly" placeholder="--" readonly style="max-width:120px;">
+            </div>
+            <div class="row">
+                <span class="label">Localidad:</span>
+                <input type="text" id="localidad_auto" class="inline-input-readonly" placeholder="--" readonly style="max-width:200px;">
+            </div>
+            <div class="row">
+                <span class="label">Altitud localidad (m):</span>
+                <input type="text" id="altitud_localidad" class="inline-input-readonly" placeholder="--" readonly style="max-width:120px;">
+            </div>
+            <div class="row">
+                <span class="label">Municipio:</span>
+                <input type="text" id="municipio_auto" class="inline-input-readonly" placeholder="--" readonly style="max-width:200px;">
+            </div>
+            <div class="row">
+                <span class="label">Estado:</span>
+                <input type="text" id="estado_auto" class="inline-input-readonly" placeholder="--" readonly style="max-width:200px;">
+            </div>
+        </div>
+
+        <!-- 5. SITIO (Sistema y Parcela) -->
         <div class="section">
             <div class="section-title">🏷️ SITIO</div>
             <div class="row">
@@ -704,7 +742,7 @@
             </div>
         </div>
 
-        <!-- TIEMPO -->
+        <!-- 6. TIEMPO -->
         <div class="section">
             <div class="section-title">⏱️ TIEMPO</div>
             <div class="row">
@@ -721,10 +759,10 @@
             </div>
         </div>
 
-        <!-- BOTONES DE ACCIÓN -->
+        <!-- 7. BOTONES DE ACCIÓN -->
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
             <button id="btn-registrar-punto" class="btn-success">📍 Registrar punto de avistamiento</button>
-            <button id="btn-iniciar-conteo" class="btn-success" disabled>▶️ Iniciar conteo</button>
+            <button id="btn-iniciar-conteo" class="btn-success" disabled>▶️ Iniciar avistamientos</button>
             <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
         </div>
 
@@ -733,25 +771,6 @@
             <div class="timer-display" id="timer-display">10:00</div>
             <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
             <button id="btn-detener-alarma" class="btn-warning" style="display:none;">🔕 Detener alarma</button>
-        </div>
-
-        <!-- Radar -->
-        <div class="section" style="margin-top:12px;">
-            <div class="section-title">📡 RADAR DE SITIOS</div>
-            <div class="radar-container" id="radar-container">
-                <canvas id="radarCanvas" width="350" height="350"></canvas>
-                <div class="radar-controls">
-                    <span class="scale-label" id="radar-escala-label">500 m</span>
-                    <input type="range" id="radar-escala" min="100" max="2000" value="500" step="50">
-                    <span class="scale-label">Zoom</span>
-                </div>
-                <div class="radar-legend">
-                    <span><span class="dot dot-red"></span> Hoy (dentro de 350m)</span>
-                    <span><span class="dot dot-blue"></span> Hoy (fuera)</span>
-                    <span><span class="dot dot-green"></span> Días anteriores</span>
-                </div>
-                <div id="radar-info" class="sitio-info">📍 Esperando GPS...</div>
-            </div>
         </div>
     </div>
 
@@ -1363,19 +1382,24 @@
                     $('gps-lon').textContent = state.gps.lon.toFixed(6);
                     $('gps-accuracy').textContent = state.gps.accuracy ? `±${Math.round(state.gps.accuracy)}m` : '--';
 
+                    // Actualizar campos de INEGI
                     if (state.inegiData) {
                         const lugar = buscarLocalidadMasCercana(state.gps.lat, state.gps.lon);
                         if (lugar && lugar.distancia < 10000) {
-                            $('estado_auto').value = lugar.estado || '';
-                            $('municipio_auto').value = lugar.municipio || '';
-                            $('localidad_auto').value = lugar.localidad || '';
-                            $('altitud_auto').value = lugar.altitud || '';
+                            // Altitud del punto (usar la del GPS si está disponible, sino la de INEGI)
+                            const altPunto = pos.coords.altitude ? Math.round(pos.coords.altitude) : (lugar.altitud || '--');
+                            $('altitud_punto').value = altPunto;
+                            $('localidad_auto').value = lugar.localidad || '--';
+                            $('altitud_localidad').value = lugar.altitud || '--';
+                            $('municipio_auto').value = lugar.municipio || '--';
+                            $('estado_auto').value = lugar.estado || '--';
                             state.ultimaLocalidad = lugar;
                         } else {
-                            $('estado_auto').value = '--';
-                            $('municipio_auto').value = '--';
+                            $('altitud_punto').value = '--';
                             $('localidad_auto').value = '--';
-                            $('altitud_auto').value = '--';
+                            $('altitud_localidad').value = '--';
+                            $('municipio_auto').value = '--';
+                            $('estado_auto').value = '--';
                             state.ultimaLocalidad = null;
                         }
                     }
@@ -1388,7 +1412,7 @@
                 },
                 (err) => {
                     alert(`Error GPS: ${err.message}`);
-                    $('btn-gps').textContent = '📍 Obtener ubicación GPS';
+                    $('btn-gps').textContent = '📍 Actualizar GPS';
                     $('btn-gps').disabled = false;
                 },
                 { enableHighAccuracy: true, timeout: 15000 }
@@ -1579,6 +1603,9 @@
             const ruta = state.rutas.find(r => r.id === state.rutaActiva);
             const lugar = state.ultimaLocalidad || {};
 
+            // Obtener altitud del punto (si está disponible en el GPS)
+            const altPunto = state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || '');
+
             const sitio = {
                 id: 'sitio_' + Date.now(),
                 rutaId: state.rutaActiva,
@@ -1589,10 +1616,11 @@
                 sistema: sistema,
                 lat: state.gps.lat,
                 lon: state.gps.lon,
-                estado: lugar.estado || '',
-                municipio: lugar.municipio || '',
+                altitud_punto: altPunto,
                 localidad: lugar.localidad || '',
-                altitud: lugar.altitud || '',
+                altitud_localidad: lugar.altitud || '',
+                municipio: lugar.municipio || '',
+                estado: lugar.estado || '',
                 poblacion: lugar.poblacion || '',
                 viviendas: lugar.viviendas || ''
             };
@@ -2055,7 +2083,8 @@
                 estado: ultimoSitio.estado || $('estado_auto').value,
                 municipio: ultimoSitio.municipio || $('municipio_auto').value,
                 localidad: ultimoSitio.localidad || $('localidad_auto').value,
-                altitud: ultimoSitio.altitud || $('altitud_auto').value,
+                altitud_punto: ultimoSitio.altitud_punto || $('altitud_punto').value,
+                altitud_localidad: ultimoSitio.altitud_localidad || $('altitud_localidad').value,
                 poblacion: ultimoSitio.poblacion || '',
                 viviendas: ultimoSitio.viviendas || '',
                 parcela: ultimoSitio.parcela || '',
@@ -2244,7 +2273,7 @@
 
             const columnas = [
                 'id','fecha','hora_inicio','minuto_observacion','ruta','estado','municipio','localidad',
-                'altitud','poblacion','viviendas','parcela','sistema','lat','lon',
+                'altitud_punto','altitud_localidad','poblacion','viviendas','parcela','sistema','lat','lon',
                 'codigo','nombre_comun','cientifico','individuos','distancia','altura',
                 'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
                 'horizontal','comportamiento','alimento','especie_vegetal',
