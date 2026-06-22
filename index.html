@@ -54,18 +54,21 @@
             background: #d5dce4;
             border-radius: 40px;
             padding: 4px;
+            flex-wrap: wrap;
         }
         .tab-btn {
-            flex: 1;
+            flex: 1 1 auto;
             border: none;
             background: transparent;
-            padding: 10px 0;
+            padding: 10px 12px;
             border-radius: 30px;
             font-weight: 600;
             font-size: 13px;
             color: #2c3e50;
             transition: 0.2s;
             cursor: pointer;
+            text-align: center;
+            min-width: 70px;
         }
         .tab-btn.active {
             background: #013366;
@@ -502,6 +505,46 @@
             transform: scale(0.95);
         }
 
+        /* === Acordeón para Sustrato === */
+        .accordion {
+            border: 1px solid #d0d9e3;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            background: #f5f8fb;
+            padding: 12px 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: 0.15s;
+        }
+        .accordion-header:active {
+            background: #e8edf3;
+        }
+        .accordion-header .arrow {
+            transition: transform 0.2s;
+        }
+        .accordion-header.open .arrow {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            padding: 4px 10px 10px;
+            display: none;
+            background: #fafcff;
+        }
+        .accordion-body.open {
+            display: block;
+        }
+        .accordion-body .opt-btn {
+            margin: 4px 0;
+            flex: 1 1 100%;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -512,6 +555,43 @@
         .text-muted { color: #666; font-size: 12px; }
         .text-center { text-align: center; }
         .text-small { font-size: 13px; }
+
+        /* Editor de sitios */
+        .edit-item {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+        .edit-item .item-text {
+            flex: 1;
+            font-weight: 500;
+            padding: 4px 8px;
+            background: #f5f8fb;
+            border-radius: 6px;
+            min-width: 100px;
+        }
+        .edit-item .btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .edit-item .btn-edit {
+            background: #f39c12;
+            color: white;
+        }
+        .edit-item .btn-delete {
+            background: #c0392b;
+            color: white;
+        }
+        .edit-item .btn-save {
+            background: #27ae60;
+            color: white;
+        }
 
         @media (max-width: 500px) {
             .app { padding: 10px 6px; }
@@ -524,6 +604,7 @@
             .grupo-grid { grid-template-columns: repeat(5, 1fr); }
             .especie-grid { grid-template-columns: repeat(2, 1fr); }
             .especie-grid .especie-btn .foto-placeholder { width: 60px; height: 60px; font-size: 24px; }
+            .tabs .tab-btn { font-size: 12px; padding: 8px 8px; min-width: 50px; }
         }
         @media (max-width: 380px) {
             .grupo-grid { grid-template-columns: repeat(4, 1fr); }
@@ -536,14 +617,15 @@
 <div class="app" id="app">
     <div class="flex-between">
         <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">conteo</span></h1>
-        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v5</span>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v6</span>
     </div>
-    <div class="subhead">Seleccione el ave por imagen · Sin condicionantes</div>
+    <div class="subhead">Seleccione el ave por imagen · Sitios editables</div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-config">⚙️ Configurar</button>
         <button class="tab-btn" data-tab="tab-registro" id="tab-registro-btn">📝 Registrar <span id="contador-badge" class="badge-count">0</span></button>
-        <button class="tab-btn" data-tab="tab-registros">📋 Registros</button>
+        <button class="tab-btn" data-tab="tab-sitios">📋 Sitios</button>
+        <button class="tab-btn" data-tab="tab-registros">📊 Registros</button>
     </div>
 
     <!-- ========================================================= -->
@@ -583,39 +665,20 @@
             <div class="row">
                 <span class="label">Municipio:</span>
                 <div class="btn-group" id="grupo-municipio">
-                    <button type="button" class="opt-btn" data-value="1">Texcoco</button>
-                    <button type="button" class="opt-btn" data-value="2">Chapingo</button>
-                    <button type="button" class="opt-btn" data-value="3">Atenco</button>
-                    <button type="button" class="opt-btn" data-value="4">Chimalhuacán</button>
-                    <button type="button" class="opt-btn" data-value="5">Papantla</button>
-                    <button type="button" class="opt-btn" data-value="6">Chicontepec</button>
-                    <button type="button" class="opt-btn" data-value="7">Huatusco</button>
-                    <button type="button" class="opt-btn" data-value="8">La Españita</button>
-                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
-                    <input type="text" id="municipio_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
+                    <!-- Los botones se generarán desde JavaScript con los datos de sitios -->
+                    <span class="text-muted">Cargando...</span>
                 </div>
             </div>
             <div class="row">
                 <span class="label">Parcela:</span>
                 <div class="btn-group" id="grupo-parcela">
-                    <button type="button" class="opt-btn" data-value="1">PA-01</button>
-                    <button type="button" class="opt-btn" data-value="2">PA-02</button>
-                    <button type="button" class="opt-btn" data-value="3">PA-03</button>
-                    <button type="button" class="opt-btn" data-value="4">PA-04</button>
-                    <button type="button" class="opt-btn" data-value="5">PA-05</button>
-                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
-                    <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
+                    <span class="text-muted">Cargando...</span>
                 </div>
             </div>
             <div class="row">
                 <span class="label">Punto:</span>
                 <div class="btn-group" id="grupo-punto">
-                    <button type="button" class="opt-btn" data-value="1">PT-01</button>
-                    <button type="button" class="opt-btn" data-value="2">PT-02</button>
-                    <button type="button" class="opt-btn" data-value="3">PT-03</button>
-                    <button type="button" class="opt-btn" data-value="4">PT-04</button>
-                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
-                    <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
+                    <span class="text-muted">Cargando...</span>
                 </div>
             </div>
             <div class="row">
@@ -651,7 +714,6 @@
     <!-- TAB 2: REGISTRO DE AVISTAMIENTOS -->
     <!-- ========================================================= -->
     <div id="tab-registro" class="tab-content">
-        <!-- Barra de estado del conteo -->
         <div class="section" style="background:#e8edf3; border-color:#013366;">
             <div class="flex-between">
                 <span style="font-weight:600; font-size:14px; color:#013366;">
@@ -660,37 +722,28 @@
                 <span style="font-size:13px; color:#013366;" id="registro-minuto-actual">
                     Minuto: <strong>--</strong>
                 </span>
-                <span style="font-size:12px; color:#555;" id="registro-sitio">PA-01 · PT-01 · SAF</span>
+                <span style="font-size:12px; color:#555;" id="registro-sitio">--</span>
             </div>
             <div style="font-size:12px; color:#555; margin-top:2px;" id="registro-fecha-hora">Fecha: -- · Hora inicio: --</div>
         </div>
 
-        <!-- ===== SELECTOR VISUAL DE ESPECIES ===== -->
+        <!-- Selector visual de especies -->
         <div class="section">
             <div class="section-title">🐦 IDENTIFICAR AVE</div>
             <div id="selector-especie">
-                <!-- Paso 1: Grupos -->
                 <div id="paso-grupos">
                     <p class="text-muted" style="margin-bottom:6px;">1. Seleccione el grupo:</p>
-                    <div class="grupo-grid" id="grupo-grid">
-                        <!-- Generado por JavaScript -->
-                    </div>
+                    <div class="grupo-grid" id="grupo-grid"></div>
                     <button id="btn-grupo-otro" class="opt-btn" style="width:100%; margin-top:4px; text-align:center;">➕ Otro / No identificado</button>
                 </div>
-
-                <!-- Paso 2: Especies -->
                 <div id="paso-especies" class="hidden">
                     <p class="text-muted" style="margin-bottom:6px;">2. Seleccione la especie:</p>
-                    <div class="especie-grid" id="especie-grid">
-                        <!-- Generado por JavaScript -->
-                    </div>
+                    <div class="especie-grid" id="especie-grid"></div>
                     <div style="display:flex; gap:8px; margin-top:6px;">
-                        <button id="btn-volver-grupos" class="btn-secondary" style="flex:1; justify-content:center;">⬅ Volver a grupos</button>
-                        <button id="btn-especie-otro" class="opt-btn" style="flex:1; text-align:center;">➕ Otro / No listado</button>
+                        <button id="btn-volver-grupos" class="btn-secondary" style="flex:1; justify-content:center;">⬅ Volver</button>
+                        <button id="btn-especie-otro" class="opt-btn" style="flex:1; text-align:center;">➕ Otro</button>
                     </div>
                 </div>
-
-                <!-- Especie seleccionada -->
                 <div id="especie-seleccionada" class="hidden" style="margin-top:8px; padding:10px; background:#e8edf3; border-radius:12px; border-left:4px solid #013366;">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div id="especie-seleccionada-foto" style="width:60px; height:60px; border-radius:8px; background:#ddd; display:flex; align-items:center; justify-content:center; font-size:24px;">🐦</div>
@@ -707,7 +760,7 @@
             </div>
         </div>
 
-        <!-- ===== FOTO ===== -->
+        <!-- Foto -->
         <div class="section">
             <div class="section-title">📸 FOTO</div>
             <div class="row">
@@ -721,7 +774,7 @@
             </div>
         </div>
 
-        <!-- ===== RESTO DE CAMPOS (sin condicionantes) ===== -->
+        <!-- Datos del avistamiento -->
         <div class="section">
             <div class="section-title">🔎 DATOS DEL AVISTAMIENTO</div>
             <div class="row">
@@ -770,64 +823,16 @@
             </div>
         </div>
 
+        <!-- Sustrato con acordeón -->
         <div class="section">
             <div class="section-title">🌿 SUSTRATO</div>
-            <div class="row">
-                <span class="label">Tipo:</span>
-                <div class="btn-group" id="grupo-sustrato_tipo">
-                    <button type="button" class="opt-btn" data-value="1">Suelo</button>
-                    <button type="button" class="opt-btn" data-value="2">Veg. muerta</button>
-                    <button type="button" class="opt-btn" data-value="3">Veg. viva</button>
-                    <button type="button" class="opt-btn" data-value="4">Infraestructura</button>
-                    <button type="button" class="opt-btn" data-value="5">Cuerpo de agua</button>
-                    <button type="button" class="opt-btn" data-value="6">Volando</button>
-                    <button type="button" class="opt-btn" data-value="7">Otro</button>
-                </div>
-            </div>
-            <div class="row">
-                <span class="label">Específico:</span>
-                <div class="btn-group" id="grupo-sustrato_esp">
-                    <button type="button" class="opt-btn" data-value="1">Opción 1</button>
-                    <button type="button" class="opt-btn" data-value="2">Opción 2</button>
-                    <button type="button" class="opt-btn" data-value="3">Opción 3</button>
-                    <button type="button" class="opt-btn" data-value="4">Opción 4</button>
-                    <button type="button" class="opt-btn" data-value="5">Opción 5</button>
-                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
-                    <input type="text" id="sustrato_esp_otro" class="inline-input inline-input-sm" placeholder="Especifique" style="display:none; margin-top:4px; width:100%;">
-                </div>
-            </div>
-            <div class="row">
-                <span class="label">Forma estructural:</span>
-                <div class="btn-group" id="grupo-forma">
-                    <button type="button" class="opt-btn" data-value="1">Herbácea</button>
-                    <button type="button" class="opt-btn" data-value="2">Arbustiva</button>
-                    <button type="button" class="opt-btn" data-value="3">Arbórea</button>
-                    <button type="button" class="opt-btn" data-value="4">No aplica</button>
-                </div>
-            </div>
-            <div class="row">
-                <span class="label">Posición vertical:</span>
-                <div class="btn-group" id="grupo-vertical">
-                    <button type="button" class="opt-btn" data-value="1">Alto</button>
-                    <button type="button" class="opt-btn" data-value="2">Medio</button>
-                    <button type="button" class="opt-btn" data-value="3">Bajo</button>
-                    <button type="button" class="opt-btn" data-value="4">No aplica</button>
-                </div>
-            </div>
-            <div class="row">
-                <span class="label">Posición horizontal:</span>
-                <div class="btn-group" id="grupo-horizontal">
-                    <button type="button" class="opt-btn" data-value="1">Interno</button>
-                    <button type="button" class="opt-btn" data-value="2">Externo</button>
-                    <button type="button" class="opt-btn" data-value="3">No aplica</button>
-                </div>
-            </div>
-            <div class="row">
-                <span class="label">Especie vegetal:</span>
-                <input type="text" id="reg-especie_vegetal" class="inline-input inline-input-lg" placeholder="Código o nombre (opcional)">
+            <div id="sustrato-accordion-container">
+                <!-- Generado por JavaScript -->
+                <p class="text-muted">Cargando...</p>
             </div>
         </div>
 
+        <!-- Comportamiento -->
         <div class="section">
             <div class="section-title">🧠 COMPORTAMIENTO</div>
             <div class="row">
@@ -860,15 +865,9 @@
             </div>
         </div>
 
+        <!-- Notas -->
         <div class="section">
-            <div class="section-title">✅ FINAL</div>
-            <div class="row">
-                <span class="label">Verificado:</span>
-                <div class="checkbox-group">
-                    <div class="checkbox-item"><input type="checkbox" id="reg-verificado_si"> <label for="reg-verificado_si">Sí</label></div>
-                    <div class="checkbox-item"><input type="checkbox" id="reg-verificado_no"> <label for="reg-verificado_no">No</label></div>
-                </div>
-            </div>
+            <div class="section-title">📝 NOTAS</div>
             <div class="row" style="align-items:flex-start;">
                 <span class="label" style="margin-top:4px;">Notas:</span>
                 <textarea id="reg-notas" class="notas-area" placeholder="Observaciones, clima, comportamiento destacado..."></textarea>
@@ -888,7 +887,47 @@
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAB 3: REGISTROS GUARDADOS -->
+    <!-- TAB 3: EDITOR DE SITIOS -->
+    <!-- ========================================================= -->
+    <div id="tab-sitios" class="tab-content">
+        <div class="section">
+            <div class="section-title">🏷️ MUNICIPIOS</div>
+            <div id="editor-municipios">
+                <div class="edit-item">
+                    <input type="text" id="nuevo-municipio" class="inline-input inline-input-full" placeholder="Nuevo municipio" style="max-width:none; flex:1;">
+                    <button id="btn-add-municipio" class="btn-sm btn-success">➕</button>
+                </div>
+                <div id="lista-municipios"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">📌 PARCELAS</div>
+            <div id="editor-parcelas">
+                <div class="edit-item">
+                    <input type="text" id="nueva-parcela" class="inline-input inline-input-full" placeholder="Nueva parcela" style="max-width:none; flex:1;">
+                    <button id="btn-add-parcela" class="btn-sm btn-success">➕</button>
+                </div>
+                <div id="lista-parcelas"></div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">📍 PUNTOS</div>
+            <div id="editor-puntos">
+                <div class="edit-item">
+                    <input type="text" id="nuevo-punto" class="inline-input inline-input-full" placeholder="Nuevo punto" style="max-width:none; flex:1;">
+                    <button id="btn-add-punto" class="btn-sm btn-success">➕</button>
+                </div>
+                <div id="lista-puntos"></div>
+            </div>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+            <button id="btn-restaurar-sitios" class="btn-secondary" style="flex:1;">↩️ Restaurar valores por defecto</button>
+            <button id="btn-exportar-sitios" class="btn-secondary" style="flex:1;">📤 Exportar sitios</button>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 4: REGISTROS GUARDADOS -->
     <!-- ========================================================= -->
     <div id="tab-registros" class="tab-content">
         <div class="flex-between mb-1">
@@ -973,6 +1012,26 @@
             { id: 'Trogones', emoji: '🐦', nombre: 'Trogones' }
         ];
 
+        // ---- MAPA DE SUSTRATO (Tipo -> Específicos) ----
+        const sustratoMap = {
+            'Suelo': ['piso', 'roca'],
+            'Veg. muerta': ['zacate_seco', 'leña_muerta', 'tocón'],
+            'Veg. viva': ['zacate_vivo', 'fuste', 'rama_leñosa', 'rama_delgada', 'follaje', 'flor', 'fruto'],
+            'Infraestructura': ['carretera_terracería', 'vivienda', 'lineas_de_luz', 'torre_eléctrica'],
+            'Cuerpo de agua': ['charco', 'cisterna', 'olla captación agua', 'represa'],
+            'Volando': ['volando'],
+            'Otro': ['Otro']
+        };
+
+        const tiposSustrato = Object.keys(sustratoMap);
+
+        // ---- VALORES POR DEFECTO DE SITIOS ----
+        const DEFAULT_SITIOS = {
+            municipios: ['Texcoco', 'Chapingo', 'Atenco', 'Chimalhuacán', 'Papantla', 'Chicontepec', 'Huatusco', 'La Españita'],
+            parcelas: ['PA-01', 'PA-02', 'PA-03', 'PA-04', 'PA-05'],
+            puntos: ['PT-01', 'PT-02', 'PT-03', 'PT-04']
+        };
+
         // ---- ESTADO GLOBAL ----
         const state = {
             conteoActivo: false,
@@ -994,7 +1053,16 @@
             },
             registros: [],
             grupoSeleccionado: null,
-            especieSeleccionada: null
+            especieSeleccionada: null,
+            sitios: {
+                municipios: [...DEFAULT_SITIOS.municipios],
+                parcelas: [...DEFAULT_SITIOS.parcelas],
+                puntos: [...DEFAULT_SITIOS.puntos]
+            },
+            sustratoSeleccionado: {
+                tipo: '',
+                especifico: ''
+            }
         };
 
         // ---- DOM REFS ----
@@ -1002,28 +1070,25 @@
 
         // ---- INICIALIZACIÓN ----
         function init() {
+            // Cargar sitios desde localStorage
+            cargarSitios();
+
             const ahora = new Date();
             $('fecha').value = ahora.toISOString().slice(0,10);
             $('hora_inicio').value = ahora.toTimeString().slice(0,5);
 
-            setupButtonGroup('grupo-municipio', 'municipio_otro');
-            setupButtonGroup('grupo-parcela', 'parcela_otro');
-            setupButtonGroup('grupo-punto', 'punto_otro');
-            setupButtonGroup('grupo-sistema', 'sistema_otro');
-            setupButtonGroup('grupo-sexo', null);
-            setupButtonGroup('grupo-edad', null);
-            setupButtonGroup('grupo-sustrato_tipo', null);
-            setupButtonGroup('grupo-sustrato_esp', 'sustrato_esp_otro');
-            setupButtonGroup('grupo-forma', null);
-            setupButtonGroup('grupo-vertical', null);
-            setupButtonGroup('grupo-horizontal', null);
-            setupButtonGroup('grupo-comportamiento', null);
-            setupButtonGroup('grupo-alimento', null);
+            // Inicializar componentes
+            inicializarGruposSitio();
+            inicializarSelectorEspecies();
+            inicializarSustratoAccordion();
+            inicializarEditorSitios();
 
             setupCircleGroup('grupo-individuos', 'individuos_otro');
-
-            // Inicializar selector de especies
-            initSelectorEspecies();
+            setupButtonGroup('grupo-sexo', null);
+            setupButtonGroup('grupo-edad', null);
+            setupButtonGroup('grupo-comportamiento', null);
+            setupButtonGroup('grupo-alimento', null);
+            setupButtonGroup('grupo-sistema', 'sistema_otro');
 
             // Pestañas
             initTabs();
@@ -1042,10 +1107,220 @@
             $('btn-finalizar-conteo').addEventListener('click', finalizarConteo);
             $('btn-exportar-csv').addEventListener('click', exportarCSV);
             $('btn-eliminar-todos').addEventListener('click', eliminarTodos);
+            $('btn-restaurar-sitios').addEventListener('click', restaurarSitios);
+            $('btn-exportar-sitios').addEventListener('click', exportarSitios);
+
+            // Eventos para el editor de sitios
+            $('btn-add-municipio').addEventListener('click', () => agregarItem('municipios', 'nuevo-municipio'));
+            $('btn-add-parcela').addEventListener('click', () => agregarItem('parcelas', 'nueva-parcela'));
+            $('btn-add-punto').addEventListener('click', () => agregarItem('puntos', 'nuevo-punto'));
+
+            // Enter en campos del editor
+            ['nuevo-municipio', 'nueva-parcela', 'nuevo-punto'].forEach(id => {
+                $(id).addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const tipo = id.replace('nuevo-', '') + 's';
+                        agregarItem(tipo, id);
+                    }
+                });
+            });
+        }
+
+        // ---- GESTIÓN DE SITIOS ----
+        function cargarSitios() {
+            try {
+                const stored = localStorage.getItem('avistapp_sitios');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    state.sitios.municipios = parsed.municipios || DEFAULT_SITIOS.municipios;
+                    state.sitios.parcelas = parsed.parcelas || DEFAULT_SITIOS.parcelas;
+                    state.sitios.puntos = parsed.puntos || DEFAULT_SITIOS.puntos;
+                }
+            } catch(e) {
+                // Si hay error, usar defaults
+                state.sitios = {
+                    municipios: [...DEFAULT_SITIOS.municipios],
+                    parcelas: [...DEFAULT_SITIOS.parcelas],
+                    puntos: [...DEFAULT_SITIOS.puntos]
+                };
+            }
+            guardarSitios();
+        }
+
+        function guardarSitios() {
+            localStorage.setItem('avistapp_sitios', JSON.stringify(state.sitios));
+            // Actualizar botones de sitios en configuración
+            inicializarGruposSitio();
+            renderizarEditorSitios();
+        }
+
+        function inicializarGruposSitio() {
+            // Municipios
+            const containerMun = $('grupo-municipio');
+            containerMun.innerHTML = '';
+            state.sitios.municipios.forEach((nombre, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'opt-btn';
+                btn.dataset.value = nombre;
+                btn.textContent = nombre;
+                containerMun.appendChild(btn);
+            });
+            // Botón "Otro"
+            const btnOtro = document.createElement('button');
+            btnOtro.type = 'button';
+            btnOtro.className = 'opt-btn';
+            btnOtro.dataset.value = 'otro';
+            btnOtro.textContent = '➕ Otro';
+            containerMun.appendChild(btnOtro);
+            const inputMun = document.createElement('input');
+            inputMun.type = 'text';
+            inputMun.id = 'municipio_otro';
+            inputMun.className = 'inline-input inline-input-sm';
+            inputMun.placeholder = 'Nombre';
+            inputMun.style.display = 'none';
+            inputMun.style.marginTop = '4px';
+            inputMun.style.width = '100%';
+            containerMun.appendChild(inputMun);
+            setupButtonGroup('grupo-municipio', 'municipio_otro');
+
+            // Parcelas
+            const containerPar = $('grupo-parcela');
+            containerPar.innerHTML = '';
+            state.sitios.parcelas.forEach((nombre, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'opt-btn';
+                btn.dataset.value = nombre;
+                btn.textContent = nombre;
+                containerPar.appendChild(btn);
+            });
+            const btnOtroPar = document.createElement('button');
+            btnOtroPar.type = 'button';
+            btnOtroPar.className = 'opt-btn';
+            btnOtroPar.dataset.value = 'otro';
+            btnOtroPar.textContent = '➕ Otro';
+            containerPar.appendChild(btnOtroPar);
+            const inputPar = document.createElement('input');
+            inputPar.type = 'text';
+            inputPar.id = 'parcela_otro';
+            inputPar.className = 'inline-input inline-input-sm';
+            inputPar.placeholder = 'Nombre';
+            inputPar.style.display = 'none';
+            inputPar.style.marginTop = '4px';
+            inputPar.style.width = '100%';
+            containerPar.appendChild(inputPar);
+            setupButtonGroup('grupo-parcela', 'parcela_otro');
+
+            // Puntos
+            const containerPto = $('grupo-punto');
+            containerPto.innerHTML = '';
+            state.sitios.puntos.forEach((nombre, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'opt-btn';
+                btn.dataset.value = nombre;
+                btn.textContent = nombre;
+                containerPto.appendChild(btn);
+            });
+            const btnOtroPto = document.createElement('button');
+            btnOtroPto.type = 'button';
+            btnOtroPto.className = 'opt-btn';
+            btnOtroPto.dataset.value = 'otro';
+            btnOtroPto.textContent = '➕ Otro';
+            containerPto.appendChild(btnOtroPto);
+            const inputPto = document.createElement('input');
+            inputPto.type = 'text';
+            inputPto.id = 'punto_otro';
+            inputPto.className = 'inline-input inline-input-sm';
+            inputPto.placeholder = 'Nombre';
+            inputPto.style.display = 'none';
+            inputPto.style.marginTop = '4px';
+            inputPto.style.width = '100%';
+            containerPto.appendChild(inputPto);
+            setupButtonGroup('grupo-punto', 'punto_otro');
+        }
+
+        function renderizarEditorSitios() {
+            renderizarListaEditor('lista-municipios', state.sitios.municipios, 'municipios');
+            renderizarListaEditor('lista-parcelas', state.sitios.parcelas, 'parcelas');
+            renderizarListaEditor('lista-puntos', state.sitios.puntos, 'puntos');
+        }
+
+        function renderizarListaEditor(containerId, items, tipo) {
+            const container = $(containerId);
+            container.innerHTML = '';
+            items.forEach((nombre, idx) => {
+                const div = document.createElement('div');
+                div.className = 'edit-item';
+                div.innerHTML = `
+                    <span class="item-text">${nombre}</span>
+                    <button class="btn-sm btn-edit" data-tipo="${tipo}" data-index="${idx}">✏️</button>
+                    <button class="btn-sm btn-delete" data-tipo="${tipo}" data-index="${idx}">✕</button>
+                `;
+                container.appendChild(div);
+            });
+
+            // Eventos para editar y eliminar
+            container.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tipo = this.dataset.tipo;
+                    const idx = parseInt(this.dataset.index);
+                    const items = state.sitios[tipo];
+                    const nuevo = prompt(`Editar ${tipo.slice(0,-1)}:`, items[idx]);
+                    if (nuevo && nuevo.trim() !== '') {
+                        items[idx] = nuevo.trim();
+                        guardarSitios();
+                    }
+                });
+            });
+
+            container.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tipo = this.dataset.tipo;
+                    const idx = parseInt(this.dataset.index);
+                    if (confirm(`¿Eliminar "${state.sitios[tipo][idx]}"?`)) {
+                        state.sitios[tipo].splice(idx, 1);
+                        guardarSitios();
+                    }
+                });
+            });
+        }
+
+        function agregarItem(tipo, inputId) {
+            const input = $(inputId);
+            const valor = input.value.trim();
+            if (!valor) { alert('Ingrese un nombre'); return; }
+            if (state.sitios[tipo].includes(valor)) {
+                alert('Este nombre ya existe');
+                return;
+            }
+            state.sitios[tipo].push(valor);
+            input.value = '';
+            guardarSitios();
+        }
+
+        function restaurarSitios() {
+            if (!confirm('¿Restaurar sitios a los valores por defecto?')) return;
+            state.sitios.municipios = [...DEFAULT_SITIOS.municipios];
+            state.sitios.parcelas = [...DEFAULT_SITIOS.parcelas];
+            state.sitios.puntos = [...DEFAULT_SITIOS.puntos];
+            guardarSitios();
+        }
+
+        function exportarSitios() {
+            const data = JSON.stringify(state.sitios, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `sitios_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+            URL.revokeObjectURL(link.href);
         }
 
         // ---- SELECTOR VISUAL DE ESPECIES ----
-        function initSelectorEspecies() {
+        function inicializarSelectorEspecies() {
             const grid = $('grupo-grid');
             grid.innerHTML = '';
             gruposList.forEach(grupo => {
@@ -1087,7 +1362,6 @@
                 b.classList.toggle('selected', b.dataset.grupo === grupoId);
             });
 
-            // Mostrar especies del grupo
             const especies = especiesDB[grupoId] || [];
             const grid = $('especie-grid');
             grid.innerHTML = '';
@@ -1119,7 +1393,6 @@
             state.especieSeleccionada = especie;
             $('especie-grid').querySelectorAll('.especie-btn').forEach(b => b.classList.remove('selected'));
 
-            // Mostrar selección
             $('especie-seleccionada-foto').textContent = especie.emoji || '🐦';
             $('especie-seleccionada-nombre').textContent = especie.nombre_comun;
             $('especie-seleccionada-cientifico').textContent = especie.cientifico;
@@ -1128,13 +1401,10 @@
             $('especie-cientifico').value = especie.cientifico;
 
             $('especie-seleccionada').classList.remove('hidden');
-
-            // Ocultar el paso de especies
             $('paso-especies').classList.add('hidden');
         }
 
         function seleccionarEspecieManual(tipo) {
-            // Para "otro" o "no listado"
             const nombre = prompt('Ingrese el nombre común de la especie:');
             if (!nombre) return;
             const cientifico = prompt('Ingrese el nombre científico (opcional):') || 'No determinado';
@@ -1158,6 +1428,105 @@
             $('especie-codigo').value = '';
             $('especie-nombre_comun').value = '';
             $('especie-cientifico').value = '';
+        }
+
+        // ---- SUSTRATO CON ACORDEÓN ----
+        function inicializarSustratoAccordion() {
+            const container = $('sustrato-accordion-container');
+            container.innerHTML = '';
+
+            tiposSustrato.forEach(tipo => {
+                const accordion = document.createElement('div');
+                accordion.className = 'accordion';
+
+                const header = document.createElement('div');
+                header.className = 'accordion-header';
+                header.innerHTML = `<span>${tipo}</span><span class="arrow">▼</span>`;
+                header.dataset.tipo = tipo;
+
+                const body = document.createElement('div');
+                body.className = 'accordion-body';
+
+                const opciones = sustratoMap[tipo];
+                opciones.forEach(esp => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'opt-btn';
+                    btn.dataset.value = esp;
+                    btn.textContent = esp;
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const parentBody = this.closest('.accordion-body');
+                        parentBody.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+                        this.classList.add('selected');
+                        state.sustratoSeleccionado.tipo = tipo;
+                        state.sustratoSeleccionado.especifico = this.dataset.value;
+
+                        // Actualizar también el campo "sustrato_esp" del registro
+                        const hiddenInput = document.getElementById('sustrato_esp_otro');
+                        if (hiddenInput) {
+                            hiddenInput.value = this.dataset.value;
+                        }
+                    });
+                    body.appendChild(btn);
+                });
+
+                header.addEventListener('click', function() {
+                    const isOpen = body.classList.toggle('open');
+                    this.classList.toggle('open', isOpen);
+                    // Cerrar otros acordeones
+                    container.querySelectorAll('.accordion-body').forEach(b => {
+                        if (b !== body) b.classList.remove('open');
+                    });
+                    container.querySelectorAll('.accordion-header').forEach(h => {
+                        if (h !== this) h.classList.remove('open');
+                    });
+                });
+
+                accordion.appendChild(header);
+                accordion.appendChild(body);
+                container.appendChild(accordion);
+            });
+
+            // Input oculto para "Otro" en sustrato específico
+            const inputOtro = document.createElement('input');
+            inputOtro.type = 'text';
+            inputOtro.id = 'sustrato_esp_otro';
+            inputOtro.className = 'inline-input inline-input-sm';
+            inputOtro.placeholder = 'Especifique';
+            inputOtro.style.display = 'none';
+            inputOtro.style.marginTop = '4px';
+            inputOtro.style.width = '100%';
+            container.appendChild(inputOtro);
+
+            // Para capturar "Otro" en el acordeón
+            // Modificar el último elemento del array "Otro" para mostrar input
+            const otroAccordion = container.querySelector('.accordion:last-child');
+            if (otroAccordion) {
+                const otroBody = otroAccordion.querySelector('.accordion-body');
+                const btnOtro = otroBody.querySelector('.opt-btn:last-child');
+                if (btnOtro && btnOtro.dataset.value === 'Otro') {
+                    btnOtro.addEventListener('click', function() {
+                        const input = document.getElementById('sustrato_esp_otro');
+                        if (input) {
+                            input.style.display = 'inline-block';
+                            input.focus();
+                            state.sustratoSeleccionado.tipo = 'Otro';
+                            state.sustratoSeleccionado.especifico = '';
+                        }
+                    });
+                }
+            }
+
+            // Escuchar input de "Otro"
+            const inputOtroListener = document.getElementById('sustrato_esp_otro');
+            if (inputOtroListener) {
+                inputOtroListener.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        state.sustratoSeleccionado.especifico = this.value.trim();
+                    }
+                });
+            }
         }
 
         // ---- FUNCIONES DE CONFIGURACIÓN DE BOTONES ----
@@ -1236,7 +1605,7 @@
         }
 
         // ---- FUNCIONES DE OBTENCIÓN DE VALORES ----
-        function getSelectedValue(groupId, inputId) {
+        function getSelectedText(groupId, inputId) {
             const container = document.getElementById(groupId);
             if (!container) return '';
             const selected = container.querySelector('.selected');
@@ -1258,7 +1627,7 @@
             return '';
         }
 
-        function getSelectedCircle(groupId, inputId) {
+        function getSelectedCircleText(groupId, inputId) {
             const container = document.getElementById(groupId);
             if (!container) return '';
             const selected = container.querySelector('.circle.selected');
@@ -1283,8 +1652,8 @@
         function getCheckboxValue(idSi, idNo) {
             const si = document.getElementById(idSi);
             const no = document.getElementById(idNo);
-            if (si.checked) return '1';
-            if (no.checked) return '0';
+            if (si.checked) return 'Sí';
+            if (no.checked) return 'No';
             return '';
         }
 
@@ -1300,10 +1669,10 @@
             state.config.fecha = fecha;
             state.config.duracion = duracion;
             state.config.horaInicio = horaInicio;
-            state.config.municipio = getSelectedValue('grupo-municipio', 'municipio_otro');
-            state.config.parcela = getSelectedValue('grupo-parcela', 'parcela_otro');
-            state.config.punto = getSelectedValue('grupo-punto', 'punto_otro');
-            state.config.sistema = getSelectedValue('grupo-sistema', 'sistema_otro');
+            state.config.municipio = getSelectedText('grupo-municipio', 'municipio_otro');
+            state.config.parcela = getSelectedText('grupo-parcela', 'parcela_otro');
+            state.config.punto = getSelectedText('grupo-punto', 'punto_otro');
+            state.config.sistema = getSelectedText('grupo-sistema', 'sistema_otro');
 
             state.duracionTotal = duracion * 60;
             state.tiempoRestante = state.duracionTotal;
@@ -1311,9 +1680,11 @@
             $('timer-container').style.display = 'block';
             $('btn-iniciar-conteo').style.display = 'none';
 
+            const sitioStr = `${state.config.parcela || '--'} · ${state.config.punto || '--'} · ${state.config.sistema || '--'}`;
             $('registro-fecha-hora').textContent = `Fecha: ${fecha} · Hora inicio: ${horaInicio}`;
-            $('registro-sitio').textContent = `${state.config.parcela || '--'} · ${state.config.punto || '--'} · ${state.config.sistema || '--'}`;
+            $('registro-sitio').textContent = sitioStr;
 
+            // Cambiar a pestaña de registro
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelector('[data-tab="tab-registro"]').classList.add('active');
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -1376,22 +1747,44 @@
             $('timer-display').classList.add('urgent');
             $('btn-detener-alarma').style.display = 'block';
 
-            if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 500]);
+            // Vibración
+            if (navigator.vibrate) navigator.vibrate([500, 300, 500, 300, 1000]);
 
+            // Sonido de 10 segundos (tres tonos largos)
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                for (let i = 0; i < 3; i++) {
+                const duracionAlarma = 10; // segundos
+                const intervalos = [0, 2, 4, 6, 8];
+                intervalos.forEach(t => {
                     setTimeout(() => {
                         const osc = ctx.createOscillator();
                         const gain = ctx.createGain();
                         osc.connect(gain);
                         gain.connect(ctx.destination);
-                        osc.frequency.value = 800;
+                        osc.frequency.value = 600;
                         gain.gain.value = 0.3;
                         osc.start();
-                        setTimeout(() => osc.stop(), 300);
-                    }, i * 500);
-                }
+                        setTimeout(() => {
+                            osc.stop();
+                            // Segunda nota más aguda
+                            const osc2 = ctx.createOscillator();
+                            const gain2 = ctx.createGain();
+                            osc2.connect(gain2);
+                            gain2.connect(ctx.destination);
+                            osc2.frequency.value = 800;
+                            gain2.gain.value = 0.2;
+                            osc2.start();
+                            setTimeout(() => osc2.stop(), 300);
+                        }, 400);
+                    }, t * 1000);
+                });
+                // Silencio final
+                setTimeout(() => {
+                    if (state.alarmaSonando) {
+                        // Repetir ciclo si no se detiene
+                        if (state.alarmaSonando) sonarAlarma();
+                    }
+                }, 10000);
             } catch(e) {}
 
             if ('Notification' in window && Notification.permission === 'granted') {
@@ -1415,6 +1808,7 @@
                 state.timerInterval = null;
             }
             state.conteoActivo = false;
+            state.alarmaSonando = false;
             $('timer-container').style.display = 'none';
             $('btn-iniciar-conteo').style.display = 'block';
             $('btn-detener-alarma').style.display = 'none';
@@ -1490,13 +1884,14 @@
                 return;
             }
 
-            const codigo = $('especie-codigo').value || $('reg-codigo')?.value || '';
+            const codigo = $('especie-codigo').value || '';
             const nombreComun = $('especie-nombre_comun').value || '';
             if (!codigo && !nombreComun) {
                 alert('⚠️ Seleccione una especie usando el selector visual');
                 return;
             }
 
+            // Calcular minuto
             let minuto = 0;
             if (state.config.horaInicio) {
                 const ahora = new Date();
@@ -1508,6 +1903,16 @@
                 if (minuto < 1) minuto = 1;
             }
 
+            // Obtener texto de sustrato específico desde el acordeón
+            let sustratoEsp = state.sustratoSeleccionado.especifico || '';
+            if (!sustratoEsp) {
+                // Intentar obtener del input "Otro"
+                const inputOtro = document.getElementById('sustrato_esp_otro');
+                if (inputOtro && inputOtro.style.display !== 'none' && inputOtro.value.trim() !== '') {
+                    sustratoEsp = inputOtro.value.trim();
+                }
+            }
+
             const registro = {
                 id: Date.now(),
                 fecha: state.config.fecha,
@@ -1517,34 +1922,33 @@
                 parcela: state.config.parcela,
                 punto: state.config.punto,
                 sistema: state.config.sistema,
-                lat: state.config.lat,
-                lon: state.config.lon,
+                lat: state.config.lat || '',
+                lon: state.config.lon || '',
                 codigo: codigo,
                 nombre_comun: nombreComun || $('reg-nombre_comun')?.value || '',
                 cientifico: $('especie-cientifico').value || '',
-                individuos: getSelectedCircle('grupo-individuos', 'individuos_otro'),
+                individuos: getSelectedCircleText('grupo-individuos', 'individuos_otro'),
                 distancia: $('reg-distancia')?.value || '',
                 altura: $('reg-altura')?.value || '',
-                sexo: getSelectedValue('grupo-sexo', null),
-                edad: getSelectedValue('grupo-edad', null),
-                sustrato_tipo: getSelectedValue('grupo-sustrato_tipo', null),
-                sustrato_esp: getSelectedValue('grupo-sustrato_esp', 'sustrato_esp_otro'),
-                forma: getSelectedValue('grupo-forma', null),
-                vertical: getSelectedValue('grupo-vertical', null),
-                horizontal: getSelectedValue('grupo-horizontal', null),
-                comportamiento: getSelectedValue('grupo-comportamiento', null),
+                sexo: getSelectedText('grupo-sexo', null),
+                edad: getSelectedText('grupo-edad', null),
+                sustrato_tipo: state.sustratoSeleccionado.tipo || '',
+                sustrato_esp: sustratoEsp,
+                forma: getSelectedText('grupo-forma', null),
+                vertical: getSelectedText('grupo-vertical', null),
+                horizontal: getSelectedText('grupo-horizontal', null),
+                comportamiento: getSelectedText('grupo-comportamiento', null),
                 alimento: (() => {
-                    const val = getSelectedValue('grupo-alimento', null);
-                    if (val === '6') {
+                    const val = getSelectedText('grupo-alimento', null);
+                    if (val === 'Otro') {
                         const otro = document.getElementById('alimento_otro');
-                        return otro ? otro.value.trim() || '6' : '6';
+                        return otro ? otro.value.trim() || 'Otro' : 'Otro';
                     }
                     return val;
                 })(),
                 especie_vegetal: $('reg-especie_vegetal')?.value || '',
-                verificado: getCheckboxValue('reg-verificado_si', 'reg-verificado_no'),
-                foto: state.fotoData || '',
-                notas: $('reg-notas')?.value || ''
+                notas: $('reg-notas')?.value || '',
+                foto: state.fotoData || ''
             };
 
             let registros = obtenerRegistros();
@@ -1555,6 +1959,9 @@
             mostrarMensaje('✅ Registro guardado', 'ok');
             actualizarContadores();
             limpiarRegistro();
+
+            // Scroll al inicio del formulario de registro
+            document.getElementById('tab-registro').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function limpiarRegistro() {
@@ -1566,12 +1973,17 @@
                 if (el) el.value = '';
             });
 
-            ['individuos_otro', 'sustrato_esp_otro', 'alimento_otro'].forEach(id => {
+            ['individuos_otro', 'alimento_otro', 'sustrato_esp_otro'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) { el.value = ''; el.style.display = 'none'; }
             });
 
-            document.querySelectorAll('#tab-registro input[type="checkbox"]').forEach(cb => cb.checked = false);
+            // Limpiar acordeón de sustrato
+            document.querySelectorAll('#sustrato-accordion-container .accordion-body .opt-btn').forEach(b => b.classList.remove('selected'));
+            document.querySelectorAll('#sustrato-accordion-container .accordion-body').forEach(b => b.classList.remove('open'));
+            document.querySelectorAll('#sustrato-accordion-container .accordion-header').forEach(h => h.classList.remove('open'));
+            state.sustratoSeleccionado = { tipo: '', especifico: '' };
+
             quitarFoto();
             limpiarEspecieSeleccionada();
             mostrarPaso('grupos');
@@ -1674,7 +2086,7 @@
                 'lat','lon','codigo','nombre_comun','cientifico','individuos','distancia','altura',
                 'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
                 'horizontal','comportamiento','alimento','especie_vegetal',
-                'verificado','notas','foto'
+                'notas','foto'
             ];
 
             let csv = columnas.join(',') + '\n';
@@ -1692,13 +2104,12 @@
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            link.href = url;
-            link.setAttribute('download', `avistamientos_${new Date().toISOString().slice(0,10)}.csv`);
+            link.href = URL.createObjectURL(blob);
+            link.download = `avistamientos_${new Date().toISOString().slice(0,10)}.csv`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+            URL.revokeObjectURL(link.href);
             mostrarMensaje('📤 CSV exportado', 'ok');
         }
 
@@ -1708,6 +2119,7 @@
             const contents = {
                 'tab-config': document.getElementById('tab-config'),
                 'tab-registro': document.getElementById('tab-registro'),
+                'tab-sitios': document.getElementById('tab-sitios'),
                 'tab-registros': document.getElementById('tab-registros')
             };
 
@@ -1719,8 +2131,9 @@
                     Object.keys(contents).forEach(key => {
                         contents[key].classList.toggle('active', key === target);
                     });
-                    if (target === 'tab-registros') {
-                        actualizarContadores();
+                    if (target === 'tab-registros' || target === 'tab-sitios') {
+                        if (target === 'tab-sitios') renderizarEditorSitios();
+                        if (target === 'tab-registros') actualizarContadores();
                     }
                 });
             });
