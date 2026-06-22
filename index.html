@@ -638,7 +638,7 @@
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAB 1: CONFIGURACIÓN (NUEVO ORDEN) -->
+    <!-- TAB 1: CONFIGURACIÓN -->
     <!-- ========================================================= -->
     <div id="tab-config" class="tab-content active">
 
@@ -693,7 +693,7 @@
             </div>
         </div>
 
-        <!-- 4. DATOS DE INEGI (en orden: Altitud punto, Localidad, Altitud localidad, Municipio, Estado) -->
+        <!-- 4. DATOS DE INEGI -->
         <div class="section">
             <div class="section-title">📍 DATOS DEL SITIO (INEGI)</div>
             <div class="row">
@@ -766,7 +766,7 @@
             <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
         </div>
 
-        <!-- Temporizador (se muestra al iniciar) -->
+        <!-- Temporizador -->
         <div id="timer-container" style="display:none; margin-top:12px;">
             <div class="timer-display" id="timer-display">10:00</div>
             <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
@@ -889,7 +889,7 @@
             </div>
         </div>
 
-        <!-- SUSTRATO (con selects dinámicos) -->
+        <!-- SUSTRATO -->
         <div class="section">
             <div class="section-title">🌿 SUSTRATO</div>
             <div class="row">
@@ -1120,7 +1120,7 @@
             timerInterval: null,
             alarmaSonando: false,
             fotoData: null,
-            gps: { lat: null, lon: null, accuracy: null },
+            gps: { lat: null, lon: null, accuracy: null, altitude: null },
             inegiData: null,
             ultimaLocalidad: null,
             especieSeleccionada: null,
@@ -1317,45 +1317,80 @@
         }
 
         // ===================================================================
-        // 5. INEGI
+        // 5. INEGI (con mensajes de depuración)
         // ===================================================================
 
         async function cargarINEGI() {
             try {
+                console.log('⏳ Intentando cargar inegi.json...');
                 const resp = await fetch('inegi.json');
-                if (!resp.ok) throw new Error('No se pudo cargar inegi.json');
+                if (!resp.ok) {
+                    console.error('❌ Error al cargar inegi.json:', resp.status, resp.statusText);
+                    throw new Error('No se pudo cargar inegi.json');
+                }
                 state.inegiData = await resp.json();
-                console.log('INEGI cargado');
+                console.log('✅ INEGI cargado correctamente. Número de estados:', Object.keys(state.inegiData).length);
+                // Mostrar un ejemplo de la estructura
+                const primerEstado = Object.keys(state.inegiData)[0];
+                console.log('📌 Estructura del JSON (primer estado):', primerEstado);
+                console.log('   Municipios en ese estado:', Object.keys(state.inegiData[primerEstado]).length);
+                const primerMunicipio = Object.keys(state.inegiData[primerEstado])[0];
+                console.log('   Primer municipio:', primerMunicipio);
+                console.log('   Número de localidades en ese municipio:', state.inegiData[primerEstado][primerMunicipio].length);
+                console.log('   Ejemplo de localidad:', state.inegiData[primerEstado][primerMunicipio][0]);
             } catch(e) {
-                console.warn('Error cargando INEGI:', e.message);
+                console.warn('❌ Error cargando INEGI:', e.message);
                 state.inegiData = null;
+                // Mostrar mensaje en la interfaz
+                document.querySelector('#tab-config .section:nth-child(4) .sitio-info')?.remove();
+                const section = document.querySelector('#tab-config .section:nth-child(4)');
+                if (section) {
+                    const msg = document.createElement('div');
+                    msg.className = 'sitio-info warning';
+                    msg.textContent = '⚠️ No se pudo cargar el archivo INEGI. Verifica que exista en el servidor.';
+                    section.appendChild(msg);
+                }
             }
         }
 
         function buscarLocalidadMasCercana(lat, lon) {
-            if (!state.inegiData) return null;
+            if (!state.inegiData) {
+                console.warn('⚠️ INEGI no cargado, no se puede buscar localidad.');
+                return null;
+            }
+            console.log('🔍 Buscando localidad más cercana a:', lat, lon);
             let mejor = null;
             let distMin = Infinity;
 
+            // Iterar sobre todos los estados y municipios
             for (const [estado, municipios] of Object.entries(state.inegiData)) {
                 for (const [municipio, localidades] of Object.entries(municipios)) {
                     for (const loc of localidades) {
-                        if (loc.lat == null || loc.lon == null) continue;
-                        const d = haversine(lat, lon, loc.lat, loc.lon);
+                        // Asegurar que tiene lat y lon
+                        const latLoc = parseFloat(loc.lat ?? loc.LAT_DECIMAL ?? loc.LATITUD);
+                        const lonLoc = parseFloat(loc.lon ?? loc.LON_DECIMAL ?? loc.LONGITUD);
+                        if (isNaN(latLoc) || isNaN(lonLoc)) continue;
+                        const d = haversine(lat, lon, latLoc, lonLoc);
                         if (d < distMin) {
                             distMin = d;
                             mejor = {
                                 estado: estado,
                                 municipio: municipio,
-                                localidad: loc.nombre,
-                                altitud: loc.altitud,
-                                poblacion: loc.poblacion,
-                                viviendas: loc.viviendas,
+                                localidad: loc.nombre ?? loc.NOM_LOC ?? loc.LOCALIDAD ?? 'Desconocida',
+                                altitud: loc.altitud ?? loc.ALTITUD ?? '',
+                                poblacion: loc.poblacion ?? loc.POB_TOTAL ?? '',
+                                viviendas: loc.viviendas ?? loc['TOTAL DE VIVIENDAS HABITADAS'] ?? '',
                                 distancia: d
                             };
                         }
                     }
                 }
+            }
+
+            if (mejor) {
+                console.log('✅ Localidad encontrada:', mejor.localidad, 'en', mejor.municipio, ',', mejor.estado, 'distancia:', Math.round(mejor.distancia), 'm');
+            } else {
+                console.warn('⚠️ No se encontró ninguna localidad cercana.');
             }
             return mejor;
         }
@@ -1377,7 +1412,9 @@
                     state.gps.lat = pos.coords.latitude;
                     state.gps.lon = pos.coords.longitude;
                     state.gps.accuracy = pos.coords.accuracy;
+                    state.gps.altitude = pos.coords.altitude; // altitud del GPS
 
+                    console.log('📍 GPS obtenido:', state.gps.lat, state.gps.lon);
                     $('gps-lat').textContent = state.gps.lat.toFixed(6);
                     $('gps-lon').textContent = state.gps.lon.toFixed(6);
                     $('gps-accuracy').textContent = state.gps.accuracy ? `±${Math.round(state.gps.accuracy)}m` : '--';
@@ -1385,15 +1422,21 @@
                     // Actualizar campos de INEGI
                     if (state.inegiData) {
                         const lugar = buscarLocalidadMasCercana(state.gps.lat, state.gps.lon);
-                        if (lugar && lugar.distancia < 10000) {
-                            // Altitud del punto (usar la del GPS si está disponible, sino la de INEGI)
-                            const altPunto = pos.coords.altitude ? Math.round(pos.coords.altitude) : (lugar.altitud || '--');
+                        if (lugar) {
+                            // Altitud del punto: usar la del GPS si está disponible, sino la de INEGI
+                            const altPunto = state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || '--');
                             $('altitud_punto').value = altPunto;
-                            $('localidad_auto').value = lugar.localidad || '--';
+                            $('localidad_auto').value = lugar.localidad;
                             $('altitud_localidad').value = lugar.altitud || '--';
-                            $('municipio_auto').value = lugar.municipio || '--';
-                            $('estado_auto').value = lugar.estado || '--';
+                            $('municipio_auto').value = lugar.municipio;
+                            $('estado_auto').value = lugar.estado;
                             state.ultimaLocalidad = lugar;
+                            // Mostrar mensaje de éxito
+                            const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
+                            if (info) {
+                                info.textContent = `✅ Localidad encontrada: ${lugar.localidad} (${Math.round(lugar.distancia)}m)`;
+                                info.className = 'sitio-info';
+                            }
                         } else {
                             $('altitud_punto').value = '--';
                             $('localidad_auto').value = '--';
@@ -1401,6 +1444,18 @@
                             $('municipio_auto').value = '--';
                             $('estado_auto').value = '--';
                             state.ultimaLocalidad = null;
+                            const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
+                            if (info) {
+                                info.textContent = '⚠️ No se encontró localidad cercana.';
+                                info.className = 'sitio-info warning';
+                            }
+                        }
+                    } else {
+                        console.warn('⚠️ INEGI no cargado, no se pueden autocompletar los datos.');
+                        const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
+                        if (info) {
+                            info.textContent = '⚠️ INEGI no cargado. Verifica la conexión.';
+                            info.className = 'sitio-info warning';
                         }
                     }
 
@@ -2337,6 +2392,7 @@
         // ===================================================================
 
         async function init() {
+            console.log('🚀 Iniciando AvistaR v9...');
             cargarDatos();
             await cargarINEGI();
 
