@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
+        /* ===== RESET Y ESTILOS GLOBALES ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -54,21 +55,18 @@
             background: #d5dce4;
             border-radius: 40px;
             padding: 4px;
-            flex-wrap: wrap;
         }
         .tab-btn {
-            flex: 1 1 auto;
+            flex: 1;
             border: none;
             background: transparent;
-            padding: 10px 12px;
+            padding: 10px 0;
             border-radius: 30px;
             font-weight: 600;
             font-size: 13px;
             color: #2c3e50;
             transition: 0.2s;
             cursor: pointer;
-            text-align: center;
-            min-width: 70px;
         }
         .tab-btn.active {
             background: #013366;
@@ -120,6 +118,7 @@
             min-width: 75px;
         }
 
+        /* ===== BOTONES Y CÍRCULOS ===== */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -232,6 +231,8 @@
             resize: vertical;
             margin-top: 4px;
         }
+
+        /* ===== BOTONES PRINCIPALES ===== */
         .btn-primary {
             background: #013366;
             color: white;
@@ -267,6 +268,11 @@
         .btn-success:active {
             transform: scale(0.97);
             background: #1e8449;
+        }
+        .btn-success:disabled {
+            background: #95a5a6;
+            box-shadow: none;
+            cursor: not-allowed;
         }
         .btn-warning {
             background: #f39c12;
@@ -345,6 +351,7 @@
             margin-top: 12px;
         }
 
+        /* ===== TABLA DE REGISTROS ===== */
         .registros-container {
             overflow-x: auto;
         }
@@ -385,6 +392,7 @@
             font-size: 15px;
         }
 
+        /* ===== TEMPORIZADOR ===== */
         .timer-display {
             font-size: 28px;
             font-weight: 700;
@@ -405,6 +413,7 @@
             50% { opacity: 0.5; }
         }
 
+        /* ===== FOTO ===== */
         .photo-preview {
             max-width: 100%;
             max-height: 150px;
@@ -413,7 +422,7 @@
             border: 1px solid #ddd;
         }
 
-        /* === Selector visual de especies === */
+        /* ===== SELECTOR VISUAL DE ESPECIES ===== */
         .grupo-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -505,44 +514,80 @@
             transform: scale(0.95);
         }
 
-        /* === Acordeón para Sustrato === */
-        .accordion {
-            border: 1px solid #d0d9e3;
-            border-radius: 10px;
-            margin-bottom: 6px;
-            overflow: hidden;
-        }
-        .accordion-header {
-            background: #f5f8fb;
-            padding: 12px 14px;
-            font-weight: 600;
-            cursor: pointer;
+        /* ===== RADAR ===== */
+        .radar-container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            user-select: none;
-            transition: 0.15s;
+            margin: 8px 0 4px 0;
+            background: #f5f8fb;
+            border-radius: 16px;
+            padding: 12px 8px;
+            border: 1px solid #d0d9e3;
         }
-        .accordion-header:active {
+        .radar-container canvas {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            aspect-ratio: 1/1;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #bcc9d6;
+            touch-action: none;
+        }
+        .radar-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 350px;
+            margin-top: 6px;
+        }
+        .radar-controls input[type="range"] {
+            flex: 1;
+            accent-color: #013366;
+        }
+        .radar-controls .scale-label {
+            font-weight: 600;
+            color: #013366;
+            font-size: 14px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .radar-legend {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #555;
+            margin-top: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .radar-legend .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .dot-red { background: #c0392b; }
+        .dot-blue { background: #2c3e50; }
+        .dot-green { background: #27ae60; }
+
+        .sitio-info {
+            font-size: 13px;
+            color: #1f3a57;
             background: #e8edf3;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 4px;
+            text-align: center;
+            width: 100%;
         }
-        .accordion-header .arrow {
-            transition: transform 0.2s;
-        }
-        .accordion-header.open .arrow {
-            transform: rotate(180deg);
-        }
-        .accordion-body {
-            padding: 4px 10px 10px;
-            display: none;
-            background: #fafcff;
-        }
-        .accordion-body.open {
-            display: block;
-        }
-        .accordion-body .opt-btn {
-            margin: 4px 0;
-            flex: 1 1 100%;
+        .sitio-info.warning {
+            background: #fdebd0;
+            color: #c0392b;
+            border: 1px solid #c0392b;
         }
 
         .hidden {
@@ -556,43 +601,6 @@
         .text-center { text-align: center; }
         .text-small { font-size: 13px; }
 
-        /* Editor de sitios */
-        .edit-item {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 4px;
-            flex-wrap: wrap;
-        }
-        .edit-item .item-text {
-            flex: 1;
-            font-weight: 500;
-            padding: 4px 8px;
-            background: #f5f8fb;
-            border-radius: 6px;
-            min-width: 100px;
-        }
-        .edit-item .btn-sm {
-            padding: 4px 12px;
-            font-size: 12px;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .edit-item .btn-edit {
-            background: #f39c12;
-            color: white;
-        }
-        .edit-item .btn-delete {
-            background: #c0392b;
-            color: white;
-        }
-        .edit-item .btn-save {
-            background: #27ae60;
-            color: white;
-        }
-
         @media (max-width: 500px) {
             .app { padding: 10px 6px; }
             .btn-group .opt-btn { font-size: 13px; padding: 12px 8px; }
@@ -604,7 +612,6 @@
             .grupo-grid { grid-template-columns: repeat(5, 1fr); }
             .especie-grid { grid-template-columns: repeat(2, 1fr); }
             .especie-grid .especie-btn .foto-placeholder { width: 60px; height: 60px; font-size: 24px; }
-            .tabs .tab-btn { font-size: 12px; padding: 8px 8px; min-width: 50px; }
         }
         @media (max-width: 380px) {
             .grupo-grid { grid-template-columns: repeat(4, 1fr); }
@@ -617,21 +624,37 @@
 <div class="app" id="app">
     <div class="flex-between">
         <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">conteo</span></h1>
-        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v6</span>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v7</span>
     </div>
-    <div class="subhead">Seleccione el ave por imagen · Sitios editables</div>
+    <div class="subhead">Seleccione ruta · Radar de sitios · Conteo de aves</div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-config">⚙️ Configurar</button>
         <button class="tab-btn" data-tab="tab-registro" id="tab-registro-btn">📝 Registrar <span id="contador-badge" class="badge-count">0</span></button>
-        <button class="tab-btn" data-tab="tab-sitios">📋 Sitios</button>
-        <button class="tab-btn" data-tab="tab-registros">📊 Registros</button>
+        <button class="tab-btn" data-tab="tab-registros">📋 Registros</button>
     </div>
 
     <!-- ========================================================= -->
     <!-- TAB 1: CONFIGURACIÓN -->
     <!-- ========================================================= -->
     <div id="tab-config" class="tab-content active">
+        <!-- RUTAS -->
+        <div class="section">
+            <div class="section-title">🗺️ RUTA DE MUESTREO</div>
+            <div class="row">
+                <span class="label">Ruta activa:</span>
+                <select id="selector-ruta" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+                <button id="btn-crear-ruta" class="btn-secondary" style="flex:0 0 auto; padding:8px 14px;">➕ Nueva</button>
+                <button id="btn-eliminar-ruta" class="btn-danger" style="flex:0 0 auto; padding:8px 14px;">✕</button>
+            </div>
+            <div id="info-ruta" class="sitio-info" style="margin-top:4px; display:none;">
+                <span id="ruta-nombre"></span> · <span id="ruta-municipio"></span>, <span id="ruta-estado"></span>
+            </div>
+        </div>
+
+        <!-- TIEMPO -->
         <div class="section">
             <div class="section-title">⏱️ CONFIGURACIÓN DEL PUNTO</div>
             <div class="row">
@@ -641,44 +664,55 @@
             <div class="row">
                 <span class="label">Hora inicio:</span>
                 <input type="time" id="hora_inicio" class="inline-input" style="min-width:100px;">
-                <span class="text-muted" style="margin-left:4px;">(se usará para calcular los minutos)</span>
+                <span class="text-muted" style="margin-left:4px;">(minuto automático)</span>
             </div>
             <div class="row">
                 <span class="label">Duración (min):</span>
                 <input type="number" id="duracion" class="inline-input" style="min-width:80px;" value="10" min="1" max="120">
                 <span class="text-muted">minutos</span>
             </div>
-
-            <div class="row" style="margin-top:8px; gap:8px;">
-                <button id="btn-iniciar-conteo" class="btn-success" style="flex:1;">▶️ Iniciar conteo</button>
-                <button id="btn-detener-alarma" class="btn-warning" style="flex:1; display:none;">🔕 Detener alarma</button>
-            </div>
-
-            <div id="timer-container" style="display:none;">
-                <div class="timer-display" id="timer-display">10:00</div>
-                <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
-            </div>
         </div>
 
+        <!-- SITIO (autocompletado por ruta o GPS) -->
         <div class="section">
             <div class="section-title">📍 SITIO</div>
             <div class="row">
+                <span class="label">Estado:</span>
+                <input type="text" id="estado_auto" class="inline-input inline-input-lg" placeholder="Automático" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+            </div>
+            <div class="row">
                 <span class="label">Municipio:</span>
-                <div class="btn-group" id="grupo-municipio">
-                    <!-- Los botones se generarán desde JavaScript con los datos de sitios -->
-                    <span class="text-muted">Cargando...</span>
-                </div>
+                <input type="text" id="municipio_auto" class="inline-input inline-input-lg" placeholder="Automático" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+            </div>
+            <div class="row">
+                <span class="label">Localidad:</span>
+                <input type="text" id="localidad_auto" class="inline-input inline-input-lg" placeholder="Automático" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
+            </div>
+            <div class="row">
+                <span class="label">Altitud (m):</span>
+                <input type="text" id="altitud_auto" class="inline-input inline-input-sm" placeholder="--" readonly style="background:#f0f4f8; color:#013366; font-weight:600;">
             </div>
             <div class="row">
                 <span class="label">Parcela:</span>
                 <div class="btn-group" id="grupo-parcela">
-                    <span class="text-muted">Cargando...</span>
+                    <button type="button" class="opt-btn" data-value="1">PA-01</button>
+                    <button type="button" class="opt-btn" data-value="2">PA-02</button>
+                    <button type="button" class="opt-btn" data-value="3">PA-03</button>
+                    <button type="button" class="opt-btn" data-value="4">PA-04</button>
+                    <button type="button" class="opt-btn" data-value="5">PA-05</button>
+                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
+                    <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
                 </div>
             </div>
             <div class="row">
                 <span class="label">Punto:</span>
                 <div class="btn-group" id="grupo-punto">
-                    <span class="text-muted">Cargando...</span>
+                    <button type="button" class="opt-btn" data-value="1">PT-01</button>
+                    <button type="button" class="opt-btn" data-value="2">PT-02</button>
+                    <button type="button" class="opt-btn" data-value="3">PT-03</button>
+                    <button type="button" class="opt-btn" data-value="4">PT-04</button>
+                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
+                    <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
                 </div>
             </div>
             <div class="row">
@@ -686,14 +720,13 @@
                 <div class="btn-group" id="grupo-sistema" style="flex-wrap: nowrap; gap:6px;">
                     <button type="button" class="opt-btn" data-value="1" style="flex:1 1 45%;">SAF</button>
                     <button type="button" class="opt-btn" data-value="2" style="flex:1 1 45%;">MIAF</button>
-                    <button type="button" class="opt-btn" data-value="otro" style="flex:0 0 auto; padding:10px 14px;">➕</button>
-                    <input type="text" id="sistema_otro" class="inline-input inline-input-sm" placeholder="Otro" style="display:none; flex:1 1 60%;">
                 </div>
             </div>
         </div>
 
+        <!-- GPS y RADAR -->
         <div class="section">
-            <div class="section-title">📡 UBICACIÓN</div>
+            <div class="section-title">📡 UBICACIÓN Y RADAR</div>
             <div class="row">
                 <button id="btn-gps" class="btn-secondary" style="width:100%; justify-content:center;">📍 Obtener ubicación GPS</button>
             </div>
@@ -707,6 +740,33 @@
                 <span class="label">Precisión:</span>
                 <span id="gps-accuracy" class="text-muted">--</span>
             </div>
+
+            <!-- RADAR -->
+            <div class="radar-container" id="radar-container">
+                <canvas id="radarCanvas" width="350" height="350"></canvas>
+                <div class="radar-controls">
+                    <span class="scale-label" id="radar-escala-label">500 m</span>
+                    <input type="range" id="radar-escala" min="100" max="2000" value="500" step="50">
+                    <span class="scale-label">Zoom</span>
+                </div>
+                <div class="radar-legend">
+                    <span><span class="dot dot-red"></span> Hoy (dentro de 350m)</span>
+                    <span><span class="dot dot-blue"></span> Hoy (fuera)</span>
+                    <span><span class="dot dot-green"></span> Días anteriores</span>
+                </div>
+                <div id="radar-info" class="sitio-info">📍 Esperando GPS...</div>
+            </div>
+        </div>
+
+        <!-- BOTÓN INICIAR (abajo) -->
+        <button id="btn-iniciar-conteo" class="btn-success" disabled style="margin-top:0;">▶️ Iniciar conteo</button>
+        <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
+
+        <!-- Temporizador oculto (se muestra al iniciar) -->
+        <div id="timer-container" style="display:none; margin-top:12px;">
+            <div class="timer-display" id="timer-display">10:00</div>
+            <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
+            <button id="btn-detener-alarma" class="btn-warning" style="display:none;">🔕 Detener alarma</button>
         </div>
     </div>
 
@@ -714,6 +774,7 @@
     <!-- TAB 2: REGISTRO DE AVISTAMIENTOS -->
     <!-- ========================================================= -->
     <div id="tab-registro" class="tab-content">
+        <!-- Barra de estado del conteo -->
         <div class="section" style="background:#e8edf3; border-color:#013366;">
             <div class="flex-between">
                 <span style="font-weight:600; font-size:14px; color:#013366;">
@@ -725,9 +786,10 @@
                 <span style="font-size:12px; color:#555;" id="registro-sitio">--</span>
             </div>
             <div style="font-size:12px; color:#555; margin-top:2px;" id="registro-fecha-hora">Fecha: -- · Hora inicio: --</div>
+            <div style="font-size:12px; color:#555;" id="registro-ruta">Ruta: --</div>
         </div>
 
-        <!-- Selector visual de especies -->
+        <!-- SELECTOR VISUAL DE ESPECIES -->
         <div class="section">
             <div class="section-title">🐦 IDENTIFICAR AVE</div>
             <div id="selector-especie">
@@ -741,7 +803,7 @@
                     <div class="especie-grid" id="especie-grid"></div>
                     <div style="display:flex; gap:8px; margin-top:6px;">
                         <button id="btn-volver-grupos" class="btn-secondary" style="flex:1; justify-content:center;">⬅ Volver</button>
-                        <button id="btn-especie-otro" class="opt-btn" style="flex:1; text-align:center;">➕ Otro</button>
+                        <button id="btn-especie-otro" class="opt-btn" style="flex:1; text-align:center;">➕ Otro / No listado</button>
                     </div>
                 </div>
                 <div id="especie-seleccionada" class="hidden" style="margin-top:8px; padding:10px; background:#e8edf3; border-radius:12px; border-left:4px solid #013366;">
@@ -760,7 +822,7 @@
             </div>
         </div>
 
-        <!-- Foto -->
+        <!-- FOTO -->
         <div class="section">
             <div class="section-title">📸 FOTO</div>
             <div class="row">
@@ -774,7 +836,7 @@
             </div>
         </div>
 
-        <!-- Datos del avistamiento -->
+        <!-- DATOS DEL AVISTAMIENTO -->
         <div class="section">
             <div class="section-title">🔎 DATOS DEL AVISTAMIENTO</div>
             <div class="row">
@@ -823,16 +885,62 @@
             </div>
         </div>
 
-        <!-- Sustrato con acordeón -->
+        <!-- SUSTRATO (con selects dinámicos) -->
         <div class="section">
             <div class="section-title">🌿 SUSTRATO</div>
-            <div id="sustrato-accordion-container">
-                <!-- Generado por JavaScript -->
-                <p class="text-muted">Cargando...</p>
+            <div class="row">
+                <span class="label">Tipo:</span>
+                <select id="sustrato_tipo" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">Seleccione...</option>
+                    <option value="Suelo">Suelo</option>
+                    <option value="Veg. muerta">Veg. muerta</option>
+                    <option value="Veg. viva">Veg. viva</option>
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Cuerpo de agua">Cuerpo de agua</option>
+                    <option value="Volando">Volando</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="row">
+                <span class="label">Específico:</span>
+                <select id="sustrato_esp" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">Primero seleccione un tipo</option>
+                </select>
+                <input type="text" id="sustrato_otro_texto" placeholder="Escriba el sustrato específico" style="display:none; margin-top:4px; width:100%; padding:8px 12px; border-radius:10px; border:2px solid #013366; font-size:16px;">
+            </div>
+            <div class="row">
+                <span class="label">Forma estructural:</span>
+                <div class="btn-group" id="grupo-forma">
+                    <button type="button" class="opt-btn" data-value="1">Herbácea</button>
+                    <button type="button" class="opt-btn" data-value="2">Arbustiva</button>
+                    <button type="button" class="opt-btn" data-value="3">Arbórea</button>
+                    <button type="button" class="opt-btn" data-value="4">No aplica</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Posición vertical:</span>
+                <div class="btn-group" id="grupo-vertical">
+                    <button type="button" class="opt-btn" data-value="1">Alto</button>
+                    <button type="button" class="opt-btn" data-value="2">Medio</button>
+                    <button type="button" class="opt-btn" data-value="3">Bajo</button>
+                    <button type="button" class="opt-btn" data-value="4">No aplica</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Posición horizontal:</span>
+                <div class="btn-group" id="grupo-horizontal">
+                    <button type="button" class="opt-btn" data-value="1">Interno</button>
+                    <button type="button" class="opt-btn" data-value="2">Externo</button>
+                    <button type="button" class="opt-btn" data-value="3">No aplica</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Especie vegetal:</span>
+                <input type="text" id="reg-especie_vegetal" class="inline-input inline-input-lg" placeholder="Código o nombre (opcional)">
             </div>
         </div>
 
-        <!-- Comportamiento -->
+        <!-- COMPORTAMIENTO Y ALIMENTO -->
         <div class="section">
             <div class="section-title">🧠 COMPORTAMIENTO</div>
             <div class="row">
@@ -865,9 +973,16 @@
             </div>
         </div>
 
-        <!-- Notas -->
+        <!-- FINAL -->
         <div class="section">
-            <div class="section-title">📝 NOTAS</div>
+            <div class="section-title">✅ FINAL</div>
+            <div class="row">
+                <span class="label">Verificado:</span>
+                <div class="checkbox-group">
+                    <div class="checkbox-item"><input type="checkbox" id="reg-verificado_si"> <label for="reg-verificado_si">Sí</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="reg-verificado_no"> <label for="reg-verificado_no">No</label></div>
+                </div>
+            </div>
             <div class="row" style="align-items:flex-start;">
                 <span class="label" style="margin-top:4px;">Notas:</span>
                 <textarea id="reg-notas" class="notas-area" placeholder="Observaciones, clima, comportamiento destacado..."></textarea>
@@ -887,47 +1002,7 @@
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAB 3: EDITOR DE SITIOS -->
-    <!-- ========================================================= -->
-    <div id="tab-sitios" class="tab-content">
-        <div class="section">
-            <div class="section-title">🏷️ MUNICIPIOS</div>
-            <div id="editor-municipios">
-                <div class="edit-item">
-                    <input type="text" id="nuevo-municipio" class="inline-input inline-input-full" placeholder="Nuevo municipio" style="max-width:none; flex:1;">
-                    <button id="btn-add-municipio" class="btn-sm btn-success">➕</button>
-                </div>
-                <div id="lista-municipios"></div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="section-title">📌 PARCELAS</div>
-            <div id="editor-parcelas">
-                <div class="edit-item">
-                    <input type="text" id="nueva-parcela" class="inline-input inline-input-full" placeholder="Nueva parcela" style="max-width:none; flex:1;">
-                    <button id="btn-add-parcela" class="btn-sm btn-success">➕</button>
-                </div>
-                <div id="lista-parcelas"></div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="section-title">📍 PUNTOS</div>
-            <div id="editor-puntos">
-                <div class="edit-item">
-                    <input type="text" id="nuevo-punto" class="inline-input inline-input-full" placeholder="Nuevo punto" style="max-width:none; flex:1;">
-                    <button id="btn-add-punto" class="btn-sm btn-success">➕</button>
-                </div>
-                <div id="lista-puntos"></div>
-            </div>
-        </div>
-        <div style="margin-top:12px; display:flex; gap:8px;">
-            <button id="btn-restaurar-sitios" class="btn-secondary" style="flex:1;">↩️ Restaurar valores por defecto</button>
-            <button id="btn-exportar-sitios" class="btn-secondary" style="flex:1;">📤 Exportar sitios</button>
-        </div>
-    </div>
-
-    <!-- ========================================================= -->
-    <!-- TAB 4: REGISTROS GUARDADOS -->
+    <!-- TAB 3: REGISTROS GUARDADOS -->
     <!-- ========================================================= -->
     <div id="tab-registros" class="tab-content">
         <div class="flex-between mb-1">
@@ -939,20 +1014,27 @@
             <button id="btn-eliminar-todos" class="btn-danger">🗑️ Borrar todo</button>
         </div>
         <div class="registros-container" id="lista-registros">
-            <div class="empty-msg">Aún no hay registros guardados</div>
+            <div class="empty-msg">📭 No hay registros guardados</div>
         </div>
     </div>
 
 </div>
 
 <!-- ========================================================= -->
-<!-- JAVASCRIPT -->
+<!-- JAVASCRIPT – LÓGICA COMPLETA -->
 <!-- ========================================================= -->
 <script>
     (function() {
         'use strict';
 
-        // ---- BASE DE DATOS DE ESPECIES (¡agrega las tuyas aquí!) ----
+        // ===================================================================
+        // 1. CONFIGURACIÓN INICIAL Y DEPENDENCIAS
+        // ===================================================================
+
+        // ---- DOM REFS ----
+        const $ = id => document.getElementById(id);
+
+        // ---- BASE DE DATOS DE ESPECIES (ejemplo) ----
         const especiesDB = {
             'Gorriones': [
                 { id: 'passer_domesticus', nombre_comun: 'Gorrión casero', cientifico: 'Passer domesticus', emoji: '🐦' },
@@ -997,7 +1079,6 @@
                 { id: 'trogon_ambiguus', nombre_comun: 'Trogón coppery-tailed', cientifico: 'Trogon ambiguus', emoji: '🐦' }
             ]
         };
-
         const gruposList = [
             { id: 'Gorriones', emoji: '🐦', nombre: 'Gorriones' },
             { id: 'Palomas', emoji: '🕊️', nombre: 'Palomas' },
@@ -1012,7 +1093,7 @@
             { id: 'Trogones', emoji: '🐦', nombre: 'Trogones' }
         ];
 
-        // ---- MAPA DE SUSTRATO (Tipo -> Específicos) ----
+        // ---- MAPA DE SUSTRATO ----
         const sustratoMap = {
             'Suelo': ['piso', 'roca'],
             'Veg. muerta': ['zacate_seco', 'leña_muerta', 'tocón'],
@@ -1020,20 +1101,15 @@
             'Infraestructura': ['carretera_terracería', 'vivienda', 'lineas_de_luz', 'torre_eléctrica'],
             'Cuerpo de agua': ['charco', 'cisterna', 'olla captación agua', 'represa'],
             'Volando': ['volando'],
-            'Otro': ['Otro']
-        };
-
-        const tiposSustrato = Object.keys(sustratoMap);
-
-        // ---- VALORES POR DEFECTO DE SITIOS ----
-        const DEFAULT_SITIOS = {
-            municipios: ['Texcoco', 'Chapingo', 'Atenco', 'Chimalhuacán', 'Papantla', 'Chicontepec', 'Huatusco', 'La Españita'],
-            parcelas: ['PA-01', 'PA-02', 'PA-03', 'PA-04', 'PA-05'],
-            puntos: ['PT-01', 'PT-02', 'PT-03', 'PT-04']
+            'Otro': ['Otro (especifique)']
         };
 
         // ---- ESTADO GLOBAL ----
         const state = {
+            rutas: [],              // [{id, nombre, municipio, estado, localidad, altitud}]
+            rutaActiva: null,       // id de la ruta seleccionada
+            sitiosHistoricos: [],   // [{id, rutaId, fecha, hora, nombre, lat, lon, altitud, parcela, punto, sistema}]
+            registros: [],          // [{id, ...}]
             conteoActivo: false,
             tiempoRestante: 600,
             duracionTotal: 600,
@@ -1041,286 +1117,807 @@
             timerInterval: null,
             alarmaSonando: false,
             fotoData: null,
-            config: {
-                fecha: '',
-                municipio: '',
-                parcela: '',
-                punto: '',
-                sistema: '',
-                lat: null,
-                lon: null,
-                accuracy: null
-            },
-            registros: [],
-            grupoSeleccionado: null,
+            gps: { lat: null, lon: null, accuracy: null },
+            inegiData: null,        // datos cargados desde inegi.json
             especieSeleccionada: null,
-            sitios: {
-                municipios: [...DEFAULT_SITIOS.municipios],
-                parcelas: [...DEFAULT_SITIOS.parcelas],
-                puntos: [...DEFAULT_SITIOS.puntos]
-            },
-            sustratoSeleccionado: {
-                tipo: '',
-                especifico: ''
-            }
+            grupoSeleccionado: null,
+            radarEscala: 500,       // metros
         };
 
-        // ---- DOM REFS ----
-        const $ = id => document.getElementById(id);
+        // ===================================================================
+        // 2. FUNCIONES DE UTILIDAD
+        // ===================================================================
 
-        // ---- INICIALIZACIÓN ----
-        function init() {
-            // Cargar sitios desde localStorage
-            cargarSitios();
+        // ---- Distancia Haversine (en metros) ----
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371000; // metros
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        }
 
-            const ahora = new Date();
-            $('fecha').value = ahora.toISOString().slice(0,10);
-            $('hora_inicio').value = ahora.toTimeString().slice(0,5);
+        // ---- Guardar en localStorage ----
+        function guardarDatos() {
+            try {
+                localStorage.setItem('avistR_rutas', JSON.stringify(state.rutas));
+                localStorage.setItem('avistR_sitios', JSON.stringify(state.sitiosHistoricos));
+                localStorage.setItem('avistamientos', JSON.stringify(state.registros));
+            } catch(e) { console.warn('Error guardando en localStorage', e); }
+        }
 
-            // Inicializar componentes
-            inicializarGruposSitio();
-            inicializarSelectorEspecies();
-            inicializarSustratoAccordion();
-            inicializarEditorSitios();
+        function cargarDatos() {
+            try {
+                const rutas = localStorage.getItem('avistR_rutas');
+                if (rutas) state.rutas = JSON.parse(rutas);
+                const sitios = localStorage.getItem('avistR_sitios');
+                if (sitios) state.sitiosHistoricos = JSON.parse(sitios);
+                const regs = localStorage.getItem('avistamientos');
+                if (regs) state.registros = JSON.parse(regs);
+            } catch(e) { console.warn('Error cargando datos', e); }
+        }
 
-            setupCircleGroup('grupo-individuos', 'individuos_otro');
+        // ---- Obtener fecha actual (YYYY-MM-DD) ----
+        function hoy() {
+            return new Date().toISOString().slice(0,10);
+        }
+
+        // ===================================================================
+        // 3. CONFIGURACIÓN DE BOTONES Y SELECTORES
+        // ===================================================================
+
+        // ---- setupButtonGroup (para botones opt-btn) ----
+        function setupButtonGroup(groupId, hiddenInputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return;
+            const buttons = container.querySelectorAll('.opt-btn');
+            const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const value = this.dataset.value;
+                    if (value === 'otro' && hiddenInput) {
+                        buttons.forEach(b => b.classList.remove('selected'));
+                        hiddenInput.style.display = 'inline-block';
+                        hiddenInput.focus();
+                        return;
+                    }
+                    if (hiddenInput) {
+                        hiddenInput.style.display = 'none';
+                        hiddenInput.value = '';
+                    }
+                    buttons.forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            if (hiddenInput) {
+                hiddenInput.addEventListener('blur', function() {
+                    if (this.value.trim() === '') this.style.display = 'none';
+                });
+                hiddenInput.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        buttons.forEach(b => b.classList.remove('selected'));
+                    }
+                });
+            }
+        }
+
+        // ---- setupCircleGroup (para círculos) ----
+        function setupCircleGroup(groupId, hiddenInputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return;
+            const circles = container.querySelectorAll('.circle');
+            const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
+
+            circles.forEach(circle => {
+                circle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const value = this.dataset.value;
+                    if (value === 'otro' && hiddenInput) {
+                        circles.forEach(c => c.classList.remove('selected'));
+                        hiddenInput.style.display = 'inline-block';
+                        hiddenInput.focus();
+                        return;
+                    }
+                    if (hiddenInput) {
+                        hiddenInput.style.display = 'none';
+                        hiddenInput.value = '';
+                    }
+                    circles.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            if (hiddenInput) {
+                hiddenInput.addEventListener('blur', function() {
+                    if (this.value.trim() === '') this.style.display = 'none';
+                });
+                hiddenInput.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        circles.forEach(c => c.classList.remove('selected'));
+                    }
+                });
+            }
+        }
+
+        // ---- Inicializar grupos ----
+        function initGrupos() {
+            setupButtonGroup('grupo-parcela', 'parcela_otro');
+            setupButtonGroup('grupo-punto', 'punto_otro');
+            setupButtonGroup('grupo-sistema', null); // SAF/MIAF sin otro
             setupButtonGroup('grupo-sexo', null);
             setupButtonGroup('grupo-edad', null);
+            setupButtonGroup('grupo-forma', null);
+            setupButtonGroup('grupo-vertical', null);
+            setupButtonGroup('grupo-horizontal', null);
             setupButtonGroup('grupo-comportamiento', null);
             setupButtonGroup('grupo-alimento', null);
-            setupButtonGroup('grupo-sistema', 'sistema_otro');
-
-            // Pestañas
-            initTabs();
-
-            // Cargar registros
-            cargarRegistros();
-
-            // Eventos
-            $('btn-iniciar-conteo').addEventListener('click', iniciarConteo);
-            $('btn-detener-alarma').addEventListener('click', detenerAlarma);
-            $('btn-gps').addEventListener('click', obtenerGPS);
-            $('btn-tomar-foto').addEventListener('click', tomarFoto);
-            $('btn-quitar-foto').addEventListener('click', quitarFoto);
-            $('btn-guardar-registro').addEventListener('click', guardarRegistro);
-            $('btn-limpiar-registro').addEventListener('click', limpiarRegistro);
-            $('btn-finalizar-conteo').addEventListener('click', finalizarConteo);
-            $('btn-exportar-csv').addEventListener('click', exportarCSV);
-            $('btn-eliminar-todos').addEventListener('click', eliminarTodos);
-            $('btn-restaurar-sitios').addEventListener('click', restaurarSitios);
-            $('btn-exportar-sitios').addEventListener('click', exportarSitios);
-
-            // Eventos para el editor de sitios
-            $('btn-add-municipio').addEventListener('click', () => agregarItem('municipios', 'nuevo-municipio'));
-            $('btn-add-parcela').addEventListener('click', () => agregarItem('parcelas', 'nueva-parcela'));
-            $('btn-add-punto').addEventListener('click', () => agregarItem('puntos', 'nuevo-punto'));
-
-            // Enter en campos del editor
-            ['nuevo-municipio', 'nueva-parcela', 'nuevo-punto'].forEach(id => {
-                $(id).addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        const tipo = id.replace('nuevo-', '') + 's';
-                        agregarItem(tipo, id);
-                    }
-                });
-            });
+            setupCircleGroup('grupo-individuos', 'individuos_otro');
         }
 
-        // ---- GESTIÓN DE SITIOS ----
-        function cargarSitios() {
-            try {
-                const stored = localStorage.getItem('avistapp_sitios');
-                if (stored) {
-                    const parsed = JSON.parse(stored);
-                    state.sitios.municipios = parsed.municipios || DEFAULT_SITIOS.municipios;
-                    state.sitios.parcelas = parsed.parcelas || DEFAULT_SITIOS.parcelas;
-                    state.sitios.puntos = parsed.puntos || DEFAULT_SITIOS.puntos;
-                }
-            } catch(e) {
-                // Si hay error, usar defaults
-                state.sitios = {
-                    municipios: [...DEFAULT_SITIOS.municipios],
-                    parcelas: [...DEFAULT_SITIOS.parcelas],
-                    puntos: [...DEFAULT_SITIOS.puntos]
-                };
+        // ===================================================================
+        // 4. RUTAS
+        // ===================================================================
+
+        function renderRutas() {
+            const select = $('selector-ruta');
+            const current = select.value;
+            select.innerHTML = '<option value="">-- Seleccionar --</option>';
+            state.rutas.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.textContent = r.nombre + ' (' + r.municipio + ')';
+                select.appendChild(opt);
+            });
+            if (current && state.rutas.some(r => r.id === current)) {
+                select.value = current;
+                state.rutaActiva = current;
+            } else {
+                select.value = '';
+                state.rutaActiva = null;
             }
-            guardarSitios();
+            actualizarInfoRuta();
+            actualizarCamposAutomaticos();
+            actualizarRadar();
+            validarInicioConteo();
         }
 
-        function guardarSitios() {
-            localStorage.setItem('avistapp_sitios', JSON.stringify(state.sitios));
-            // Actualizar botones de sitios en configuración
-            inicializarGruposSitio();
-            renderizarEditorSitios();
+        function actualizarInfoRuta() {
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const info = $('info-ruta');
+            if (ruta) {
+                info.style.display = 'block';
+                $('ruta-nombre').textContent = ruta.nombre;
+                $('ruta-municipio').textContent = ruta.municipio;
+                $('ruta-estado').textContent = ruta.estado || '';
+            } else {
+                info.style.display = 'none';
+            }
         }
 
-        function inicializarGruposSitio() {
-            // Municipios
-            const containerMun = $('grupo-municipio');
-            containerMun.innerHTML = '';
-            state.sitios.municipios.forEach((nombre, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'opt-btn';
-                btn.dataset.value = nombre;
-                btn.textContent = nombre;
-                containerMun.appendChild(btn);
-            });
-            // Botón "Otro"
-            const btnOtro = document.createElement('button');
-            btnOtro.type = 'button';
-            btnOtro.className = 'opt-btn';
-            btnOtro.dataset.value = 'otro';
-            btnOtro.textContent = '➕ Otro';
-            containerMun.appendChild(btnOtro);
-            const inputMun = document.createElement('input');
-            inputMun.type = 'text';
-            inputMun.id = 'municipio_otro';
-            inputMun.className = 'inline-input inline-input-sm';
-            inputMun.placeholder = 'Nombre';
-            inputMun.style.display = 'none';
-            inputMun.style.marginTop = '4px';
-            inputMun.style.width = '100%';
-            containerMun.appendChild(inputMun);
-            setupButtonGroup('grupo-municipio', 'municipio_otro');
-
-            // Parcelas
-            const containerPar = $('grupo-parcela');
-            containerPar.innerHTML = '';
-            state.sitios.parcelas.forEach((nombre, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'opt-btn';
-                btn.dataset.value = nombre;
-                btn.textContent = nombre;
-                containerPar.appendChild(btn);
-            });
-            const btnOtroPar = document.createElement('button');
-            btnOtroPar.type = 'button';
-            btnOtroPar.className = 'opt-btn';
-            btnOtroPar.dataset.value = 'otro';
-            btnOtroPar.textContent = '➕ Otro';
-            containerPar.appendChild(btnOtroPar);
-            const inputPar = document.createElement('input');
-            inputPar.type = 'text';
-            inputPar.id = 'parcela_otro';
-            inputPar.className = 'inline-input inline-input-sm';
-            inputPar.placeholder = 'Nombre';
-            inputPar.style.display = 'none';
-            inputPar.style.marginTop = '4px';
-            inputPar.style.width = '100%';
-            containerPar.appendChild(inputPar);
-            setupButtonGroup('grupo-parcela', 'parcela_otro');
-
-            // Puntos
-            const containerPto = $('grupo-punto');
-            containerPto.innerHTML = '';
-            state.sitios.puntos.forEach((nombre, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'opt-btn';
-                btn.dataset.value = nombre;
-                btn.textContent = nombre;
-                containerPto.appendChild(btn);
-            });
-            const btnOtroPto = document.createElement('button');
-            btnOtroPto.type = 'button';
-            btnOtroPto.className = 'opt-btn';
-            btnOtroPto.dataset.value = 'otro';
-            btnOtroPto.textContent = '➕ Otro';
-            containerPto.appendChild(btnOtroPto);
-            const inputPto = document.createElement('input');
-            inputPto.type = 'text';
-            inputPto.id = 'punto_otro';
-            inputPto.className = 'inline-input inline-input-sm';
-            inputPto.placeholder = 'Nombre';
-            inputPto.style.display = 'none';
-            inputPto.style.marginTop = '4px';
-            inputPto.style.width = '100%';
-            containerPto.appendChild(inputPto);
-            setupButtonGroup('grupo-punto', 'punto_otro');
+        function actualizarCamposAutomaticos() {
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            if (ruta) {
+                $('estado_auto').value = ruta.estado || '';
+                $('municipio_auto').value = ruta.municipio || '';
+                $('localidad_auto').value = ruta.localidad || '';
+                $('altitud_auto').value = ruta.altitud || '';
+            } else {
+                // Si no hay ruta, usar los datos del GPS + INEGI si están disponibles
+                // (se actualiza en la función de GPS)
+            }
         }
 
-        function renderizarEditorSitios() {
-            renderizarListaEditor('lista-municipios', state.sitios.municipios, 'municipios');
-            renderizarListaEditor('lista-parcelas', state.sitios.parcelas, 'parcelas');
-            renderizarListaEditor('lista-puntos', state.sitios.puntos, 'puntos');
+        function crearRuta() {
+            const nombre = prompt('Nombre de la ruta (ej. "Ruta Papantla"):');
+            if (!nombre) return;
+            const municipio = prompt('Municipio/base:');
+            if (!municipio) return;
+            const estado = prompt('Estado (opcional):') || '';
+            const localidad = prompt('Localidad (opcional):') || '';
+            const altitud = prompt('Altitud (m) (opcional):') || '';
+
+            const ruta = {
+                id: 'ruta_' + Date.now(),
+                nombre: nombre.trim(),
+                municipio: municipio.trim(),
+                estado: estado.trim(),
+                localidad: localidad.trim(),
+                altitud: altitud.trim()
+            };
+            state.rutas.push(ruta);
+            guardarDatos();
+            renderRutas();
+            // Seleccionar la nueva ruta
+            $('selector-ruta').value = ruta.id;
+            state.rutaActiva = ruta.id;
+            actualizarInfoRuta();
+            actualizarCamposAutomaticos();
+            actualizarRadar();
+            validarInicioConteo();
         }
 
-        function renderizarListaEditor(containerId, items, tipo) {
-            const container = $(containerId);
-            container.innerHTML = '';
-            items.forEach((nombre, idx) => {
-                const div = document.createElement('div');
-                div.className = 'edit-item';
-                div.innerHTML = `
-                    <span class="item-text">${nombre}</span>
-                    <button class="btn-sm btn-edit" data-tipo="${tipo}" data-index="${idx}">✏️</button>
-                    <button class="btn-sm btn-delete" data-tipo="${tipo}" data-index="${idx}">✕</button>
-                `;
-                container.appendChild(div);
-            });
+        function eliminarRuta() {
+            if (!state.rutaActiva) return;
+            if (!confirm('¿Eliminar la ruta activa?')) return;
+            state.rutas = state.rutas.filter(r => r.id !== state.rutaActiva);
+            state.rutaActiva = null;
+            guardarDatos();
+            renderRutas();
+            actualizarCamposAutomaticos();
+            actualizarRadar();
+            validarInicioConteo();
+        }
 
-            // Eventos para editar y eliminar
-            container.querySelectorAll('.btn-edit').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tipo = this.dataset.tipo;
-                    const idx = parseInt(this.dataset.index);
-                    const items = state.sitios[tipo];
-                    const nuevo = prompt(`Editar ${tipo.slice(0,-1)}:`, items[idx]);
-                    if (nuevo && nuevo.trim() !== '') {
-                        items[idx] = nuevo.trim();
-                        guardarSitios();
+        // ===================================================================
+        // 5. INEGI (carga y búsqueda)
+        // ===================================================================
+
+        async function cargarINEGI() {
+            try {
+                const resp = await fetch('inegi.json');
+                if (!resp.ok) throw new Error('No se pudo cargar inegi.json');
+                state.inegiData = await resp.json();
+                console.log('INEGI cargado:', Object.keys(state.inegiData).length, 'estados');
+            } catch(e) {
+                console.warn('Error cargando INEGI:', e.message);
+                state.inegiData = null;
+            }
+        }
+
+        function buscarLocalidadMasCercana(lat, lon) {
+            if (!state.inegiData) return null;
+            let mejor = null;
+            let distMin = Infinity;
+
+            // Iterar sobre todos los estados y municipios
+            for (const [estado, municipios] of Object.entries(state.inegiData)) {
+                for (const [municipio, localidades] of Object.entries(municipios)) {
+                    for (const loc of localidades) {
+                        if (loc.lat == null || loc.lon == null) continue;
+                        const d = haversine(lat, lon, loc.lat, loc.lon);
+                        if (d < distMin) {
+                            distMin = d;
+                            mejor = {
+                                estado: estado,
+                                municipio: municipio,
+                                localidad: loc.nombre,
+                                altitud: loc.altitud,
+                                distancia: d
+                            };
+                        }
                     }
-                });
-            });
-
-            container.querySelectorAll('.btn-delete').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tipo = this.dataset.tipo;
-                    const idx = parseInt(this.dataset.index);
-                    if (confirm(`¿Eliminar "${state.sitios[tipo][idx]}"?`)) {
-                        state.sitios[tipo].splice(idx, 1);
-                        guardarSitios();
-                    }
-                });
-            });
+                }
+            }
+            return mejor;
         }
 
-        function agregarItem(tipo, inputId) {
-            const input = $(inputId);
-            const valor = input.value.trim();
-            if (!valor) { alert('Ingrese un nombre'); return; }
-            if (state.sitios[tipo].includes(valor)) {
-                alert('Este nombre ya existe');
+        // ===================================================================
+        // 6. GPS y autocompletado
+        // ===================================================================
+
+        function obtenerGPS() {
+            if (!navigator.geolocation) {
+                alert('Tu dispositivo no soporta GPS');
                 return;
             }
-            state.sitios[tipo].push(valor);
-            input.value = '';
-            guardarSitios();
+            $('btn-gps').textContent = '📍 Obteniendo ubicación...';
+            $('btn-gps').disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    state.gps.lat = pos.coords.latitude;
+                    state.gps.lon = pos.coords.longitude;
+                    state.gps.accuracy = pos.coords.accuracy;
+
+                    $('gps-lat').textContent = state.gps.lat.toFixed(6);
+                    $('gps-lon').textContent = state.gps.lon.toFixed(6);
+                    $('gps-accuracy').textContent = state.gps.accuracy ? `±${Math.round(state.gps.accuracy)}m` : '--';
+
+                    // Si no hay ruta activa, buscar en INEGI
+                    if (!state.rutaActiva && state.inegiData) {
+                        const lugar = buscarLocalidadMasCercana(state.gps.lat, state.gps.lon);
+                        if (lugar && lugar.distancia < 10000) { // 10 km de tolerancia
+                            $('estado_auto').value = lugar.estado;
+                            $('municipio_auto').value = lugar.municipio;
+                            $('localidad_auto').value = lugar.localidad;
+                            $('altitud_auto').value = lugar.altitud || '';
+                        } else {
+                            $('estado_auto').value = '--';
+                            $('municipio_auto').value = '--';
+                            $('localidad_auto').value = '--';
+                            $('altitud_auto').value = '--';
+                        }
+                    } else {
+                        // Si hay ruta, ya está autocompletado
+                        actualizarCamposAutomaticos();
+                    }
+
+                    // Actualizar radar
+                    actualizarRadar();
+                    validarInicioConteo();
+
+                    $('btn-gps').textContent = '📍 Actualizar GPS';
+                    $('btn-gps').disabled = false;
+                },
+                (err) => {
+                    alert(`Error GPS: ${err.message}`);
+                    $('btn-gps').textContent = '📍 Obtener ubicación GPS';
+                    $('btn-gps').disabled = false;
+                },
+                { enableHighAccuracy: true, timeout: 15000 }
+            );
         }
 
-        function restaurarSitios() {
-            if (!confirm('¿Restaurar sitios a los valores por defecto?')) return;
-            state.sitios.municipios = [...DEFAULT_SITIOS.municipios];
-            state.sitios.parcelas = [...DEFAULT_SITIOS.parcelas];
-            state.sitios.puntos = [...DEFAULT_SITIOS.puntos];
-            guardarSitios();
+        // ===================================================================
+        // 7. RADAR
+        // ===================================================================
+
+        function actualizarRadar() {
+            const canvas = $('radarCanvas');
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            const centroX = w/2, centroY = h/2;
+            const escalaMax = state.radarEscala; // metros
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Dibujar fondo
+            ctx.fillStyle = '#fafcff';
+            ctx.fillRect(0, 0, w, h);
+
+            // Dibujar círculos concéntricos
+            for (let r = 0.2; r <= 1; r += 0.2) {
+                ctx.beginPath();
+                ctx.arc(centroX, centroY, r * w/2, 0, 2*Math.PI);
+                ctx.strokeStyle = '#d0d9e3';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                // Etiqueta de distancia
+                ctx.fillStyle = '#999';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(Math.round(r * escalaMax) + 'm', centroX, centroY - r * w/2 - 4);
+            }
+
+            // Círculo de 350 m (zona de advertencia)
+            const radio350 = (350 / escalaMax) * w/2;
+            if (radio350 < w/2) {
+                ctx.beginPath();
+                ctx.arc(centroX, centroY, radio350, 0, 2*Math.PI);
+                ctx.setLineDash([4, 6]);
+                ctx.strokeStyle = '#c0392b';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = 'rgba(192,57,43,0.08)';
+                ctx.fill();
+            }
+
+            // Si no hay GPS o no hay sitios, mostrar mensaje
+            if (state.gps.lat === null || state.gps.lon === null) {
+                ctx.fillStyle = '#999';
+                ctx.font = '16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('📍 Esperando GPS...', centroX, centroY);
+                $('radar-info').textContent = '📍 Esperando GPS...';
+                return;
+            }
+
+            // Obtener sitios de la ruta activa
+            const sitiosRuta = state.sitiosHistoricos.filter(s => s.rutaId === state.rutaActiva);
+            if (sitiosRuta.length === 0) {
+                ctx.fillStyle = '#999';
+                ctx.font = '16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('No hay sitios en esta ruta', centroX, centroY);
+                $('radar-info').textContent = '📌 No hay sitios en esta ruta';
+                return;
+            }
+
+            // Dibujar sitios
+            const hoyStr = hoy();
+            let sitioMasCercano = null;
+            let distMasCercana = Infinity;
+
+            sitiosRuta.forEach(sitio => {
+                const d = haversine(state.gps.lat, state.gps.lon, sitio.lat, sitio.lon);
+                if (d < distMasCercana) {
+                    distMasCercana = d;
+                    sitioMasCercano = sitio;
+                }
+
+                // Coordenadas relativas en el canvas
+                const dx = (sitio.lon - state.gps.lon) * (w/2 / (escalaMax / 111320)); // 1 grado ≈ 111320 m
+                const dy = -(sitio.lat - state.gps.lat) * (w/2 / (escalaMax / 111320));
+                const rx = centroX + dx;
+                const ry = centroY + dy;
+
+                // Solo dibujar si está dentro del radar
+                if (Math.hypot(rx - centroX, ry - centroY) > w/2) return;
+
+                // Color según fecha
+                let color;
+                if (sitio.fecha === hoyStr) {
+                    color = (d < 350) ? '#c0392b' : '#2c3e50';
+                } else {
+                    color = '#27ae60';
+                }
+
+                ctx.beginPath();
+                ctx.arc(rx, ry, 6, 0, 2*Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Etiqueta
+                ctx.fillStyle = '#1f3a57';
+                ctx.font = '9px sans-serif';
+                ctx.textAlign = 'center';
+                const label = sitio.nombre || sitio.parcela + '-' + sitio.punto;
+                ctx.fillText(label, rx, ry - 10);
+            });
+
+            // Mostrar información del sitio más cercano
+            if (sitioMasCercano) {
+                const msg = `📍 Sitio más cercano: ${sitioMasCercano.nombre || sitioMasCercano.parcela + '-' + sitioMasCercano.punto} · Distancia: ${Math.round(distMasCercana)}m`;
+                $('radar-info').textContent = msg;
+                // Marcar si está dentro de 350m
+                if (distMasCercana < 350 && sitioMasCercano.fecha === hoyStr) {
+                    $('radar-info').className = 'sitio-info warning';
+                } else {
+                    $('radar-info').className = 'sitio-info';
+                }
+            } else {
+                $('radar-info').textContent = '📍 Sin sitios cercanos';
+                $('radar-info').className = 'sitio-info';
+            }
+
+            // Dibujar posición actual (centro)
+            ctx.beginPath();
+            ctx.arc(centroX, centroY, 5, 0, 2*Math.PI);
+            ctx.fillStyle = '#013366';
+            ctx.fill();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Leyenda de escala
+            ctx.fillStyle = '#013366';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText(escalaMax + 'm', w - 10, 20);
         }
 
-        function exportarSitios() {
-            const data = JSON.stringify(state.sitios, null, 2);
-            const blob = new Blob([data], { type: 'application/json' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `sitios_${new Date().toISOString().slice(0,10)}.json`;
-            link.click();
-            URL.revokeObjectURL(link.href);
+        // ---- Control de zoom del radar ----
+        function initRadarZoom() {
+            const slider = $('radar-escala');
+            const label = $('radar-escala-label');
+            slider.addEventListener('input', function() {
+                state.radarEscala = parseInt(this.value);
+                label.textContent = state.radarEscala + ' m';
+                actualizarRadar();
+            });
+
+            // Zoom con pellizco (touch)
+            let lastDist = 0;
+            const canvas = $('radarCanvas');
+            canvas.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    const dx = e.touches[0].clientX - e.touches[1].clientX;
+                    const dy = e.touches[0].clientY - e.touches[1].clientY;
+                    lastDist = Math.hypot(dx, dy);
+                }
+            });
+            canvas.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const dx = e.touches[0].clientX - e.touches[1].clientX;
+                    const dy = e.touches[0].clientY - e.touches[1].clientY;
+                    const dist = Math.hypot(dx, dy);
+                    const delta = dist - lastDist;
+                    if (Math.abs(delta) > 10) {
+                        let newScale = state.radarEscala - delta * 2;
+                        newScale = Math.min(2000, Math.max(100, newScale));
+                        state.radarEscala = Math.round(newScale / 50) * 50;
+                        slider.value = state.radarEscala;
+                        $('radar-escala-label').textContent = state.radarEscala + ' m';
+                        actualizarRadar();
+                        lastDist = dist;
+                    }
+                }
+            });
         }
 
-        // ---- SELECTOR VISUAL DE ESPECIES ----
-        function inicializarSelectorEspecies() {
+        // ===================================================================
+        // 8. VALIDACIÓN DE DISTANCIA (bloqueo de inicio)
+        // ===================================================================
+
+        function validarInicioConteo() {
+            const btn = $('btn-iniciar-conteo');
+            const msg = $('iniciar-mensaje');
+
+            if (!state.rutaActiva) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Seleccione o cree una ruta primero.';
+                return;
+            }
+
+            if (state.gps.lat === null || state.gps.lon === null) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Obtenga su ubicación GPS primero.';
+                return;
+            }
+
+            // Buscar sitios del día actual en la ruta activa
+            const hoyStr = hoy();
+            const sitiosHoy = state.sitiosHistoricos.filter(s =>
+                s.rutaId === state.rutaActiva && s.fecha === hoyStr
+            );
+
+            if (sitiosHoy.length === 0) {
+                // No hay sitios hoy, permitir
+                btn.disabled = false;
+                msg.style.display = 'none';
+                return;
+            }
+
+            // Calcular distancia al sitio más cercano de hoy
+            let distMin = Infinity;
+            sitiosHoy.forEach(s => {
+                const d = haversine(state.gps.lat, state.gps.lon, s.lat, s.lon);
+                if (d < distMin) distMin = d;
+            });
+
+            if (distMin < 350) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = `⚠️ Distancia al sitio más cercano (hoy) es de ${Math.round(distMin)}m. Mínimo requerido: 350m. Muévase a otra ubicación.`;
+            } else {
+                btn.disabled = false;
+                msg.style.display = 'none';
+            }
+        }
+
+        // ===================================================================
+        // 9. TEMPORIZADOR Y CONTEO
+        // ===================================================================
+
+        function iniciarConteo() {
+            // Validar que la ruta esté seleccionada y GPS disponible
+            if (!state.rutaActiva) {
+                alert('Seleccione una ruta primero.');
+                return;
+            }
+            if (state.gps.lat === null || state.gps.lon === null) {
+                alert('Obtenga su ubicación GPS primero.');
+                return;
+            }
+
+            const fecha = $('fecha').value;
+            const horaInicio = $('hora_inicio').value;
+            const duracion = parseInt($('duracion').value) || 10;
+
+            if (!fecha) { alert('Seleccione una fecha'); return; }
+            if (!horaInicio) { alert('Seleccione la hora de inicio'); return; }
+
+            // Guardar sitio histórico
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || 'PA-00';
+            const punto = getSelectedValue('grupo-punto', 'punto_otro') || 'PT-00';
+            const sistema = getSelectedValue('grupo-sistema', null) || '0';
+
+            const sitio = {
+                id: 'sitio_' + Date.now(),
+                rutaId: state.rutaActiva,
+                fecha: fecha,
+                hora: horaInicio,
+                nombre: ruta ? ruta.nombre + '_' + parcela + '_' + punto : 'sitio',
+                parcela: parcela,
+                punto: punto,
+                sistema: sistema,
+                lat: state.gps.lat,
+                lon: state.gps.lon,
+                altitud: $('altitud_auto').value || ''
+            };
+            state.sitiosHistoricos.push(sitio);
+            guardarDatos();
+
+            // Configurar temporizador
+            state.duracionTotal = duracion * 60;
+            state.tiempoRestante = state.duracionTotal;
+            state.horaInicio = horaInicio;
+            state.conteoActivo = true;
+
+            // Mostrar timer
+            $('timer-container').style.display = 'block';
+            $('btn-iniciar-conteo').style.display = 'none';
+
+            // Actualizar UI de registro
+            $('registro-fecha-hora').textContent = `Fecha: ${fecha} · Hora inicio: ${horaInicio}`;
+            $('registro-sitio').textContent = `${parcela} · ${punto} · ${sistema}`;
+            $('registro-ruta').textContent = `Ruta: ${ruta ? ruta.nombre : '--'}`;
+
+            // Ir a pestaña de registro
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-tab="tab-registro"]').classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-registro').classList.add('active');
+
+            actualizarTimer();
+
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            state.timerInterval = setInterval(() => {
+                state.tiempoRestante--;
+                actualizarTimer();
+                if (state.tiempoRestante <= 0) {
+                    clearInterval(state.timerInterval);
+                    state.timerInterval = null;
+                    state.conteoActivo = false;
+                    sonarAlarma();
+                }
+            }, 1000);
+
+            actualizarMinutoActual();
+            actualizarRadar();
+            validarInicioConteo();
+        }
+
+        function actualizarTimer() {
+            const mins = Math.floor(state.tiempoRestante / 60);
+            const segs = state.tiempoRestante % 60;
+            const display = `${String(mins).padStart(2,'0')}:${String(segs).padStart(2,'0')}`;
+            const el = $('timer-display');
+            el.textContent = display;
+            $('registro-tiempo-restante').textContent = display;
+
+            if (state.tiempoRestante <= 30 && state.tiempoRestante > 0) {
+                el.classList.add('urgent');
+            } else {
+                el.classList.remove('urgent');
+            }
+            actualizarMinutoActual();
+        }
+
+        function actualizarMinutoActual() {
+            if (!state.horaInicio) return;
+            const ahora = new Date();
+            const [h, m] = state.horaInicio.split(':').map(Number);
+            const inicio = new Date();
+            inicio.setHours(h, m, 0, 0);
+            const diffSeg = Math.floor((ahora - inicio) / 1000);
+            const minuto = Math.min(Math.floor(diffSeg / 60) + 1, 10);
+            if (minuto >= 1 && minuto <= 10) {
+                $('registro-minuto-actual').innerHTML = `Minuto: <strong>${minuto}</strong>`;
+            } else if (minuto > 10) {
+                $('registro-minuto-actual').innerHTML = `Minuto: <strong>10+</strong>`;
+            } else {
+                $('registro-minuto-actual').innerHTML = `Minuto: <strong>--</strong>`;
+            }
+        }
+
+        function sonarAlarma() {
+            state.alarmaSonando = true;
+            $('timer-status').textContent = '🔔 ⏰ ¡TIEMPO FINALIZADO! ⏰ 🔔';
+            $('timer-display').classList.add('urgent');
+            $('btn-detener-alarma').style.display = 'block';
+
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 500]);
+
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.frequency.value = 800;
+                        gain.gain.value = 0.3;
+                        osc.start();
+                        setTimeout(() => osc.stop(), 300);
+                    }, i * 500);
+                }
+            } catch(e) {}
+
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('⏰ AvistaR', {
+                    body: '¡El tiempo de conteo ha finalizado!',
+                    icon: 'https://via.placeholder.com/64/013366/FFFFFF?text=AV'
+                });
+            }
+        }
+
+        function detenerAlarma() {
+            state.alarmaSonando = false;
+            $('btn-detener-alarma').style.display = 'none';
+            $('timer-status').textContent = '✅ Conteo finalizado';
+            $('timer-display').classList.remove('urgent');
+        }
+
+        function finalizarConteo() {
+            if (state.timerInterval) {
+                clearInterval(state.timerInterval);
+                state.timerInterval = null;
+            }
+            state.conteoActivo = false;
+            $('timer-container').style.display = 'none';
+            $('btn-iniciar-conteo').style.display = 'block';
+            $('btn-detener-alarma').style.display = 'none';
+            $('timer-status').textContent = '⏳ Conteo en progreso...';
+            $('timer-display').classList.remove('urgent');
+            $('registro-tiempo-restante').textContent = '--:--';
+            $('registro-minuto-actual').innerHTML = 'Minuto: <strong>--</strong>';
+            alert('Conteo finalizado. Puede iniciar uno nuevo desde Configuración.');
+        }
+
+        // ===================================================================
+        // 10. FUNCIONES DE OBTENCIÓN DE VALORES
+        // ===================================================================
+
+        function getSelectedValue(groupId, inputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return '';
+            const selected = container.querySelector('.selected');
+            if (selected) {
+                const val = selected.dataset.value;
+                if (val === 'otro') {
+                    const inp = document.getElementById(inputId);
+                    if (inp) return inp.value.trim() || '';
+                    return '';
+                }
+                return val;
+            }
+            if (inputId) {
+                const inp = document.getElementById(inputId);
+                if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
+                    return inp.value.trim();
+                }
+            }
+            return '';
+        }
+
+        function getSelectedCircle(groupId, inputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return '';
+            const selected = container.querySelector('.circle.selected');
+            if (selected) {
+                const val = selected.dataset.value;
+                if (val === 'otro') {
+                    const inp = document.getElementById(inputId);
+                    if (inp) return inp.value.trim() || '';
+                    return '';
+                }
+                return val;
+            }
+            if (inputId) {
+                const inp = document.getElementById(inputId);
+                if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
+                    return inp.value.trim();
+                }
+            }
+            return '';
+        }
+
+        function getCheckboxValue(idSi, idNo) {
+            const si = document.getElementById(idSi);
+            const no = document.getElementById(idNo);
+            if (si.checked) return '1';
+            if (no.checked) return '0';
+            return '';
+        }
+
+        // ===================================================================
+        // 11. SELECTOR VISUAL DE ESPECIES
+        // ===================================================================
+
+        function initSelectorEspecies() {
             const grid = $('grupo-grid');
             grid.innerHTML = '';
             gruposList.forEach(grupo => {
@@ -1430,425 +2027,73 @@
             $('especie-cientifico').value = '';
         }
 
-        // ---- SUSTRATO CON ACORDEÓN ----
-        function inicializarSustratoAccordion() {
-            const container = $('sustrato-accordion-container');
-            container.innerHTML = '';
+        // ===================================================================
+        // 12. SUSTRATO DINÁMICO (select)
+        // ===================================================================
 
-            tiposSustrato.forEach(tipo => {
-                const accordion = document.createElement('div');
-                accordion.className = 'accordion';
+        function initSustratoDinamico() {
+            const tipoSelect = $('sustrato_tipo');
+            const espSelect = $('sustrato_esp');
+            const inputOtro = $('sustrato_otro_texto');
 
-                const header = document.createElement('div');
-                header.className = 'accordion-header';
-                header.innerHTML = `<span>${tipo}</span><span class="arrow">▼</span>`;
-                header.dataset.tipo = tipo;
+            tipoSelect.addEventListener('change', function() {
+                const tipo = this.value;
+                espSelect.innerHTML = '';
+                inputOtro.style.display = 'none';
+                inputOtro.value = '';
 
-                const body = document.createElement('div');
-                body.className = 'accordion-body';
+                if (!tipo || !sustratoMap[tipo]) {
+                    espSelect.innerHTML = '<option value="">Primero seleccione un tipo</option>';
+                    return;
+                }
 
                 const opciones = sustratoMap[tipo];
-                opciones.forEach(esp => {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'opt-btn';
-                    btn.dataset.value = esp;
-                    btn.textContent = esp;
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        const parentBody = this.closest('.accordion-body');
-                        parentBody.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-                        this.classList.add('selected');
-                        state.sustratoSeleccionado.tipo = tipo;
-                        state.sustratoSeleccionado.especifico = this.dataset.value;
-
-                        // Actualizar también el campo "sustrato_esp" del registro
-                        const hiddenInput = document.getElementById('sustrato_esp_otro');
-                        if (hiddenInput) {
-                            hiddenInput.value = this.dataset.value;
-                        }
-                    });
-                    body.appendChild(btn);
+                opciones.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt;
+                    option.textContent = opt;
+                    espSelect.appendChild(option);
                 });
 
-                header.addEventListener('click', function() {
-                    const isOpen = body.classList.toggle('open');
-                    this.classList.toggle('open', isOpen);
-                    // Cerrar otros acordeones
-                    container.querySelectorAll('.accordion-body').forEach(b => {
-                        if (b !== body) b.classList.remove('open');
-                    });
-                    container.querySelectorAll('.accordion-header').forEach(h => {
-                        if (h !== this) h.classList.remove('open');
-                    });
-                });
-
-                accordion.appendChild(header);
-                accordion.appendChild(body);
-                container.appendChild(accordion);
+                if (tipo === 'Otro') {
+                    const option = document.createElement('option');
+                    option.value = 'otro_texto';
+                    option.textContent = '✏️ Otro (escribir abajo)';
+                    espSelect.appendChild(option);
+                    inputOtro.style.display = 'block';
+                }
             });
 
-            // Input oculto para "Otro" en sustrato específico
-            const inputOtro = document.createElement('input');
-            inputOtro.type = 'text';
-            inputOtro.id = 'sustrato_esp_otro';
-            inputOtro.className = 'inline-input inline-input-sm';
-            inputOtro.placeholder = 'Especifique';
-            inputOtro.style.display = 'none';
-            inputOtro.style.marginTop = '4px';
-            inputOtro.style.width = '100%';
-            container.appendChild(inputOtro);
-
-            // Para capturar "Otro" en el acordeón
-            // Modificar el último elemento del array "Otro" para mostrar input
-            const otroAccordion = container.querySelector('.accordion:last-child');
-            if (otroAccordion) {
-                const otroBody = otroAccordion.querySelector('.accordion-body');
-                const btnOtro = otroBody.querySelector('.opt-btn:last-child');
-                if (btnOtro && btnOtro.dataset.value === 'Otro') {
-                    btnOtro.addEventListener('click', function() {
-                        const input = document.getElementById('sustrato_esp_otro');
-                        if (input) {
-                            input.style.display = 'inline-block';
-                            input.focus();
-                            state.sustratoSeleccionado.tipo = 'Otro';
-                            state.sustratoSeleccionado.especifico = '';
-                        }
-                    });
+            espSelect.addEventListener('change', function() {
+                if (this.value === 'otro_texto') {
+                    inputOtro.style.display = 'block';
+                    inputOtro.focus();
+                } else {
+                    inputOtro.style.display = 'none';
+                    inputOtro.value = '';
                 }
-            }
-
-            // Escuchar input de "Otro"
-            const inputOtroListener = document.getElementById('sustrato_esp_otro');
-            if (inputOtroListener) {
-                inputOtroListener.addEventListener('input', function() {
-                    if (this.value.trim() !== '') {
-                        state.sustratoSeleccionado.especifico = this.value.trim();
-                    }
-                });
-            }
-        }
-
-        // ---- FUNCIONES DE CONFIGURACIÓN DE BOTONES ----
-        function setupButtonGroup(groupId, hiddenInputId) {
-            const container = document.getElementById(groupId);
-            if (!container) return;
-            const buttons = container.querySelectorAll('.opt-btn');
-            const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
-
-            buttons.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const value = this.dataset.value;
-                    if (value === 'otro' && hiddenInput) {
-                        buttons.forEach(b => b.classList.remove('selected'));
-                        hiddenInput.style.display = 'inline-block';
-                        hiddenInput.focus();
-                        return;
-                    }
-                    if (hiddenInput) {
-                        hiddenInput.style.display = 'none';
-                        hiddenInput.value = '';
-                    }
-                    buttons.forEach(b => b.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
             });
 
-            if (hiddenInput) {
-                hiddenInput.addEventListener('blur', function() {
-                    if (this.value.trim() === '') this.style.display = 'none';
-                });
-                hiddenInput.addEventListener('input', function() {
-                    if (this.value.trim() !== '') {
-                        buttons.forEach(b => b.classList.remove('selected'));
-                    }
-                });
-            }
-        }
-
-        function setupCircleGroup(groupId, hiddenInputId) {
-            const container = document.getElementById(groupId);
-            if (!container) return;
-            const circles = container.querySelectorAll('.circle');
-            const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
-
-            circles.forEach(circle => {
-                circle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const value = this.dataset.value;
-                    if (value === 'otro' && hiddenInput) {
-                        circles.forEach(c => c.classList.remove('selected'));
-                        hiddenInput.style.display = 'inline-block';
-                        hiddenInput.focus();
-                        return;
-                    }
-                    if (hiddenInput) {
-                        hiddenInput.style.display = 'none';
-                        hiddenInput.value = '';
-                    }
-                    circles.forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
+            inputOtro.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    espSelect.value = 'otro_texto';
+                }
             });
+        }
 
-            if (hiddenInput) {
-                hiddenInput.addEventListener('blur', function() {
-                    if (this.value.trim() === '') this.style.display = 'none';
-                });
-                hiddenInput.addEventListener('input', function() {
-                    if (this.value.trim() !== '') {
-                        circles.forEach(c => c.classList.remove('selected'));
-                    }
-                });
+        function getSustratoEspecifico() {
+            const espSelect = $('sustrato_esp');
+            const inputOtro = $('sustrato_otro_texto');
+            if (espSelect.value === 'otro_texto') {
+                return inputOtro.value.trim() || 'Otro (sin especificar)';
             }
+            return espSelect.value;
         }
 
-        // ---- FUNCIONES DE OBTENCIÓN DE VALORES ----
-        function getSelectedText(groupId, inputId) {
-            const container = document.getElementById(groupId);
-            if (!container) return '';
-            const selected = container.querySelector('.selected');
-            if (selected) {
-                const val = selected.dataset.value;
-                if (val === 'otro') {
-                    const inp = document.getElementById(inputId);
-                    if (inp) return inp.value.trim() || '';
-                    return '';
-                }
-                return val;
-            }
-            if (inputId) {
-                const inp = document.getElementById(inputId);
-                if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
-                    return inp.value.trim();
-                }
-            }
-            return '';
-        }
+        // ===================================================================
+        // 13. FOTO
+        // ===================================================================
 
-        function getSelectedCircleText(groupId, inputId) {
-            const container = document.getElementById(groupId);
-            if (!container) return '';
-            const selected = container.querySelector('.circle.selected');
-            if (selected) {
-                const val = selected.dataset.value;
-                if (val === 'otro') {
-                    const inp = document.getElementById(inputId);
-                    if (inp) return inp.value.trim() || '';
-                    return '';
-                }
-                return val;
-            }
-            if (inputId) {
-                const inp = document.getElementById(inputId);
-                if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
-                    return inp.value.trim();
-                }
-            }
-            return '';
-        }
-
-        function getCheckboxValue(idSi, idNo) {
-            const si = document.getElementById(idSi);
-            const no = document.getElementById(idNo);
-            if (si.checked) return 'Sí';
-            if (no.checked) return 'No';
-            return '';
-        }
-
-        // ---- TEMPORIZADOR ----
-        function iniciarConteo() {
-            const fecha = $('fecha').value;
-            const horaInicio = $('hora_inicio').value;
-            const duracion = parseInt($('duracion').value) || 10;
-
-            if (!fecha) { alert('Seleccione una fecha'); return; }
-            if (!horaInicio) { alert('Seleccione la hora de inicio'); return; }
-
-            state.config.fecha = fecha;
-            state.config.duracion = duracion;
-            state.config.horaInicio = horaInicio;
-            state.config.municipio = getSelectedText('grupo-municipio', 'municipio_otro');
-            state.config.parcela = getSelectedText('grupo-parcela', 'parcela_otro');
-            state.config.punto = getSelectedText('grupo-punto', 'punto_otro');
-            state.config.sistema = getSelectedText('grupo-sistema', 'sistema_otro');
-
-            state.duracionTotal = duracion * 60;
-            state.tiempoRestante = state.duracionTotal;
-
-            $('timer-container').style.display = 'block';
-            $('btn-iniciar-conteo').style.display = 'none';
-
-            const sitioStr = `${state.config.parcela || '--'} · ${state.config.punto || '--'} · ${state.config.sistema || '--'}`;
-            $('registro-fecha-hora').textContent = `Fecha: ${fecha} · Hora inicio: ${horaInicio}`;
-            $('registro-sitio').textContent = sitioStr;
-
-            // Cambiar a pestaña de registro
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-tab="tab-registro"]').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.getElementById('tab-registro').classList.add('active');
-
-            state.conteoActivo = true;
-            actualizarTimer();
-
-            if (state.timerInterval) clearInterval(state.timerInterval);
-            state.timerInterval = setInterval(() => {
-                state.tiempoRestante--;
-                actualizarTimer();
-                if (state.tiempoRestante <= 0) {
-                    clearInterval(state.timerInterval);
-                    state.timerInterval = null;
-                    state.conteoActivo = false;
-                    sonarAlarma();
-                }
-            }, 1000);
-
-            actualizarMinutoActual();
-        }
-
-        function actualizarTimer() {
-            const mins = Math.floor(state.tiempoRestante / 60);
-            const segs = state.tiempoRestante % 60;
-            const display = `${String(mins).padStart(2,'0')}:${String(segs).padStart(2,'0')}`;
-            const el = $('timer-display');
-            el.textContent = display;
-            $('registro-tiempo-restante').textContent = display;
-
-            if (state.tiempoRestante <= 30 && state.tiempoRestante > 0) {
-                el.classList.add('urgent');
-            } else {
-                el.classList.remove('urgent');
-            }
-            actualizarMinutoActual();
-        }
-
-        function actualizarMinutoActual() {
-            if (!state.config.horaInicio) return;
-            const ahora = new Date();
-            const [h, m] = state.config.horaInicio.split(':').map(Number);
-            const inicio = new Date();
-            inicio.setHours(h, m, 0, 0);
-            const diffSeg = Math.floor((ahora - inicio) / 1000);
-            const minuto = Math.min(Math.floor(diffSeg / 60) + 1, 10);
-            if (minuto >= 1 && minuto <= 10) {
-                $('registro-minuto-actual').innerHTML = `Minuto: <strong>${minuto}</strong>`;
-            } else if (minuto > 10) {
-                $('registro-minuto-actual').innerHTML = `Minuto: <strong>10+</strong>`;
-            } else {
-                $('registro-minuto-actual').innerHTML = `Minuto: <strong>--</strong>`;
-            }
-        }
-
-        function sonarAlarma() {
-            state.alarmaSonando = true;
-            $('timer-status').textContent = '🔔 ⏰ ¡TIEMPO FINALIZADO! ⏰ 🔔';
-            $('timer-display').classList.add('urgent');
-            $('btn-detener-alarma').style.display = 'block';
-
-            // Vibración
-            if (navigator.vibrate) navigator.vibrate([500, 300, 500, 300, 1000]);
-
-            // Sonido de 10 segundos (tres tonos largos)
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const duracionAlarma = 10; // segundos
-                const intervalos = [0, 2, 4, 6, 8];
-                intervalos.forEach(t => {
-                    setTimeout(() => {
-                        const osc = ctx.createOscillator();
-                        const gain = ctx.createGain();
-                        osc.connect(gain);
-                        gain.connect(ctx.destination);
-                        osc.frequency.value = 600;
-                        gain.gain.value = 0.3;
-                        osc.start();
-                        setTimeout(() => {
-                            osc.stop();
-                            // Segunda nota más aguda
-                            const osc2 = ctx.createOscillator();
-                            const gain2 = ctx.createGain();
-                            osc2.connect(gain2);
-                            gain2.connect(ctx.destination);
-                            osc2.frequency.value = 800;
-                            gain2.gain.value = 0.2;
-                            osc2.start();
-                            setTimeout(() => osc2.stop(), 300);
-                        }, 400);
-                    }, t * 1000);
-                });
-                // Silencio final
-                setTimeout(() => {
-                    if (state.alarmaSonando) {
-                        // Repetir ciclo si no se detiene
-                        if (state.alarmaSonando) sonarAlarma();
-                    }
-                }, 10000);
-            } catch(e) {}
-
-            if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification('⏰ AvistaR', {
-                    body: '¡El tiempo de conteo ha finalizado!',
-                    icon: 'https://via.placeholder.com/64/013366/FFFFFF?text=AV'
-                });
-            }
-        }
-
-        function detenerAlarma() {
-            state.alarmaSonando = false;
-            $('btn-detener-alarma').style.display = 'none';
-            $('timer-status').textContent = '✅ Conteo finalizado';
-            $('timer-display').classList.remove('urgent');
-        }
-
-        function finalizarConteo() {
-            if (state.timerInterval) {
-                clearInterval(state.timerInterval);
-                state.timerInterval = null;
-            }
-            state.conteoActivo = false;
-            state.alarmaSonando = false;
-            $('timer-container').style.display = 'none';
-            $('btn-iniciar-conteo').style.display = 'block';
-            $('btn-detener-alarma').style.display = 'none';
-            $('timer-status').textContent = '⏳ Conteo en progreso...';
-            $('timer-display').classList.remove('urgent');
-            $('registro-tiempo-restante').textContent = '--:--';
-            $('registro-minuto-actual').innerHTML = 'Minuto: <strong>--</strong>';
-            alert('Conteo finalizado. Puede iniciar uno nuevo desde Configuración.');
-        }
-
-        // ---- GPS ----
-        function obtenerGPS() {
-            if (!navigator.geolocation) {
-                alert('Tu dispositivo no soporta GPS');
-                return;
-            }
-            $('btn-gps').textContent = '📍 Obteniendo ubicación...';
-            $('btn-gps').disabled = true;
-
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    state.config.lat = pos.coords.latitude;
-                    state.config.lon = pos.coords.longitude;
-                    state.config.accuracy = pos.coords.accuracy;
-                    $('gps-lat').textContent = state.config.lat.toFixed(6);
-                    $('gps-lon').textContent = state.config.lon.toFixed(6);
-                    $('gps-accuracy').textContent = state.config.accuracy ? `±${Math.round(state.config.accuracy)}m` : '--';
-                    $('btn-gps').textContent = '📍 Actualizar GPS';
-                    $('btn-gps').disabled = false;
-                },
-                (err) => {
-                    alert(`Error GPS: ${err.message}`);
-                    $('btn-gps').textContent = '📍 Obtener ubicación GPS';
-                    $('btn-gps').disabled = false;
-                },
-                { enableHighAccuracy: true, timeout: 15000 }
-            );
-        }
-
-        // ---- FOTO ----
         function tomarFoto() {
             const input = document.createElement('input');
             input.type = 'file';
@@ -1877,7 +2122,10 @@
             $('btn-tomar-foto').textContent = '📷 Tomar fotografía';
         }
 
-        // ---- GUARDAR REGISTRO ----
+        // ===================================================================
+        // 14. GUARDAR REGISTRO
+        // ===================================================================
+
         function guardarRegistro() {
             if (!state.conteoActivo) {
                 alert('⚠️ Debe iniciar un conteo primero (pestaña Configurar)');
@@ -1891,11 +2139,11 @@
                 return;
             }
 
-            // Calcular minuto
+            // Calcular minuto automático
             let minuto = 0;
-            if (state.config.horaInicio) {
+            if (state.horaInicio) {
                 const ahora = new Date();
-                const [h, m] = state.config.horaInicio.split(':').map(Number);
+                const [h, m] = state.horaInicio.split(':').map(Number);
                 const inicio = new Date();
                 inicio.setHours(h, m, 0, 0);
                 const diffSeg = Math.floor((ahora - inicio) / 1000);
@@ -1903,65 +2151,65 @@
                 if (minuto < 1) minuto = 1;
             }
 
-            // Obtener texto de sustrato específico desde el acordeón
-            let sustratoEsp = state.sustratoSeleccionado.especifico || '';
-            if (!sustratoEsp) {
-                // Intentar obtener del input "Otro"
-                const inputOtro = document.getElementById('sustrato_esp_otro');
-                if (inputOtro && inputOtro.style.display !== 'none' && inputOtro.value.trim() !== '') {
-                    sustratoEsp = inputOtro.value.trim();
-                }
-            }
+            // Obtener datos de la ruta activa
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || '';
+            const punto = getSelectedValue('grupo-punto', 'punto_otro') || '';
+            const sistema = getSelectedValue('grupo-sistema', null) || '';
 
             const registro = {
                 id: Date.now(),
-                fecha: state.config.fecha,
-                hora_inicio: state.config.horaInicio,
+                fecha: $('fecha').value,
+                hora_inicio: state.horaInicio,
                 minuto_observacion: minuto,
-                municipio: state.config.municipio,
-                parcela: state.config.parcela,
-                punto: state.config.punto,
-                sistema: state.config.sistema,
-                lat: state.config.lat || '',
-                lon: state.config.lon || '',
+                ruta: ruta ? ruta.nombre : '',
+                municipio: ruta ? ruta.municipio : $('municipio_auto').value,
+                estado: ruta ? ruta.estado : $('estado_auto').value,
+                localidad: ruta ? ruta.localidad : $('localidad_auto').value,
+                altitud: ruta ? ruta.altitud : $('altitud_auto').value,
+                parcela: parcela,
+                punto: punto,
+                sistema: sistema,
+                lat: state.gps.lat,
+                lon: state.gps.lon,
                 codigo: codigo,
-                nombre_comun: nombreComun || $('reg-nombre_comun')?.value || '',
-                cientifico: $('especie-cientifico').value || '',
-                individuos: getSelectedCircleText('grupo-individuos', 'individuos_otro'),
-                distancia: $('reg-distancia')?.value || '',
-                altura: $('reg-altura')?.value || '',
-                sexo: getSelectedText('grupo-sexo', null),
-                edad: getSelectedText('grupo-edad', null),
-                sustrato_tipo: state.sustratoSeleccionado.tipo || '',
-                sustrato_esp: sustratoEsp,
-                forma: getSelectedText('grupo-forma', null),
-                vertical: getSelectedText('grupo-vertical', null),
-                horizontal: getSelectedText('grupo-horizontal', null),
-                comportamiento: getSelectedText('grupo-comportamiento', null),
+                nombre_comun: nombreComun || $('especie-nombre_comun').value,
+                cientifico: $('especie-cientifico').value,
+                individuos: getSelectedCircle('grupo-individuos', 'individuos_otro'),
+                distancia: $('reg-distancia').value.trim(),
+                altura: $('reg-altura').value.trim(),
+                sexo: getSelectedValue('grupo-sexo', null),
+                edad: getSelectedValue('grupo-edad', null),
+                sustrato_tipo: $('sustrato_tipo').value,
+                sustrato_esp: getSustratoEspecifico(),
+                forma: getSelectedValue('grupo-forma', null),
+                vertical: getSelectedValue('grupo-vertical', null),
+                horizontal: getSelectedValue('grupo-horizontal', null),
+                comportamiento: getSelectedValue('grupo-comportamiento', null),
                 alimento: (() => {
-                    const val = getSelectedText('grupo-alimento', null);
-                    if (val === 'Otro') {
+                    const val = getSelectedValue('grupo-alimento', null);
+                    if (val === '6') {
                         const otro = document.getElementById('alimento_otro');
-                        return otro ? otro.value.trim() || 'Otro' : 'Otro';
+                        return otro ? otro.value.trim() || '6' : '6';
                     }
                     return val;
                 })(),
-                especie_vegetal: $('reg-especie_vegetal')?.value || '',
-                notas: $('reg-notas')?.value || '',
-                foto: state.fotoData || ''
+                especie_vegetal: $('reg-especie_vegetal').value.trim(),
+                verificado: getCheckboxValue('reg-verificado_si', 'reg-verificado_no'),
+                foto: state.fotoData || '',
+                notas: $('reg-notas').value.trim()
             };
 
-            let registros = obtenerRegistros();
-            registros.push(registro);
-            localStorage.setItem('avistamientos', JSON.stringify(registros));
-            state.registros = registros;
+            state.registros.push(registro);
+            guardarDatos();
 
             mostrarMensaje('✅ Registro guardado', 'ok');
             actualizarContadores();
             limpiarRegistro();
 
-            // Scroll al inicio del formulario de registro
-            document.getElementById('tab-registro').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Hacer scroll al inicio de la pestaña de registro
+            document.getElementById('tab-registro').scrollTop = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function limpiarRegistro() {
@@ -1973,17 +2221,16 @@
                 if (el) el.value = '';
             });
 
-            ['individuos_otro', 'alimento_otro', 'sustrato_esp_otro'].forEach(id => {
+            ['individuos_otro', 'sustrato_otro_texto', 'alimento_otro'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) { el.value = ''; el.style.display = 'none'; }
             });
 
-            // Limpiar acordeón de sustrato
-            document.querySelectorAll('#sustrato-accordion-container .accordion-body .opt-btn').forEach(b => b.classList.remove('selected'));
-            document.querySelectorAll('#sustrato-accordion-container .accordion-body').forEach(b => b.classList.remove('open'));
-            document.querySelectorAll('#sustrato-accordion-container .accordion-header').forEach(h => h.classList.remove('open'));
-            state.sustratoSeleccionado = { tipo: '', especifico: '' };
+            // Resetear selects de sustrato
+            $('sustrato_tipo').value = '';
+            $('sustrato_esp').innerHTML = '<option value="">Primero seleccione un tipo</option>';
 
+            document.querySelectorAll('#tab-registro input[type="checkbox"]').forEach(cb => cb.checked = false);
             quitarFoto();
             limpiarEspecieSeleccionada();
             mostrarPaso('grupos');
@@ -1998,18 +2245,9 @@
             setTimeout(() => { el.style.display = 'none'; }, 4000);
         }
 
-        // ---- FUNCIONES DE LISTA Y EXPORTACIÓN ----
-        function obtenerRegistros() {
-            try {
-                const stored = localStorage.getItem('avistamientos');
-                return stored ? JSON.parse(stored) : [];
-            } catch (e) { return []; }
-        }
-
-        function cargarRegistros() {
-            state.registros = obtenerRegistros();
-            actualizarContadores();
-        }
+        // ===================================================================
+        // 15. LISTA DE REGISTROS Y EXPORTACIÓN
+        // ===================================================================
 
         function actualizarContadores() {
             const count = state.registros.length;
@@ -2058,39 +2296,37 @@
         }
 
         function eliminarRegistro(id) {
-            let registros = obtenerRegistros();
-            registros = registros.filter(r => r.id !== id);
-            localStorage.setItem('avistamientos', JSON.stringify(registros));
-            state.registros = registros;
+            state.registros = state.registros.filter(r => r.id !== id);
+            guardarDatos();
             actualizarContadores();
             mostrarMensaje('🗑️ Registro eliminado', 'ok');
         }
 
         function eliminarTodos() {
             if (!confirm('¿Eliminar TODOS los registros guardados?')) return;
-            localStorage.removeItem('avistamientos');
             state.registros = [];
+            guardarDatos();
             actualizarContadores();
             mostrarMensaje('🗑️ Todos los registros eliminados', 'ok');
         }
 
         function exportarCSV() {
-            const registros = obtenerRegistros();
-            if (registros.length === 0) {
+            if (state.registros.length === 0) {
                 alert('No hay registros para exportar');
                 return;
             }
 
             const columnas = [
-                'id','fecha','hora_inicio','minuto_observacion','municipio','parcela','punto','sistema',
-                'lat','lon','codigo','nombre_comun','cientifico','individuos','distancia','altura',
+                'id','fecha','hora_inicio','minuto_observacion','ruta','municipio','estado','localidad',
+                'altitud','parcela','punto','sistema','lat','lon',
+                'codigo','nombre_comun','cientifico','individuos','distancia','altura',
                 'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
                 'horizontal','comportamiento','alimento','especie_vegetal',
-                'notas','foto'
+                'verificado','notas','foto'
             ];
 
             let csv = columnas.join(',') + '\n';
-            registros.forEach(r => {
+            state.registros.forEach(r => {
                 const fila = columnas.map(col => {
                     let val = r[col] !== undefined ? r[col] : '';
                     if (col === 'foto' && val.length > 100) val = '[FOTO]';
@@ -2104,22 +2340,25 @@
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `avistamientos_${new Date().toISOString().slice(0,10)}.csv`;
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.setAttribute('download', `avistamientos_${hoy()}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
+            URL.revokeObjectURL(url);
             mostrarMensaje('📤 CSV exportado', 'ok');
         }
 
-        // ---- TABS ----
+        // ===================================================================
+        // 16. TABS
+        // ===================================================================
+
         function initTabs() {
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = {
                 'tab-config': document.getElementById('tab-config'),
                 'tab-registro': document.getElementById('tab-registro'),
-                'tab-sitios': document.getElementById('tab-sitios'),
                 'tab-registros': document.getElementById('tab-registros')
             };
 
@@ -2131,15 +2370,88 @@
                     Object.keys(contents).forEach(key => {
                         contents[key].classList.toggle('active', key === target);
                     });
-                    if (target === 'tab-registros' || target === 'tab-sitios') {
-                        if (target === 'tab-sitios') renderizarEditorSitios();
-                        if (target === 'tab-registros') actualizarContadores();
+                    if (target === 'tab-registros') {
+                        actualizarContadores();
                     }
                 });
             });
         }
 
-        // ---- INICIO ----
+        // ===================================================================
+        // 17. INICIALIZACIÓN
+        // ===================================================================
+
+        async function init() {
+            // Cargar datos guardados
+            cargarDatos();
+
+            // Cargar INEGI
+            await cargarINEGI();
+
+            // Fecha y hora por defecto
+            const ahora = new Date();
+            $('fecha').value = ahora.toISOString().slice(0,10);
+            $('hora_inicio').value = ahora.toTimeString().slice(0,5);
+
+            // Inicializar grupos de botones
+            initGrupos();
+
+            // Inicializar selector de especies
+            initSelectorEspecies();
+
+            // Inicializar sustrato dinámico
+            initSustratoDinamico();
+
+            // Inicializar radar (zoom)
+            initRadarZoom();
+
+            // Inicializar pestañas
+            initTabs();
+
+            // Renderizar rutas
+            renderRutas();
+
+            // Cargar registros
+            actualizarContadores();
+
+            // Eventos
+            $('btn-crear-ruta').addEventListener('click', crearRuta);
+            $('btn-eliminar-ruta').addEventListener('click', eliminarRuta);
+            $('selector-ruta').addEventListener('change', function() {
+                state.rutaActiva = this.value || null;
+                actualizarInfoRuta();
+                actualizarCamposAutomaticos();
+                actualizarRadar();
+                validarInicioConteo();
+            });
+
+            $('btn-gps').addEventListener('click', obtenerGPS);
+            $('btn-iniciar-conteo').addEventListener('click', iniciarConteo);
+            $('btn-detener-alarma').addEventListener('click', detenerAlarma);
+            $('btn-finalizar-conteo').addEventListener('click', finalizarConteo);
+
+            $('btn-tomar-foto').addEventListener('click', tomarFoto);
+            $('btn-quitar-foto').addEventListener('click', quitarFoto);
+
+            $('btn-guardar-registro').addEventListener('click', guardarRegistro);
+            $('btn-limpiar-registro').addEventListener('click', limpiarRegistro);
+
+            $('btn-exportar-csv').addEventListener('click', exportarCSV);
+            $('btn-eliminar-todos').addEventListener('click', eliminarTodos);
+
+            // Validar estado inicial
+            validarInicioConteo();
+
+            // Actualizar radar periódicamente (cada 5 seg) si hay GPS
+            setInterval(() => {
+                if (state.gps.lat !== null && state.gps.lon !== null) {
+                    actualizarRadar();
+                    validarInicioConteo();
+                }
+            }, 5000);
+        }
+
+        // ---- Inicio ----
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
