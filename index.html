@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AvistaR · Formulario de campo</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#013366">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        /* ===== RESET Y ESTILOS GLOBALES ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: #E8E8E8;
+            padding: 12px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+        .app {
+            max-width: 700px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            padding: 20px 16px 30px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 22px;
+            color: #013366;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        .subhead {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            background: #d5dce4;
+            border-radius: 40px;
+            padding: 4px;
+        }
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #2c3e50;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: #013366;
+            color: white;
+            box-shadow: 0 2px 8px rgba(1, 51, 102, 0.4);
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.5; transform: translateY(4px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECCIONES DEL FORMULARIO ===== */
+        .section {
+            border: 1px solid #d0d9e3;
+            border-radius: 16px;
+            padding: 16px 14px 12px;
+            margin-bottom: 18px;
+            background: #fafcff;
+        }
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #013366;
+            background: white;
+            display: inline-block;
+            padding: 0 12px;
+            margin-top: -26px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 12px;
+            margin-bottom: 8px;
+        }
+        .label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1f3a57;
+            min-width: 85px;
+        }
+        .label-sm {
+            min-width: 60px;
+            font-size: 12px;
+        }
+
+        /* ===== NUEVOS BOTONES VERTICALES ===== */
+        .btn-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+            margin-top: 4px;
+        }
+        .option-btn {
+            background: #013366;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            touch-action: manipulation;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .option-btn:active {
+            transform: scale(0.98);
+        }
+        .option-btn.selected {
+            background: #004d99;
+            border: 2px solid #FFB74D;
+            box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.3);
+        }
+        .option-btn.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.8);
+        }
+        .option-btn .badge-opt {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 0 10px;
+            font-size: 11px;
+        }
+
+        .inline-input {
+            border: none;
+            border-bottom: 2px solid #013366;
+            background: transparent;
+            font-size: 15px;
+            padding: 4px 6px;
+            min-width: 60px;
+            max-width: 140px;
+            font-weight: 500;
+            outline: none;
+        }
+        .inline-input:focus {
+            border-bottom-color: #FFB74D;
+        }
+        .inline-input-sm { min-width: 50px; max-width: 80px; }
+        .inline-input-lg { min-width: 100px; max-width: 180px; }
+
+        .checkbox-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: #013366;
+        }
+
+        .notas-area {
+            width: 100%;
+            border: 1px solid #bcc9d6;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 14px;
+            min-height: 60px;
+            background: white;
+            resize: vertical;
+            margin-top: 4px;
+        }
+        .btn-primary {
+            background: #013366;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 17px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 6px;
+            box-shadow: 0 4px 10px rgba(1, 51, 102, 0.3);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: #002244;
+        }
+        .btn-secondary {
+            background: #e8edf3;
+            color: #013366;
+            border: 1px solid #bcc9d6;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-secondary:active {
+            background: #d0d9e3;
+        }
+        .btn-danger {
+            background: #c0392b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-danger:active {
+            background: #a93226;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        /* ===== TABLA DE REGISTROS ===== */
+        .registros-container {
+            overflow-x: auto;
+        }
+        .registros-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .registros-container th {
+            background: #013366;
+            color: white;
+            padding: 8px 6px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .registros-container td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #e0e6ed;
+            vertical-align: top;
+        }
+        .registros-container tr:last-child td {
+            border-bottom: none;
+        }
+        .badge-count {
+            background: #FFB74D;
+            color: #013366;
+            border-radius: 40px;
+            padding: 2px 12px;
+            font-size: 13px;
+            display: inline-block;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+        .empty-msg {
+            color: #777;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 15px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 500px) {
+            .app { padding: 14px 10px; }
+            .option-btn { font-size: 14px; padding: 14px 14px; }
+            .label { min-width: 70px; font-size: 12px; }
+            .inline-input { font-size: 14px; min-width: 50px; }
+            .row { gap: 4px 8px; }
+            .section { padding: 14px 10px 10px; }
+        }
+        .mt-1 { margin-top: 8px; }
+        .mb-1 { margin-bottom: 8px; }
+        .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .text-muted { color: #666; font-size: 12px; }
+        .text-center { text-align: center; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="app" id="app">
+    <!-- HEADER -->
+    <div class="flex-between">
+        <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">campo</span></h1>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">OFFLINE v2</span>
+    </div>
+    <div class="subhead">Seleccione la opción que corresponda · Desplácese hacia abajo</div>
+
+    <!-- PESTAÑAS -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-registro">📝 Registrar</button>
+        <button class="tab-btn" data-tab="tab-registros">📋 Mis registros <span id="contador-badge" class="badge-count">0</span></button>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 1: REGISTRO -->
+    <!-- ========================================================= -->
+    <div id="tab-registro" class="tab-content active">
+        <form id="formRegistro" autocomplete="off">
+
+            <!-- SECCIÓN: SITIO -->
+            <div class="section">
+                <div class="section-title">📍 SITIO</div>
+                <div class="row">
+                    <span class="label">Fecha:</span>
+                    <input type="date" id="fecha" class="inline-input" style="min-width:130px;">
+                    <span class="label">Hora:</span>
+                    <input type="time" id="hora" class="inline-input" style="min-width:100px;">
+                </div>
+                <div class="row">
+                    <span class="label">Muestreo:</span>
+                    <div class="btn-stack" id="grupo-muestreo">
+                        <button type="button" class="option-btn" data-value="1">1 <span class="badge-opt">01</span></button>
+                        <button type="button" class="option-btn" data-value="2">2 <span class="badge-opt">02</span></button>
+                        <button type="button" class="option-btn" data-value="3">3 <span class="badge-opt">03</span></button>
+                        <button type="button" class="option-btn" data-value="4">4 <span class="badge-opt">04</span></button>
+                        <button type="button" class="option-btn" data-value="5">5 <span class="badge-opt">05</span></button>
+                        <button type="button" class="option-btn" data-value="6">6 <span class="badge-opt">06</span></button>
+                        <button type="button" class="option-btn" data-value="7">7 <span class="badge-opt">07</span></button>
+                        <button type="button" class="option-btn" data-value="8">8 <span class="badge-opt">08</span></button>
+                        <button type="button" class="option-btn" data-value="9">9 <span class="badge-opt">09</span></button>
+                        <button type="button" class="option-btn" data-value="10">10 <span class="badge-opt">10</span></button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro número</button>
+                        <input type="text" id="muestreo_otro" class="inline-input inline-input-sm" placeholder="Escriba Nº" style="margin-top:4px; display:none;">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Municipio:</span>
+                    <div class="btn-stack" id="grupo-municipio">
+                        <button type="button" class="option-btn" data-value="1">Texcoco</button>
+                        <button type="button" class="option-btn" data-value="2">Chapingo</button>
+                        <button type="button" class="option-btn" data-value="3">Atenco</button>
+                        <button type="button" class="option-btn" data-value="4">Chimalhuacán</button>
+                        <button type="button" class="option-btn" data-value="5">Papantla</button>
+                        <button type="button" class="option-btn" data-value="6">Chicontepec</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro municipio</button>
+                        <input type="text" id="municipio_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Parcela:</span>
+                    <div class="btn-stack" id="grupo-parcela">
+                        <button type="button" class="option-btn" data-value="1">PA-01</button>
+                        <button type="button" class="option-btn" data-value="2">PA-02</button>
+                        <button type="button" class="option-btn" data-value="3">PA-03</button>
+                        <button type="button" class="option-btn" data-value="4">PA-04</button>
+                        <button type="button" class="option-btn" data-value="5">PA-05</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro parcela</button>
+                        <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Punto:</span>
+                    <div class="btn-stack" id="grupo-punto">
+                        <button type="button" class="option-btn" data-value="1">PT-01</button>
+                        <button type="button" class="option-btn" data-value="2">PT-02</button>
+                        <button type="button" class="option-btn" data-value="3">PT-03</button>
+                        <button type="button" class="option-btn" data-value="4">PT-04</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro punto</button>
+                        <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Sistema:</span>
+                    <div class="btn-stack" id="grupo-sistema">
+                        <button type="button" class="option-btn" data-value="1">SAF</button>
+                        <button type="button" class="option-btn" data-value="2">MIAF</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro sistema</button>
+                        <input type="text" id="sistema_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: ESPECIE -->
+            <div class="section">
+                <div class="section-title">🐦 ESPECIE</div>
+                <div class="row">
+                    <span class="label">Código (6 letras):</span>
+                    <input type="text" id="codigo" class="inline-input inline-input-lg" placeholder="Ej. TURMER" maxlength="10" required>
+                </div>
+                <div class="row">
+                    <span class="label">Nombre común:</span>
+                    <input type="text" id="nombre_comun" class="inline-input inline-input-lg" placeholder="Opcional">
+                </div>
+            </div>
+
+            <!-- SECCIÓN: ESPECÍMEN -->
+            <div class="section">
+                <div class="section-title">🔎 ESPECÍMEN</div>
+                <div class="row">
+                    <span class="label">Individuos:</span>
+                    <div class="btn-stack" id="grupo-individuos">
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Más de 10</button>
+                        <input type="number" id="individuos_otro" class="inline-input inline-input-sm" placeholder="Cant." style="margin-top:4px; display:none;" min="1">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Minuto (1-10):</span>
+                    <div class="btn-stack" id="grupo-minuto">
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="number" id="minuto_otro" class="inline-input inline-input-sm" placeholder="Min" style="margin-top:4px; display:none;" min="1">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Distancia (m):</span>
+                    <div class="btn-stack" id="grupo-distancia">
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="15">15</button>
+                        <button type="button" class="option-btn" data-value="20">20</button>
+                        <button type="button" class="option-btn" data-value="25">25</button>
+                        <button type="button" class="option-btn" data-value="30">30</button>
+                        <button type="button" class="option-btn" data-value="40">40</button>
+                        <button type="button" class="option-btn" data-value="50">50</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="number" id="distancia_otro" class="inline-input inline-input-sm" placeholder="m" style="margin-top:4px; display:none;" min="1">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Altura (m):</span>
+                    <div class="btn-stack" id="grupo-altura">
+                        <button type="button" class="option-btn" data-value="0">0 (Suelo)</button>
+                        <button type="button" class="option-btn" data-value="1">1</button>
+                        <button type="button" class="option-btn" data-value="2">2</button>
+                        <button type="button" class="option-btn" data-value="3">3</button>
+                        <button type="button" class="option-btn" data-value="4">4</button>
+                        <button type="button" class="option-btn" data-value="5">5</button>
+                        <button type="button" class="option-btn" data-value="6">6</button>
+                        <button type="button" class="option-btn" data-value="7">7</button>
+                        <button type="button" class="option-btn" data-value="8">8</button>
+                        <button type="button" class="option-btn" data-value="9">9</button>
+                        <button type="button" class="option-btn" data-value="10">10</button>
+                        <button type="button" class="option-btn" data-value="15">15</button>
+                        <button type="button" class="option-btn" data-value="20">20</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="number" id="altura_otro" class="inline-input inline-input-sm" placeholder="m" style="margin-top:4px; display:none;" min="0">
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Sexo:</span>
+                    <div class="btn-stack" id="grupo-sexo">
+                        <button type="button" class="option-btn" data-value="1">Macho</button>
+                        <button type="button" class="option-btn" data-value="2">Hembra</button>
+                        <button type="button" class="option-btn" data-value="3">Ambos</button>
+                        <button type="button" class="option-btn" data-value="4">Indeterminado</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Edad:</span>
+                    <div class="btn-stack" id="grupo-edad">
+                        <button type="button" class="option-btn" data-value="1">Cría</button>
+                        <button type="button" class="option-btn" data-value="2">Volantón</button>
+                        <button type="button" class="option-btn" data-value="3">Juvenil</button>
+                        <button type="button" class="option-btn" data-value="4">Adulto</button>
+                        <button type="button" class="option-btn" data-value="5">Senil</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: SUSTRATO -->
+            <div class="section">
+                <div class="section-title">🌿 SUSTRATO</div>
+                <div class="row">
+                    <span class="label">Tipo:</span>
+                    <div class="btn-stack" id="grupo-sustrato_tipo">
+                        <button type="button" class="option-btn" data-value="1">Suelo</button>
+                        <button type="button" class="option-btn" data-value="2">Vegetación muerta</button>
+                        <button type="button" class="option-btn" data-value="3">Vegetación viva</button>
+                        <button type="button" class="option-btn" data-value="4">Infraestructura</button>
+                        <button type="button" class="option-btn" data-value="5">Cuerpo de agua</button>
+                        <button type="button" class="option-btn" data-value="6" id="btn-volando">Volando</button>
+                        <button type="button" class="option-btn" data-value="7">Otro</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Específico:</span>
+                    <div class="btn-stack" id="grupo-sustrato_esp">
+                        <button type="button" class="option-btn" data-value="1">Opción 1</button>
+                        <button type="button" class="option-btn" data-value="2">Opción 2</button>
+                        <button type="button" class="option-btn" data-value="3">Opción 3</button>
+                        <button type="button" class="option-btn" data-value="4">Opción 4</button>
+                        <button type="button" class="option-btn" data-value="5">Opción 5</button>
+                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
+                        <input type="text" id="sustrato_esp_otro" class="inline-input inline-input-sm" placeholder="Escriba" style="margin-top:4px; display:none;">
+                    </div>
+                    <span class="text-muted" style="margin-top:4px;">(Depende del tipo, use la guía)</span>
+                </div>
+                <div class="row">
+                    <span class="label">Forma estructural:</span>
+                    <div class="btn-stack" id="grupo-forma">
+                        <button type="button" class="option-btn" data-value="1">Herbácea</button>
+                        <button type="button" class="option-btn" data-value="2">Arbustiva</button>
+                        <button type="button" class="option-btn" data-value="3">Arbórea</button>
+                        <button type="button" class="option-btn" data-value="4">No aplica</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Posición vertical:</span>
+                    <div class="btn-stack" id="grupo-vertical">
+                        <button type="button" class="option-btn" data-value="1">Alto</button>
+                        <button type="button" class="option-btn" data-value="2">Medio</button>
+                        <button type="button" class="option-btn" data-value="3">Bajo</button>
+                        <button type="button" class="option-btn" data-value="4">No aplica</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Posición horizontal:</span>
+                    <div class="btn-stack" id="grupo-horizontal">
+                        <button type="button" class="option-btn" data-value="1">Interno</button>
+                        <button type="button" class="option-btn" data-value="2">Externo</button>
+                        <button type="button" class="option-btn" data-value="3">No aplica</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Especie vegetal:</span>
+                    <input type="text" id="especie_vegetal" class="inline-input inline-input-lg" placeholder="Código o nombre (opcional)">
+                </div>
+            </div>
+
+            <!-- SECCIÓN: COMPORTAMIENTO -->
+            <div class="section">
+                <div class="section-title">🧠 COMPORTAMIENTO</div>
+                <div class="row">
+                    <span class="label">Comportamiento:</span>
+                    <div class="btn-stack" id="grupo-comportamiento">
+                        <button type="button" class="option-btn" data-value="1">Alimentándose</button>
+                        <button type="button" class="option-btn" data-value="2">Caminando</button>
+                        <button type="button" class="option-btn" data-value="3">Cantando</button>
+                        <button type="button" class="option-btn" data-value="4">Cortejo</button>
+                        <button type="button" class="option-btn" data-value="5">Nidificando</button>
+                        <button type="button" class="option-btn" data-value="6">Percha</button>
+                        <button type="button" class="option-btn" data-value="7">Reproducción</button>
+                        <button type="button" class="option-btn" data-value="8">Vigilancia</button>
+                        <button type="button" class="option-btn" data-value="9">Vuelo corto</button>
+                        <button type="button" class="option-btn" data-value="10">Vuelo largo</button>
+                        <button type="button" class="option-btn" data-value="11">No determinado</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label">Tipo alimento:</span>
+                    <div class="btn-stack" id="grupo-alimento">
+                        <button type="button" class="option-btn" data-value="1">Invertebrados</button>
+                        <button type="button" class="option-btn" data-value="2">Frutos</button>
+                        <button type="button" class="option-btn" data-value="3">Néctar</button>
+                        <button type="button" class="option-btn" data-value="4">Semillas</button>
+                        <button type="button" class="option-btn" data-value="5">Vertebrados</button>
+                        <button type="button" class="option-btn" data-value="6">Otro</button>
+                        <input type="text" id="alimento_otro" class="inline-input inline-input-sm" placeholder="Especifique" style="margin-top:4px; display:none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: VERIFICADO Y NOTAS -->
+            <div class="section">
+                <div class="section-title">✅ FINAL</div>
+                <div class="row">
+                    <span class="label">Verificado:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item"><input type="checkbox" id="verificado_si"> <label for="verificado_si">Sí</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="verificado_no"> <label for="verificado_no">No</label></div>
+                    </div>
+                    <span style="margin-left:10px; font-weight:600;">Foto:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item"><input type="checkbox" id="foto_si"> <label for="foto_si">Sí</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="foto_no"> <label for="foto_no">No</label></div>
+                    </div>
+                </div>
+                <div class="row" style="align-items:flex-start;">
+                    <span class="label" style="margin-top:4px;">Notas:</span>
+                    <textarea id="notas" class="notas-area" placeholder="Observaciones, clima, comportamiento destacado..."></textarea>
+                </div>
+            </div>
+
+            <button type="button" id="btnGuardar" class="btn-primary">💾 Guardar registro</button>
+            <div style="margin-top:8px; text-align:center; font-size:13px; color:#777;">
+                <span id="mensaje-guardado" style="display:none; color:#1a7a3a; font-weight:600;">✅ Registro guardado</span>
+            </div>
+        </form>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 2: REGISTROS GUARDADOS -->
+    <!-- ========================================================= -->
+    <div id="tab-registros" class="tab-content">
+        <div class="flex-between mb-1">
+            <span style="font-weight:600; font-size:15px;">Registros locales</span>
+            <span id="contador-registros" style="background:#013366; color:white; padding:2px 14px; border-radius:30px;">0</span>
+        </div>
+        <div class="toolbar">
+            <button id="btnExportarCSV" class="btn-secondary">📤 Exportar CSV</button>
+            <button id="btnEliminarTodos" class="btn-danger">🗑️ Borrar todo</button>
+        </div>
+        <div class="registros-container" id="lista-registros">
+            <div class="empty-msg">Aún no hay registros guardados</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- JAVASCRIPT – LÓGICA COMPLETA + CONDICIONANTES -->
+<!-- ========================================================= -->
+<script>
+    (function() {
+        'use strict';
+
+        const form = document.getElementById('formRegistro');
+
+        // ---- Configurar grupos de botones (vertical) ----
+        function setupButtonGroup(groupId, hiddenInputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return;
+            const buttons = container.querySelectorAll('.option-btn');
+            const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const value = this.dataset.value;
+
+                    // Si es "otro"
+                    if (value === 'otro' && hiddenInput) {
+                        buttons.forEach(b => b.classList.remove('selected'));
+                        hiddenInput.style.display = 'block';
+                        hiddenInput.focus();
+                        // Limpiar selección del hidden
+                        return;
+                    }
+
+                    // Si hay hidden input, ocultarlo
+                    if (hiddenInput) {
+                        hiddenInput.style.display = 'none';
+                        hiddenInput.value = '';
+                    }
+
+                    // Deseleccionar todos y seleccionar este
+                    buttons.forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            if (hiddenInput) {
+                hiddenInput.addEventListener('blur', function() {
+                    if (this.value.trim() === '') {
+                        this.style.display = 'none';
+                    }
+                });
+                hiddenInput.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        buttons.forEach(b => b.classList.remove('selected'));
+                    }
+                });
+            }
+        }
+
+        // Inicializar todos los grupos
+        setupButtonGroup('grupo-muestreo', 'muestreo_otro');
+        setupButtonGroup('grupo-municipio', 'municipio_otro');
+        setupButtonGroup('grupo-parcela', 'parcela_otro');
+        setupButtonGroup('grupo-punto', 'punto_otro');
+        setupButtonGroup('grupo-sistema', 'sistema_otro');
+        setupButtonGroup('grupo-individuos', 'individuos_otro');
+        setupButtonGroup('grupo-minuto', 'minuto_otro');
+        setupButtonGroup('grupo-distancia', 'distancia_otro');
+        setupButtonGroup('grupo-altura', 'altura_otro');
+        setupButtonGroup('grupo-sexo', null);
+        setupButtonGroup('grupo-edad', null);
+        setupButtonGroup('grupo-sustrato_tipo', null);
+        setupButtonGroup('grupo-sustrato_esp', 'sustrato_esp_otro');
+        setupButtonGroup('grupo-forma', null);
+        setupButtonGroup('grupo-vertical', null);
+        setupButtonGroup('grupo-horizontal', null);
+        setupButtonGroup('grupo-comportamiento', null);
+        setupButtonGroup('grupo-alimento', null);
+
+        // ---- FUNCIONES DE UTILIDAD ----
+        function getSelectedValue(groupId, inputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return '';
+            const selected = container.querySelector('.option-btn.selected');
+            if (selected) {
+                const val = selected.dataset.value;
+                if (val === 'otro') {
+                    const inp = document.getElementById(inputId);
+                    if (inp) return inp.value.trim() || '';
+                    return '';
+                }
+                return val;
+            }
+            if (inputId) {
+                const inp = document.getElementById(inputId);
+                if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
+                    return inp.value.trim();
+                }
+            }
+            return '';
+        }
+
+        function getCheckboxValue(idSi, idNo) {
+            const si = document.getElementById(idSi);
+            const no = document.getElementById(idNo);
+            if (si.checked) return '1';
+            if (no.checked) return '0';
+            return '';
+        }
+
+        // ---- CONDICIONANTES DINÁMICAS ----
+        function updateSustratoOptions(alturaVal) {
+            const btnVolando = document.getElementById('btn-volando');
+            if (!btnVolando) return;
+            const container = document.getElementById('grupo-sustrato_tipo');
+            if (!container) return;
+
+            // Si altura es 0 (número o string '0'), ocultar Volando
+            if (alturaVal === '0' || alturaVal === 0) {
+                btnVolando.classList.add('hidden');
+                // Si estaba seleccionado, deseleccionarlo
+                if (btnVolando.classList.contains('selected')) {
+                    btnVolando.classList.remove('selected');
+                }
+            } else {
+                btnVolando.classList.remove('hidden');
+            }
+        }
+
+        function updateAlimentoStatus(comportamientoVal) {
+            const container = document.getElementById('grupo-alimento');
+            if (!container) return;
+            const buttons = container.querySelectorAll('.option-btn');
+            const isAlimentandose = (comportamientoVal === '1');
+
+            buttons.forEach(btn => {
+                if (isAlimentandose) {
+                    btn.classList.remove('disabled');
+                } else {
+                    btn.classList.add('disabled');
+                    btn.classList.remove('selected');
+                }
+            });
+            // Si no está alimentándose, limpiar el input "otro" de alimento
+            if (!isAlimentandose) {
+                const inp = document.getElementById('alimento_otro');
+                if (inp) { inp.value = ''; inp.style.display = 'none'; }
+            }
+        }
+
+        function updateFormaStatus(sustratoVal) {
+            const grupos = ['grupo-forma', 'grupo-vertical', 'grupo-horizontal'];
+            const isVegetacion = (sustratoVal === '2' || sustratoVal === '3');
+
+            grupos.forEach(gid => {
+                const container = document.getElementById(gid);
+                if (!container) return;
+                const buttons = container.querySelectorAll('.option-btn');
+                buttons.forEach(btn => {
+                    if (isVegetacion) {
+                        btn.classList.remove('disabled');
+                    } else {
+                        btn.classList.add('disabled');
+                        btn.classList.remove('selected');
+                        // Si el valor es "No aplica" (4 en forma, 4 en vertical, 3 en horizontal) lo seleccionamos automáticamente
+                        if (gid === 'grupo-forma' && btn.dataset.value === '4') {
+                            btn.classList.add('selected');
+                        } else if (gid === 'grupo-vertical' && btn.dataset.value === '4') {
+                            btn.classList.add('selected');
+                        } else if (gid === 'grupo-horizontal' && btn.dataset.value === '3') {
+                            btn.classList.add('selected');
+                        }
+                    }
+                });
+            });
+        }
+
+        // ---- ESCUCHAR CAMBIOS EN LOS GRUPOS ----
+        // 1. Altura
+        document.getElementById('grupo-altura').addEventListener('click', function(e) {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            // Esperar a que se actualice la selección (usamos setTimeout)
+            setTimeout(() => {
+                const val = getSelectedValue('grupo-altura', 'altura_otro');
+                updateSustratoOptions(val);
+            }, 50);
+        });
+        document.getElementById('altura_otro').addEventListener('input', function() {
+            const val = this.value.trim();
+            updateSustratoOptions(val);
+        });
+
+        // 2. Comportamiento
+        document.getElementById('grupo-comportamiento').addEventListener('click', function(e) {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            setTimeout(() => {
+                const val = getSelectedValue('grupo-comportamiento', null);
+                updateAlimentoStatus(val);
+            }, 50);
+        });
+
+        // 3. Sustrato Tipo
+        document.getElementById('grupo-sustrato_tipo').addEventListener('click', function(e) {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+            setTimeout(() => {
+                const val = getSelectedValue('grupo-sustrato_tipo', null);
+                updateFormaStatus(val);
+            }, 50);
+        });
+
+        // ---- GUARDAR REGISTRO ----
+        function guardarRegistro() {
+            const fecha = document.getElementById('fecha').value;
+            const hora = document.getElementById('hora').value;
+            if (!fecha) { mostrarMensaje('⚠️ Seleccione fecha', 'error'); return; }
+            if (!hora) { mostrarMensaje('⚠️ Seleccione hora', 'error'); return; }
+
+            const codigo = document.getElementById('codigo').value.trim();
+            if (!codigo) { mostrarMensaje('⚠️ Ingrese el código de la especie', 'error'); return; }
+
+            // Recolectar datos
+            const registro = {
+                id: Date.now(),
+                fecha, hora,
+                muestreo: getSelectedValue('grupo-muestreo', 'muestreo_otro'),
+                municipio: getSelectedValue('grupo-municipio', 'municipio_otro'),
+                parcela: getSelectedValue('grupo-parcela', 'parcela_otro'),
+                punto: getSelectedValue('grupo-punto', 'punto_otro'),
+                sistema: getSelectedValue('grupo-sistema', 'sistema_otro'),
+                codigo,
+                nombre_comun: document.getElementById('nombre_comun').value.trim(),
+                individuos: getSelectedValue('grupo-individuos', 'individuos_otro'),
+                minuto: getSelectedValue('grupo-minuto', 'minuto_otro'),
+                distancia: getSelectedValue('grupo-distancia', 'distancia_otro'),
+                altura: getSelectedValue('grupo-altura', 'altura_otro'),
+                sexo: getSelectedValue('grupo-sexo', null),
+                edad: getSelectedValue('grupo-edad', null),
+                sustrato_tipo: getSelectedValue('grupo-sustrato_tipo', null),
+                sustrato_esp: getSelectedValue('grupo-sustrato_esp', 'sustrato_esp_otro'),
+                forma: getSelectedValue('grupo-forma', null),
+                vertical: getSelectedValue('grupo-vertical', null),
+                horizontal: getSelectedValue('grupo-horizontal', null),
+                comportamiento: getSelectedValue('grupo-comportamiento', null),
+                alimento: (() => {
+                    const val = getSelectedValue('grupo-alimento', null);
+                    if (val === '6') {
+                        const otro = document.getElementById('alimento_otro').value.trim();
+                        return otro || '6';
+                    }
+                    return val;
+                })(),
+                especie_vegetal: document.getElementById('especie_vegetal').value.trim(),
+                verificado: getCheckboxValue('verificado_si', 'verificado_no'),
+                foto: getCheckboxValue('foto_si', 'foto_no'),
+                notas: document.getElementById('notas').value.trim()
+            };
+
+            // Guardar en localStorage
+            let registros = [];
+            try {
+                const stored = localStorage.getItem('avistamientos');
+                registros = stored ? JSON.parse(stored) : [];
+            } catch (e) { registros = []; }
+
+            registros.push(registro);
+            localStorage.setItem('avistamientos', JSON.stringify(registros));
+
+            mostrarMensaje('✅ Registro guardado correctamente', 'ok');
+            actualizarContadores();
+            limpiarFormulario();
+        }
+
+        // ---- LIMPIAR FORMULARIO ----
+        function limpiarFormulario() {
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            const otros = [
+                'muestreo_otro', 'municipio_otro', 'parcela_otro', 'punto_otro',
+                'sistema_otro', 'individuos_otro', 'minuto_otro', 'distancia_otro',
+                'altura_otro', 'sustrato_esp_otro', 'alimento_otro'
+            ];
+            otros.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.value = ''; el.style.display = 'none'; }
+            });
+            document.getElementById('codigo').value = '';
+            document.getElementById('nombre_comun').value = '';
+            document.getElementById('especie_vegetal').value = '';
+            document.getElementById('notas').value = '';
+            document.getElementById('verificado_si').checked = false;
+            document.getElementById('verificado_no').checked = false;
+            document.getElementById('foto_si').checked = false;
+            document.getElementById('foto_no').checked = false;
+            // Re-ejecutar condicionantes para estado inicial
+            updateSustratoOptions(''); // ocultar volando si altura no seleccionada
+            updateAlimentoStatus('');
+            updateFormaStatus('');
+        }
+
+        // ---- MOSTRAR MENSAJE ----
+        function mostrarMensaje(texto, tipo) {
+            const el = document.getElementById('mensaje-guardado');
+            el.textContent = texto;
+            el.style.display = 'block';
+            el.style.color = tipo === 'error' ? '#c0392b' : '#1a7a3a';
+            setTimeout(() => { el.style.display = 'none'; }, 4000);
+        }
+
+        // ---- ACTUALIZAR CONTADORES Y LISTA ----
+        function actualizarContadores() {
+            const registros = obtenerRegistros();
+            const count = registros.length;
+            document.getElementById('contador-badge').textContent = count;
+            document.getElementById('contador-registros').textContent = count;
+            renderizarLista(registros);
+        }
+
+        function obtenerRegistros() {
+            try {
+                const stored = localStorage.getItem('avistamientos');
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) { return []; }
+        }
+
+        function renderizarLista(registros) {
+            const container = document.getElementById('lista-registros');
+            if (!registros || registros.length === 0) {
+                container.innerHTML = '<div class="empty-msg">📭 No hay registros guardados</div>';
+                return;
+            }
+
+            let html = `<table>
+                <thead><tr>
+                    <th>#</th><th>Fecha</th><th>Hora</th><th>Código</th>
+                    <th>Ind.</th><th>Comport.</th><th>Acción</th>
+                </tr></thead><tbody>`;
+
+            registros.slice().reverse().forEach((r, idx) => {
+                const num = registros.length - idx;
+                html += `<tr>
+                    <td>${num}</td>
+                    <td>${r.fecha || ''}</td>
+                    <td>${r.hora || ''}</td>
+                    <td><strong>${r.codigo || ''}</strong></td>
+                    <td>${r.individuos || ''}</td>
+                    <td>${r.comportamiento || ''}</td>
+                    <td><button class="btn-danger" style="padding:4px 10px; font-size:11px;" data-id="${r.id}">✕</button></td>
+                </tr>`;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+
+            container.querySelectorAll('[data-id]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.dataset.id);
+                    eliminarRegistro(id);
+                });
+            });
+        }
+
+        function eliminarRegistro(id) {
+            let registros = obtenerRegistros();
+            registros = registros.filter(r => r.id !== id);
+            localStorage.setItem('avistamientos', JSON.stringify(registros));
+            actualizarContadores();
+            mostrarMensaje('🗑️ Registro eliminado', 'ok');
+        }
+
+        function eliminarTodos() {
+            if (!confirm('¿Eliminar TODOS los registros guardados?')) return;
+            localStorage.removeItem('avistamientos');
+            actualizarContadores();
+            mostrarMensaje('🗑️ Todos los registros eliminados', 'ok');
+        }
+
+        // ---- EXPORTAR CSV ----
+        function exportarCSV() {
+            const registros = obtenerRegistros();
+            if (registros.length === 0) {
+                alert('No hay registros para exportar');
+                return;
+            }
+
+            const columnas = [
+                'id','fecha','hora','muestreo','municipio','parcela','punto','sistema',
+                'codigo','nombre_comun','individuos','minuto','distancia','altura',
+                'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
+                'horizontal','comportamiento','alimento','especie_vegetal',
+                'verificado','foto','notas'
+            ];
+
+            let csv = columnas.join(',') + '\n';
+            registros.forEach(r => {
+                const fila = columnas.map(col => {
+                    let val = r[col] !== undefined ? r[col] : '';
+                    if (typeof val === 'string' && (val.includes(',') || val.includes('"'))) {
+                        val = '"' + val.replace(/"/g, '""') + '"';
+                    }
+                    return val;
+                });
+                csv += fila.join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.setAttribute('download', `avistamientos_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            mostrarMensaje('📤 CSV exportado', 'ok');
+        }
+
+        // ---- TABS ----
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = {
+                'tab-registro': document.getElementById('tab-registro'),
+                'tab-registros': document.getElementById('tab-registros')
+            };
+
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabs.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const target = this.dataset.tab;
+                    Object.keys(contents).forEach(key => {
+                        contents[key].classList.toggle('active', key === target);
+                    });
+                    if (target === 'tab-registros') {
+                        actualizarContadores();
+                    }
+                });
+            });
+        }
+
+        // ---- INICIALIZACIÓN ----
+        function init() {
+            const ahora = new Date();
+            document.getElementById('fecha').value = ahora.toISOString().slice(0,10);
+            document.getElementById('hora').value = ahora.toTimeString().slice(0,5);
+
+            initTabs();
+            actualizarContadores();
+
+            // Estado inicial de condicionantes
+            updateSustratoOptions('');
+            updateAlimentoStatus('');
+            updateFormaStatus('');
+
+            document.getElementById('btnGuardar').addEventListener('click', guardarRegistro);
+            document.getElementById('btnExportarCSV').addEventListener('click', exportarCSV);
+            document.getElementById('btnEliminarTodos').addEventListener('click', eliminarTodos);
+
+            form.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    guardarRegistro();
+                }
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+    })();
+</script>
+
+</body>
+</html>
