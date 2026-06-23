@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AvistaR · Formulario de campo</title>
+    <title>AvistaR · Conteo Visual</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#013366">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        /* ===== RESET Y ESTILOS GLOBALES ===== */
+        /* ===== RESET Y ESTILOS GLOBALES (igual que antes) ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,20 +18,20 @@
         }
         body {
             background: #E8E8E8;
-            padding: 12px;
+            padding: 0;
+            margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
         }
         .app {
-            max-width: 700px;
+            max-width: none;
             width: 100%;
             background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            padding: 20px 16px 30px;
-            position: relative;
-            margin-bottom: 20px;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 16px 12px 30px;
+            margin: 0;
         }
         h1 {
             font-size: 22px;
@@ -39,19 +39,19 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .subhead {
             color: #555;
-            font-size: 14px;
-            margin-bottom: 18px;
+            font-size: 13px;
+            margin-bottom: 14px;
             border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
         .tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
+            gap: 6px;
+            margin-bottom: 16px;
             background: #d5dce4;
             border-radius: 40px;
             padding: 4px;
@@ -63,7 +63,7 @@
             padding: 10px 0;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 13px;
             color: #2c3e50;
             transition: 0.2s;
             cursor: pointer;
@@ -85,23 +85,22 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== SECCIONES DEL FORMULARIO ===== */
         .section {
             border: 1px solid #d0d9e3;
             border-radius: 16px;
-            padding: 16px 14px 12px;
-            margin-bottom: 18px;
+            padding: 16px 12px 10px;
+            margin-bottom: 16px;
             background: #fafcff;
         }
         .section-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             color: #013366;
             background: white;
             display: inline-block;
-            padding: 0 12px;
-            margin-top: -26px;
-            margin-bottom: 10px;
+            padding: 0 10px;
+            margin-top: -24px;
+            margin-bottom: 8px;
             border-radius: 20px;
             letter-spacing: 0.3px;
         }
@@ -109,82 +108,109 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 6px 12px;
-            margin-bottom: 8px;
+            gap: 6px 10px;
+            margin-bottom: 6px;
         }
         .label {
             font-weight: 600;
             font-size: 13px;
             color: #1f3a57;
-            min-width: 85px;
+            min-width: 75px;
         }
-        .label-sm {
-            min-width: 60px;
-            font-size: 12px;
-        }
-
-        /* ===== NUEVOS BOTONES VERTICALES ===== */
-        .btn-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            width: 100%;
-            margin-top: 4px;
-        }
-        .option-btn {
-            background: #013366;
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 500;
-            text-align: left;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            touch-action: manipulation;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .option-btn:active {
-            transform: scale(0.98);
-        }
-        .option-btn.selected {
-            background: #004d99;
-            border: 2px solid #FFB74D;
-            box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.3);
-        }
-        .option-btn.disabled {
-            opacity: 0.4;
-            pointer-events: none;
-            filter: grayscale(0.8);
-        }
-        .option-btn .badge-opt {
-            background: rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: 0 10px;
-            font-size: 11px;
-        }
-
         .inline-input {
             border: none;
             border-bottom: 2px solid #013366;
             background: transparent;
-            font-size: 15px;
+            font-size: 16px;
             padding: 4px 6px;
             min-width: 60px;
-            max-width: 140px;
+            max-width: 100px;
             font-weight: 500;
             outline: none;
         }
         .inline-input:focus {
             border-bottom-color: #FFB74D;
         }
-        .inline-input-sm { min-width: 50px; max-width: 80px; }
-        .inline-input-lg { min-width: 100px; max-width: 180px; }
+        .inline-input-sm { min-width: 50px; max-width: 70px; }
+        .inline-input-lg { min-width: 100px; max-width: 160px; }
+        .inline-input-full { max-width: none; width: 100%; }
+        .inline-input-readonly {
+            background: #f0f4f8;
+            color: #013366;
+            font-weight: 600;
+            border-bottom: 2px solid #013366;
+            padding: 4px 6px;
+            font-size: 16px;
+            min-width: 60px;
+            max-width: 200px;
+            border: none;
+            border-bottom: 2px solid #013366;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            width: 100%;
+            margin-top: 2px;
+        }
+        .btn-group .opt-btn {
+            background: #013366;
+            color: white;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            touch-action: manipulation;
+            flex: 1 1 calc(50% - 6px);
+            min-width: 70px;
+        }
+        .btn-group .opt-btn.selected {
+            background: #004d99;
+            border: 2px solid #FFB74D;
+            box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.3);
+        }
+        .btn-group .opt-btn.hidden {
+            display: none;
+        }
+
+        .circle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+        }
+        .circle-group .circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #013366;
+            font-size: 14px;
+            font-weight: 700;
+            background: white;
+            color: #013366;
+            cursor: pointer;
+            transition: 0.1s;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .circle-group .circle.selected {
+            background: #013366;
+            color: white;
+            box-shadow: 0 0 0 3px rgba(1, 51, 102, 0.3);
+        }
+        .circle-group .circle-otro {
+            border-style: dashed;
+            border-color: #888;
+            background: #f0f0f0;
+        }
 
         .checkbox-group {
             display: flex;
@@ -202,7 +228,6 @@
             height: 22px;
             accent-color: #013366;
         }
-
         .notas-area {
             width: 100%;
             border: 1px solid #bcc9d6;
@@ -213,6 +238,97 @@
             background: white;
             resize: vertical;
             margin-top: 4px;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 17px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 6px;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+        .btn-success:active {
+            transform: scale(0.97);
+            background: #1e8449;
+        }
+        .btn-success:disabled {
+            background: #95a5a6;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 17px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 6px;
+            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+        }
+        .btn-warning:active {
+            transform: scale(0.97);
+            background: #d68910;
+        }
+        .btn-danger {
+            background: #c0392b;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .btn-danger:active {
+            background: #a93226;
+        }
+        .btn-secondary {
+            background: #e8edf3;
+            color: #013366;
+            border: 1px solid #bcc9d6;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-secondary:active {
+            background: #d0d9e3;
+        }
+        .btn-photo {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .btn-photo:active {
+            transform: scale(0.97);
         }
         .btn-primary {
             background: #013366;
@@ -232,37 +348,6 @@
             transform: scale(0.97);
             background: #002244;
         }
-        .btn-secondary {
-            background: #e8edf3;
-            color: #013366;
-            border: 1px solid #bcc9d6;
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-secondary:active {
-            background: #d0d9e3;
-        }
-        .btn-danger {
-            background: #c0392b;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-        .btn-danger:active {
-            background: #a93226;
-        }
 
         .toolbar {
             display: flex;
@@ -272,8 +357,6 @@
             align-items: center;
             margin-top: 12px;
         }
-
-        /* ===== TABLA DE REGISTROS ===== */
         .registros-container {
             overflow-x: auto;
         }
@@ -314,14 +397,204 @@
             font-size: 15px;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 500px) {
-            .app { padding: 14px 10px; }
-            .option-btn { font-size: 14px; padding: 14px 14px; }
-            .label { min-width: 70px; font-size: 12px; }
-            .inline-input { font-size: 14px; min-width: 50px; }
-            .row { gap: 4px 8px; }
-            .section { padding: 14px 10px 10px; }
+        .timer-display {
+            font-size: 28px;
+            font-weight: 700;
+            color: #013366;
+            text-align: center;
+            padding: 8px 0;
+            background: #e8edf3;
+            border-radius: 16px;
+            margin: 4px 0 8px 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .timer-display.urgent {
+            color: #c0392b;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .photo-preview {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 12px;
+            margin-top: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Selector visual de especies */
+        .grupo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .grupo-grid .grupo-btn {
+            background: #013366;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 4px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            touch-action: manipulation;
+        }
+        .grupo-grid .grupo-btn .emoji {
+            font-size: 28px;
+        }
+        .grupo-grid .grupo-btn.selected {
+            background: #004d99;
+            border: 2px solid #FFB74D;
+            box-shadow: 0 0 0 3px rgba(255, 183, 77, 0.3);
+        }
+        .grupo-grid .grupo-btn:active {
+            transform: scale(0.95);
+        }
+
+        .especie-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 8px 0;
+        }
+        .especie-grid .especie-btn {
+            background: #f5f8fb;
+            border: 2px solid #d0d9e3;
+            border-radius: 12px;
+            padding: 8px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.15s;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .especie-grid .especie-btn .foto-placeholder {
+            width: 80px;
+            height: 80px;
+            background: #e8edf3;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #888;
+            overflow: hidden;
+        }
+        .especie-grid .especie-btn .foto-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .especie-grid .especie-btn .nombre-comun {
+            font-size: 12px;
+            font-weight: 600;
+            color: #013366;
+        }
+        .especie-grid .especie-btn .nombre-cientifico {
+            font-size: 10px;
+            color: #666;
+            font-style: italic;
+        }
+        .especie-grid .especie-btn.selected {
+            border-color: #013366;
+            background: #e8edf3;
+            box-shadow: 0 0 0 3px rgba(1, 51, 102, 0.2);
+        }
+        .especie-grid .especie-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Radar */
+        .radar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 8px 0 4px 0;
+            background: #f5f8fb;
+            border-radius: 16px;
+            padding: 12px 8px;
+            border: 1px solid #d0d9e3;
+        }
+        .radar-container canvas {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            aspect-ratio: 1/1;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #bcc9d6;
+            touch-action: none;
+        }
+        .radar-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 350px;
+            margin-top: 6px;
+        }
+        .radar-controls input[type="range"] {
+            flex: 1;
+            accent-color: #013366;
+        }
+        .radar-controls .scale-label {
+            font-weight: 600;
+            color: #013366;
+            font-size: 14px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .radar-legend {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #555;
+            margin-top: 4px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .radar-legend .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .dot-red { background: #c0392b; }
+        .dot-blue { background: #2c3e50; }
+        .dot-green { background: #27ae60; }
+
+        .sitio-info {
+            font-size: 13px;
+            color: #1f3a57;
+            background: #e8edf3;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 4px;
+            text-align: center;
+            width: 100%;
+        }
+        .sitio-info.warning {
+            background: #fdebd0;
+            color: #c0392b;
+            border: 1px solid #c0392b;
+        }
+
+        .hidden {
+            display: none !important;
         }
         .mt-1 { margin-top: 8px; }
         .mb-1 { margin-bottom: 8px; }
@@ -329,395 +602,591 @@
         .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .text-muted { color: #666; font-size: 12px; }
         .text-center { text-align: center; }
-        .hidden { display: none !important; }
+        .text-small { font-size: 13px; }
+
+        @media (max-width: 500px) {
+            .app { padding: 10px 6px; }
+            .btn-group .opt-btn { font-size: 13px; padding: 12px 8px; }
+            .circle-group .circle { width: 32px; height: 32px; font-size: 13px; }
+            .label { min-width: 60px; font-size: 12px; }
+            .inline-input { font-size: 14px; min-width: 50px; }
+            .section { padding: 14px 8px 8px; }
+            .timer-display { font-size: 24px; }
+            .grupo-grid { grid-template-columns: repeat(5, 1fr); }
+            .especie-grid { grid-template-columns: repeat(2, 1fr); }
+            .especie-grid .especie-btn .foto-placeholder { width: 60px; height: 60px; font-size: 24px; }
+        }
+        @media (max-width: 380px) {
+            .grupo-grid { grid-template-columns: repeat(4, 1fr); }
+            .especie-grid { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
 
 <div class="app" id="app">
-    <!-- HEADER -->
     <div class="flex-between">
         <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">campo</span></h1>
-        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">OFFLINE v2</span>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v9</span>
     </div>
-    <div class="subhead">Seleccione la opción que corresponda · Desplácese hacia abajo</div>
+    <div class="subhead">Configure la ruta · Obtenga GPS · Registre el punto · Inicie avistamientos</div>
 
-    <!-- PESTAÑAS -->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="tab-registro">📝 Registrar</button>
-        <button class="tab-btn" data-tab="tab-registros">📋 Mis registros <span id="contador-badge" class="badge-count">0</span></button>
+        <button class="tab-btn active" data-tab="tab-config">⚙️ Configurar</button>
+        <button class="tab-btn" data-tab="tab-registro" id="tab-registro-btn">📝 Registrar <span id="contador-badge" class="badge-count">0</span></button>
+        <button class="tab-btn" data-tab="tab-registros">📋 Registros</button>
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAB 1: REGISTRO -->
+    <!-- TAB 1: CONFIGURACIÓN -->
     <!-- ========================================================= -->
-    <div id="tab-registro" class="tab-content active">
-        <form id="formRegistro" autocomplete="off">
+    <div id="tab-config" class="tab-content active">
 
-            <!-- SECCIÓN: SITIO -->
-            <div class="section">
-                <div class="section-title">📍 SITIO</div>
-                <div class="row">
-                    <span class="label">Fecha:</span>
-                    <input type="date" id="fecha" class="inline-input" style="min-width:130px;">
-                    <span class="label">Hora:</span>
-                    <input type="time" id="hora" class="inline-input" style="min-width:100px;">
+        <!-- 1. RUTA -->
+        <div class="section">
+            <div class="section-title">🗺️ RUTA DE MUESTREO</div>
+            <div class="row">
+                <span class="label">Ruta activa:</span>
+                <select id="selector-ruta" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">-- Seleccionar --</option>
+                </select>
+                <button id="btn-crear-ruta" class="btn-secondary" style="flex:0 0 auto; padding:8px 14px;">➕ Nueva</button>
+                <button id="btn-eliminar-ruta" class="btn-danger" style="flex:0 0 auto; padding:8px 14px;">✕</button>
+            </div>
+            <div id="info-ruta" class="sitio-info" style="margin-top:4px; display:none;">
+                <span id="ruta-nombre"></span>
+            </div>
+        </div>
+
+        <!-- 2. ACTUALIZAR GPS + LAT/LON/PRECISIÓN -->
+        <div class="section">
+            <div class="section-title">📡 UBICACIÓN GPS</div>
+            <div class="row">
+                <button id="btn-gps" class="btn-secondary" style="width:100%; justify-content:center;">📍 Actualizar GPS</button>
+            </div>
+            <div class="row">
+                <span class="label">Latitud:</span>
+                <span id="gps-lat" class="text-muted">--</span>
+                <span class="label" style="margin-left:12px;">Longitud:</span>
+                <span id="gps-lon" class="text-muted">--</span>
+                <span class="label" style="margin-left:12px;">Precisión:</span>
+                <span id="gps-accuracy" class="text-muted">--</span>
+            </div>
+        </div>
+
+        <!-- 3. RADAR DE SITIOS -->
+        <div class="section">
+            <div class="section-title">📡 RADAR DE SITIOS</div>
+            <div class="radar-container" id="radar-container">
+                <canvas id="radarCanvas" width="350" height="350"></canvas>
+                <div class="radar-controls">
+                    <span class="scale-label" id="radar-escala-label">500 m</span>
+                    <input type="range" id="radar-escala" min="100" max="2000" value="500" step="50">
+                    <span class="scale-label">Zoom</span>
                 </div>
-                <div class="row">
-                    <span class="label">Muestreo:</span>
-                    <div class="btn-stack" id="grupo-muestreo">
-                        <button type="button" class="option-btn" data-value="1">1 <span class="badge-opt">01</span></button>
-                        <button type="button" class="option-btn" data-value="2">2 <span class="badge-opt">02</span></button>
-                        <button type="button" class="option-btn" data-value="3">3 <span class="badge-opt">03</span></button>
-                        <button type="button" class="option-btn" data-value="4">4 <span class="badge-opt">04</span></button>
-                        <button type="button" class="option-btn" data-value="5">5 <span class="badge-opt">05</span></button>
-                        <button type="button" class="option-btn" data-value="6">6 <span class="badge-opt">06</span></button>
-                        <button type="button" class="option-btn" data-value="7">7 <span class="badge-opt">07</span></button>
-                        <button type="button" class="option-btn" data-value="8">8 <span class="badge-opt">08</span></button>
-                        <button type="button" class="option-btn" data-value="9">9 <span class="badge-opt">09</span></button>
-                        <button type="button" class="option-btn" data-value="10">10 <span class="badge-opt">10</span></button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro número</button>
-                        <input type="text" id="muestreo_otro" class="inline-input inline-input-sm" placeholder="Escriba Nº" style="margin-top:4px; display:none;">
-                    </div>
+                <div class="radar-legend">
+                    <span><span class="dot dot-red"></span> Hoy (dentro de 350m)</span>
+                    <span><span class="dot dot-blue"></span> Hoy (fuera)</span>
+                    <span><span class="dot dot-green"></span> Días anteriores</span>
                 </div>
-                <div class="row">
-                    <span class="label">Municipio:</span>
-                    <div class="btn-stack" id="grupo-municipio">
-                        <button type="button" class="option-btn" data-value="1">Texcoco</button>
-                        <button type="button" class="option-btn" data-value="2">Chapingo</button>
-                        <button type="button" class="option-btn" data-value="3">Atenco</button>
-                        <button type="button" class="option-btn" data-value="4">Chimalhuacán</button>
-                        <button type="button" class="option-btn" data-value="5">Papantla</button>
-                        <button type="button" class="option-btn" data-value="6">Chicontepec</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro municipio</button>
-                        <input type="text" id="municipio_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Parcela:</span>
-                    <div class="btn-stack" id="grupo-parcela">
-                        <button type="button" class="option-btn" data-value="1">PA-01</button>
-                        <button type="button" class="option-btn" data-value="2">PA-02</button>
-                        <button type="button" class="option-btn" data-value="3">PA-03</button>
-                        <button type="button" class="option-btn" data-value="4">PA-04</button>
-                        <button type="button" class="option-btn" data-value="5">PA-05</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro parcela</button>
-                        <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Punto:</span>
-                    <div class="btn-stack" id="grupo-punto">
-                        <button type="button" class="option-btn" data-value="1">PT-01</button>
-                        <button type="button" class="option-btn" data-value="2">PT-02</button>
-                        <button type="button" class="option-btn" data-value="3">PT-03</button>
-                        <button type="button" class="option-btn" data-value="4">PT-04</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro punto</button>
-                        <input type="text" id="punto_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Sistema:</span>
-                    <div class="btn-stack" id="grupo-sistema">
-                        <button type="button" class="option-btn" data-value="1">SAF</button>
-                        <button type="button" class="option-btn" data-value="2">MIAF</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro sistema</button>
-                        <input type="text" id="sistema_otro" class="inline-input inline-input-sm" placeholder="Escriba nombre" style="margin-top:4px; display:none;">
-                    </div>
+                <div id="radar-info" class="sitio-info">📍 Esperando GPS...</div>
+            </div>
+        </div>
+
+        <!-- 4. DATOS DE INEGI -->
+        <div class="section">
+            <div class="section-title">📍 DATOS DEL SITIO (INEGI)</div>
+            <div class="row">
+                <span class="label">Altitud del punto (m):</span>
+                <input type="text" id="altitud_punto" class="inline-input-readonly" placeholder="--" readonly style="max-width:120px;">
+            </div>
+            <div class="row">
+                <span class="label">Localidad:</span>
+                <input type="text" id="localidad_auto" class="inline-input-readonly" placeholder="--" readonly style="max-width:200px;">
+            </div>
+            <div class="row">
+                <span class="label">Altitud localidad (m):</span>
+                <input type="text" id="altitud_localidad" class="inline-input-readonly" placeholder="--" readonly style="max-width:120px;">
+            </div>
+            <div class="row">
+                <span class="label">Municipio:</span>
+                <input type="text" id="municipio_auto" class="inline-input-readonly" placeholder="--" readonly style="max-width:200px;">
+            </div>
+            <div class="row">
+                <span class="label">Estado:</span>
+                <input type="text" id="estado_auto" class="inline-input-readonly" placeholder="--" readonly style="max-width:200px;">
+            </div>
+        </div>
+
+        <!-- 5. SITIO (Sistema y Parcela) -->
+        <div class="section">
+            <div class="section-title">🏷️ SITIO</div>
+            <div class="row">
+                <span class="label">Sistema:</span>
+                <div class="btn-group" id="grupo-sistema" style="flex-wrap: nowrap; gap:6px;">
+                    <button type="button" class="opt-btn" data-value="1" style="flex:1 1 45%;">SAF</button>
+                    <button type="button" class="opt-btn" data-value="2" style="flex:1 1 45%;">MIAF</button>
                 </div>
             </div>
-
-            <!-- SECCIÓN: ESPECIE -->
-            <div class="section">
-                <div class="section-title">🐦 ESPECIE</div>
-                <div class="row">
-                    <span class="label">Código (6 letras):</span>
-                    <input type="text" id="codigo" class="inline-input inline-input-lg" placeholder="Ej. TURMER" maxlength="10" required>
-                </div>
-                <div class="row">
-                    <span class="label">Nombre común:</span>
-                    <input type="text" id="nombre_comun" class="inline-input inline-input-lg" placeholder="Opcional">
-                </div>
-            </div>
-
-            <!-- SECCIÓN: ESPECÍMEN -->
-            <div class="section">
-                <div class="section-title">🔎 ESPECÍMEN</div>
-                <div class="row">
-                    <span class="label">Individuos:</span>
-                    <div class="btn-stack" id="grupo-individuos">
-                        <button type="button" class="option-btn" data-value="1">1</button>
-                        <button type="button" class="option-btn" data-value="2">2</button>
-                        <button type="button" class="option-btn" data-value="3">3</button>
-                        <button type="button" class="option-btn" data-value="4">4</button>
-                        <button type="button" class="option-btn" data-value="5">5</button>
-                        <button type="button" class="option-btn" data-value="6">6</button>
-                        <button type="button" class="option-btn" data-value="7">7</button>
-                        <button type="button" class="option-btn" data-value="8">8</button>
-                        <button type="button" class="option-btn" data-value="9">9</button>
-                        <button type="button" class="option-btn" data-value="10">10</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Más de 10</button>
-                        <input type="number" id="individuos_otro" class="inline-input inline-input-sm" placeholder="Cant." style="margin-top:4px; display:none;" min="1">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Minuto (1-10):</span>
-                    <div class="btn-stack" id="grupo-minuto">
-                        <button type="button" class="option-btn" data-value="1">1</button>
-                        <button type="button" class="option-btn" data-value="2">2</button>
-                        <button type="button" class="option-btn" data-value="3">3</button>
-                        <button type="button" class="option-btn" data-value="4">4</button>
-                        <button type="button" class="option-btn" data-value="5">5</button>
-                        <button type="button" class="option-btn" data-value="6">6</button>
-                        <button type="button" class="option-btn" data-value="7">7</button>
-                        <button type="button" class="option-btn" data-value="8">8</button>
-                        <button type="button" class="option-btn" data-value="9">9</button>
-                        <button type="button" class="option-btn" data-value="10">10</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
-                        <input type="number" id="minuto_otro" class="inline-input inline-input-sm" placeholder="Min" style="margin-top:4px; display:none;" min="1">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Distancia (m):</span>
-                    <div class="btn-stack" id="grupo-distancia">
-                        <button type="button" class="option-btn" data-value="1">1</button>
-                        <button type="button" class="option-btn" data-value="2">2</button>
-                        <button type="button" class="option-btn" data-value="3">3</button>
-                        <button type="button" class="option-btn" data-value="4">4</button>
-                        <button type="button" class="option-btn" data-value="5">5</button>
-                        <button type="button" class="option-btn" data-value="6">6</button>
-                        <button type="button" class="option-btn" data-value="7">7</button>
-                        <button type="button" class="option-btn" data-value="8">8</button>
-                        <button type="button" class="option-btn" data-value="9">9</button>
-                        <button type="button" class="option-btn" data-value="10">10</button>
-                        <button type="button" class="option-btn" data-value="15">15</button>
-                        <button type="button" class="option-btn" data-value="20">20</button>
-                        <button type="button" class="option-btn" data-value="25">25</button>
-                        <button type="button" class="option-btn" data-value="30">30</button>
-                        <button type="button" class="option-btn" data-value="40">40</button>
-                        <button type="button" class="option-btn" data-value="50">50</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
-                        <input type="number" id="distancia_otro" class="inline-input inline-input-sm" placeholder="m" style="margin-top:4px; display:none;" min="1">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Altura (m):</span>
-                    <div class="btn-stack" id="grupo-altura">
-                        <button type="button" class="option-btn" data-value="0">0 (Suelo)</button>
-                        <button type="button" class="option-btn" data-value="1">1</button>
-                        <button type="button" class="option-btn" data-value="2">2</button>
-                        <button type="button" class="option-btn" data-value="3">3</button>
-                        <button type="button" class="option-btn" data-value="4">4</button>
-                        <button type="button" class="option-btn" data-value="5">5</button>
-                        <button type="button" class="option-btn" data-value="6">6</button>
-                        <button type="button" class="option-btn" data-value="7">7</button>
-                        <button type="button" class="option-btn" data-value="8">8</button>
-                        <button type="button" class="option-btn" data-value="9">9</button>
-                        <button type="button" class="option-btn" data-value="10">10</button>
-                        <button type="button" class="option-btn" data-value="15">15</button>
-                        <button type="button" class="option-btn" data-value="20">20</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
-                        <input type="number" id="altura_otro" class="inline-input inline-input-sm" placeholder="m" style="margin-top:4px; display:none;" min="0">
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Sexo:</span>
-                    <div class="btn-stack" id="grupo-sexo">
-                        <button type="button" class="option-btn" data-value="1">Macho</button>
-                        <button type="button" class="option-btn" data-value="2">Hembra</button>
-                        <button type="button" class="option-btn" data-value="3">Ambos</button>
-                        <button type="button" class="option-btn" data-value="4">Indeterminado</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Edad:</span>
-                    <div class="btn-stack" id="grupo-edad">
-                        <button type="button" class="option-btn" data-value="1">Cría</button>
-                        <button type="button" class="option-btn" data-value="2">Volantón</button>
-                        <button type="button" class="option-btn" data-value="3">Juvenil</button>
-                        <button type="button" class="option-btn" data-value="4">Adulto</button>
-                        <button type="button" class="option-btn" data-value="5">Senil</button>
-                    </div>
+            <div class="row">
+                <span class="label">Parcela:</span>
+                <div class="btn-group" id="grupo-parcela">
+                    <button type="button" class="opt-btn" data-value="1">PA-01</button>
+                    <button type="button" class="opt-btn" data-value="2">PA-02</button>
+                    <button type="button" class="opt-btn" data-value="3">PA-03</button>
+                    <button type="button" class="opt-btn" data-value="4">PA-04</button>
+                    <button type="button" class="opt-btn" data-value="5">PA-05</button>
+                    <button type="button" class="opt-btn" data-value="otro">➕ Otro</button>
+                    <input type="text" id="parcela_otro" class="inline-input inline-input-sm" placeholder="Nombre" style="display:none; margin-top:4px; width:100%;">
                 </div>
             </div>
+        </div>
 
-            <!-- SECCIÓN: SUSTRATO -->
-            <div class="section">
-                <div class="section-title">🌿 SUSTRATO</div>
-                <div class="row">
-                    <span class="label">Tipo:</span>
-                    <div class="btn-stack" id="grupo-sustrato_tipo">
-                        <button type="button" class="option-btn" data-value="1">Suelo</button>
-                        <button type="button" class="option-btn" data-value="2">Vegetación muerta</button>
-                        <button type="button" class="option-btn" data-value="3">Vegetación viva</button>
-                        <button type="button" class="option-btn" data-value="4">Infraestructura</button>
-                        <button type="button" class="option-btn" data-value="5">Cuerpo de agua</button>
-                        <button type="button" class="option-btn" data-value="6" id="btn-volando">Volando</button>
-                        <button type="button" class="option-btn" data-value="7">Otro</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Específico:</span>
-                    <div class="btn-stack" id="grupo-sustrato_esp">
-                        <button type="button" class="option-btn" data-value="1">Opción 1</button>
-                        <button type="button" class="option-btn" data-value="2">Opción 2</button>
-                        <button type="button" class="option-btn" data-value="3">Opción 3</button>
-                        <button type="button" class="option-btn" data-value="4">Opción 4</button>
-                        <button type="button" class="option-btn" data-value="5">Opción 5</button>
-                        <button type="button" class="option-btn" data-value="otro">➕ Otro</button>
-                        <input type="text" id="sustrato_esp_otro" class="inline-input inline-input-sm" placeholder="Escriba" style="margin-top:4px; display:none;">
-                    </div>
-                    <span class="text-muted" style="margin-top:4px;">(Depende del tipo, use la guía)</span>
-                </div>
-                <div class="row">
-                    <span class="label">Forma estructural:</span>
-                    <div class="btn-stack" id="grupo-forma">
-                        <button type="button" class="option-btn" data-value="1">Herbácea</button>
-                        <button type="button" class="option-btn" data-value="2">Arbustiva</button>
-                        <button type="button" class="option-btn" data-value="3">Arbórea</button>
-                        <button type="button" class="option-btn" data-value="4">No aplica</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Posición vertical:</span>
-                    <div class="btn-stack" id="grupo-vertical">
-                        <button type="button" class="option-btn" data-value="1">Alto</button>
-                        <button type="button" class="option-btn" data-value="2">Medio</button>
-                        <button type="button" class="option-btn" data-value="3">Bajo</button>
-                        <button type="button" class="option-btn" data-value="4">No aplica</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Posición horizontal:</span>
-                    <div class="btn-stack" id="grupo-horizontal">
-                        <button type="button" class="option-btn" data-value="1">Interno</button>
-                        <button type="button" class="option-btn" data-value="2">Externo</button>
-                        <button type="button" class="option-btn" data-value="3">No aplica</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Especie vegetal:</span>
-                    <input type="text" id="especie_vegetal" class="inline-input inline-input-lg" placeholder="Código o nombre (opcional)">
-                </div>
+        <!-- 6. TIEMPO -->
+        <div class="section">
+            <div class="section-title">⏱️ TIEMPO</div>
+            <div class="row">
+                <span class="label">Fecha:</span>
+                <input type="date" id="fecha" class="inline-input" style="min-width:130px;">
             </div>
+            <div class="row">
+                <span class="label">Hora inicio:</span>
+                <input type="time" id="hora_inicio" class="inline-input" style="min-width:100px;">
+            </div>
+            <div class="row">
+                <span class="label">Duración (min):</span>
+                <input type="number" id="duracion" class="inline-input" style="min-width:80px;" value="10" min="1" max="120">
+            </div>
+        </div>
 
-            <!-- SECCIÓN: COMPORTAMIENTO -->
-            <div class="section">
-                <div class="section-title">🧠 COMPORTAMIENTO</div>
-                <div class="row">
-                    <span class="label">Comportamiento:</span>
-                    <div class="btn-stack" id="grupo-comportamiento">
-                        <button type="button" class="option-btn" data-value="1">Alimentándose</button>
-                        <button type="button" class="option-btn" data-value="2">Caminando</button>
-                        <button type="button" class="option-btn" data-value="3">Cantando</button>
-                        <button type="button" class="option-btn" data-value="4">Cortejo</button>
-                        <button type="button" class="option-btn" data-value="5">Nidificando</button>
-                        <button type="button" class="option-btn" data-value="6">Percha</button>
-                        <button type="button" class="option-btn" data-value="7">Reproducción</button>
-                        <button type="button" class="option-btn" data-value="8">Vigilancia</button>
-                        <button type="button" class="option-btn" data-value="9">Vuelo corto</button>
-                        <button type="button" class="option-btn" data-value="10">Vuelo largo</button>
-                        <button type="button" class="option-btn" data-value="11">No determinado</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <span class="label">Tipo alimento:</span>
-                    <div class="btn-stack" id="grupo-alimento">
-                        <button type="button" class="option-btn" data-value="1">Invertebrados</button>
-                        <button type="button" class="option-btn" data-value="2">Frutos</button>
-                        <button type="button" class="option-btn" data-value="3">Néctar</button>
-                        <button type="button" class="option-btn" data-value="4">Semillas</button>
-                        <button type="button" class="option-btn" data-value="5">Vertebrados</button>
-                        <button type="button" class="option-btn" data-value="6">Otro</button>
-                        <input type="text" id="alimento_otro" class="inline-input inline-input-sm" placeholder="Especifique" style="margin-top:4px; display:none;">
-                    </div>
-                </div>
-            </div>
+        <!-- 7. BOTONES DE ACCIÓN -->
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
+            <button id="btn-registrar-punto" class="btn-success">📍 Registrar punto de avistamiento</button>
+            <button id="btn-iniciar-conteo" class="btn-success" disabled>▶️ Iniciar avistamientos</button>
+            <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
+        </div>
 
-            <!-- SECCIÓN: VERIFICADO Y NOTAS -->
-            <div class="section">
-                <div class="section-title">✅ FINAL</div>
-                <div class="row">
-                    <span class="label">Verificado:</span>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item"><input type="checkbox" id="verificado_si"> <label for="verificado_si">Sí</label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="verificado_no"> <label for="verificado_no">No</label></div>
-                    </div>
-                    <span style="margin-left:10px; font-weight:600;">Foto:</span>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item"><input type="checkbox" id="foto_si"> <label for="foto_si">Sí</label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="foto_no"> <label for="foto_no">No</label></div>
-                    </div>
-                </div>
-                <div class="row" style="align-items:flex-start;">
-                    <span class="label" style="margin-top:4px;">Notas:</span>
-                    <textarea id="notas" class="notas-area" placeholder="Observaciones, clima, comportamiento destacado..."></textarea>
-                </div>
-            </div>
-
-            <button type="button" id="btnGuardar" class="btn-primary">💾 Guardar registro</button>
-            <div style="margin-top:8px; text-align:center; font-size:13px; color:#777;">
-                <span id="mensaje-guardado" style="display:none; color:#1a7a3a; font-weight:600;">✅ Registro guardado</span>
-            </div>
-        </form>
+        <!-- Temporizador -->
+        <div id="timer-container" style="display:none; margin-top:12px;">
+            <div class="timer-display" id="timer-display">10:00</div>
+            <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
+            <button id="btn-detener-alarma" class="btn-warning" style="display:none;">🔕 Detener alarma</button>
+        </div>
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAB 2: REGISTROS GUARDADOS -->
+    <!-- TAB 2: REGISTRO DE AVISTAMIENTOS -->
+    <!-- ========================================================= -->
+    <div id="tab-registro" class="tab-content">
+        <!-- Barra de estado del conteo -->
+        <div class="section" style="background:#e8edf3; border-color:#013366;">
+            <div class="flex-between">
+                <span style="font-weight:600; font-size:14px; color:#013366;">
+                    ⏱️ <span id="registro-tiempo-restante">10:00</span>
+                </span>
+                <span style="font-size:13px; color:#013366;" id="registro-minuto-actual">
+                    Minuto: <strong>--</strong>
+                </span>
+                <span style="font-size:12px; color:#555;" id="registro-sitio">--</span>
+            </div>
+            <div style="font-size:12px; color:#555; margin-top:2px;" id="registro-fecha-hora">Fecha: -- · Hora inicio: --</div>
+            <div style="font-size:12px; color:#555;" id="registro-ruta">Ruta: --</div>
+        </div>
+
+        <!-- SELECTOR VISUAL DE ESPECIES -->
+        <div class="section">
+            <div class="section-title">🐦 IDENTIFICAR AVE</div>
+            <div id="selector-especie">
+                <div id="paso-grupos">
+                    <p class="text-muted" style="margin-bottom:6px;">1. Seleccione el grupo:</p>
+                    <div class="grupo-grid" id="grupo-grid"></div>
+                    <button id="btn-grupo-otro" class="opt-btn" style="width:100%; margin-top:4px; text-align:center;">➕ Otro / No identificado</button>
+                </div>
+                <div id="paso-especies" class="hidden">
+                    <p class="text-muted" style="margin-bottom:6px;">2. Seleccione la especie:</p>
+                    <div class="especie-grid" id="especie-grid"></div>
+                    <div style="display:flex; gap:8px; margin-top:6px;">
+                        <button id="btn-volver-grupos" class="btn-secondary" style="flex:1; justify-content:center;">⬅ Volver</button>
+                        <button id="btn-especie-otro" class="opt-btn" style="flex:1; text-align:center;">➕ Otro / No listado</button>
+                    </div>
+                </div>
+                <div id="especie-seleccionada" class="hidden" style="margin-top:8px; padding:10px; background:#e8edf3; border-radius:12px; border-left:4px solid #013366;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div id="especie-seleccionada-foto" style="width:60px; height:60px; border-radius:8px; background:#ddd; display:flex; align-items:center; justify-content:center; font-size:24px;">🐦</div>
+                        <div>
+                            <div id="especie-seleccionada-nombre" style="font-weight:700; font-size:16px; color:#013366;">--</div>
+                            <div id="especie-seleccionada-cientifico" style="font-size:13px; color:#555; font-style:italic;">--</div>
+                        </div>
+                        <button id="btn-cambiar-especie" class="btn-secondary" style="margin-left:auto; padding:6px 14px;">Cambiar</button>
+                    </div>
+                    <input type="hidden" id="especie-codigo" value="">
+                    <input type="hidden" id="especie-nombre_comun" value="">
+                    <input type="hidden" id="especie-cientifico" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- FOTO -->
+        <div class="section">
+            <div class="section-title">📸 FOTO</div>
+            <div class="row">
+                <button id="btn-tomar-foto" class="btn-photo" style="width:100%; justify-content:center;">📷 Tomar fotografía</button>
+            </div>
+            <div id="foto-preview-container" style="display:none; margin-top:8px;">
+                <img id="foto-preview" class="photo-preview" src="" alt="Vista previa">
+                <div style="margin-top:4px;">
+                    <button id="btn-quitar-foto" class="btn-danger" style="padding:6px 16px; font-size:12px;">✕ Quitar foto</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATOS DEL AVISTAMIENTO -->
+        <div class="section">
+            <div class="section-title">🔎 DATOS DEL AVISTAMIENTO</div>
+            <div class="row">
+                <span class="label">Individuos:</span>
+                <div class="circle-group" id="grupo-individuos">
+                    <span class="circle" data-value="1">1</span>
+                    <span class="circle" data-value="2">2</span>
+                    <span class="circle" data-value="3">3</span>
+                    <span class="circle" data-value="4">4</span>
+                    <span class="circle" data-value="5">5</span>
+                    <span class="circle" data-value="6">6</span>
+                    <span class="circle" data-value="7">7</span>
+                    <span class="circle" data-value="8">8</span>
+                    <span class="circle" data-value="9">9</span>
+                    <span class="circle" data-value="10">10</span>
+                    <span class="circle circle-otro" data-value="otro">+</span>
+                    <input type="number" id="individuos_otro" class="inline-input inline-input-sm" placeholder="Cant." style="display:none; min-width:60px;" min="1">
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Distancia (m):</span>
+                <input type="number" id="reg-distancia" class="inline-input" placeholder="0-50" min="0" max="50" step="1" style="width:100px;">
+            </div>
+            <div class="row">
+                <span class="label">Altura (m):</span>
+                <input type="number" id="reg-altura" class="inline-input" placeholder="0-50" min="0" max="50" step="1" style="width:100px;">
+            </div>
+            <div class="row">
+                <span class="label">Sexo:</span>
+                <div class="btn-group" id="grupo-sexo">
+                    <button type="button" class="opt-btn" data-value="1">Macho</button>
+                    <button type="button" class="opt-btn" data-value="2">Hembra</button>
+                    <button type="button" class="opt-btn" data-value="3">Ambos</button>
+                    <button type="button" class="opt-btn" data-value="4">Indeterminado</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Edad:</span>
+                <div class="btn-group" id="grupo-edad">
+                    <button type="button" class="opt-btn" data-value="1">Cría</button>
+                    <button type="button" class="opt-btn" data-value="2">Volantón</button>
+                    <button type="button" class="opt-btn" data-value="3">Juvenil</button>
+                    <button type="button" class="opt-btn" data-value="4">Adulto</button>
+                    <button type="button" class="opt-btn" data-value="5">Senil</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUSTRATO -->
+        <div class="section">
+            <div class="section-title">🌿 SUSTRATO</div>
+            <div class="row">
+                <span class="label">Tipo:</span>
+                <select id="sustrato_tipo" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">Seleccione...</option>
+                    <option value="Suelo">Suelo</option>
+                    <option value="Veg. muerta">Veg. muerta</option>
+                    <option value="Veg. viva">Veg. viva</option>
+                    <option value="Infraestructura">Infraestructura</option>
+                    <option value="Cuerpo de agua">Cuerpo de agua</option>
+                    <option value="Volando">Volando</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="row">
+                <span class="label">Específico:</span>
+                <select id="sustrato_esp" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">Primero seleccione un tipo</option>
+                </select>
+                <input type="text" id="sustrato_otro_texto" placeholder="Escriba el sustrato específico" style="display:none; margin-top:4px; width:100%; padding:8px 12px; border-radius:10px; border:2px solid #013366; font-size:16px;">
+            </div>
+            <div class="row">
+                <span class="label">Forma estructural:</span>
+                <div class="btn-group" id="grupo-forma">
+                    <button type="button" class="opt-btn" data-value="1">Herbácea</button>
+                    <button type="button" class="opt-btn" data-value="2">Arbustiva</button>
+                    <button type="button" class="opt-btn" data-value="3">Arbórea</button>
+                    <button type="button" class="opt-btn" data-value="4">No aplica</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Posición vertical:</span>
+                <div class="btn-group" id="grupo-vertical">
+                    <button type="button" class="opt-btn" data-value="1">Alto</button>
+                    <button type="button" class="opt-btn" data-value="2">Medio</button>
+                    <button type="button" class="opt-btn" data-value="3">Bajo</button>
+                    <button type="button" class="opt-btn" data-value="4">No aplica</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Posición horizontal:</span>
+                <div class="btn-group" id="grupo-horizontal">
+                    <button type="button" class="opt-btn" data-value="1">Interno</button>
+                    <button type="button" class="opt-btn" data-value="2">Externo</button>
+                    <button type="button" class="opt-btn" data-value="3">No aplica</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Especie vegetal:</span>
+                <input type="text" id="reg-especie_vegetal" class="inline-input inline-input-lg" placeholder="Código o nombre (opcional)">
+            </div>
+        </div>
+
+        <!-- COMPORTAMIENTO Y ALIMENTO -->
+        <div class="section">
+            <div class="section-title">🧠 COMPORTAMIENTO</div>
+            <div class="row">
+                <span class="label">Comportamiento:</span>
+                <div class="btn-group" id="grupo-comportamiento">
+                    <button type="button" class="opt-btn" data-value="1">Alimentándose</button>
+                    <button type="button" class="opt-btn" data-value="2">Caminando</button>
+                    <button type="button" class="opt-btn" data-value="3">Cantando</button>
+                    <button type="button" class="opt-btn" data-value="4">Cortejo</button>
+                    <button type="button" class="opt-btn" data-value="5">Nidificando</button>
+                    <button type="button" class="opt-btn" data-value="6">Percha</button>
+                    <button type="button" class="opt-btn" data-value="7">Reproducción</button>
+                    <button type="button" class="opt-btn" data-value="8">Vigilancia</button>
+                    <button type="button" class="opt-btn" data-value="9">Vuelo corto</button>
+                    <button type="button" class="opt-btn" data-value="10">Vuelo largo</button>
+                    <button type="button" class="opt-btn" data-value="11">No determinado</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="label">Tipo alimento:</span>
+                <div class="btn-group" id="grupo-alimento">
+                    <button type="button" class="opt-btn" data-value="1">Invertebrados</button>
+                    <button type="button" class="opt-btn" data-value="2">Frutos</button>
+                    <button type="button" class="opt-btn" data-value="3">Néctar</button>
+                    <button type="button" class="opt-btn" data-value="4">Semillas</button>
+                    <button type="button" class="opt-btn" data-value="5">Vertebrados</button>
+                    <button type="button" class="opt-btn" data-value="6">Otro</button>
+                    <input type="text" id="alimento_otro" class="inline-input inline-input-sm" placeholder="Especifique" style="display:none; flex:1 1 100%; margin-top:4px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL -->
+        <div class="section">
+            <div class="section-title">✅ FINAL</div>
+            <div class="row">
+                <span class="label">Verificado:</span>
+                <div class="checkbox-group">
+                    <div class="checkbox-item"><input type="checkbox" id="reg-verificado_si"> <label for="reg-verificado_si">Sí</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="reg-verificado_no"> <label for="reg-verificado_no">No</label></div>
+                </div>
+            </div>
+            <div class="row" style="align-items:flex-start;">
+                <span class="label" style="margin-top:4px;">Notas:</span>
+                <textarea id="reg-notas" class="notas-area" placeholder="Observaciones, clima, comportamiento destacado..."></textarea>
+            </div>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" id="btn-guardar-registro" class="btn-primary" style="flex:2;">💾 Guardar registro</button>
+            <button type="button" id="btn-limpiar-registro" class="btn-secondary" style="flex:1;">🗑️ Limpiar</button>
+        </div>
+        <div style="margin-top:8px; text-align:center; font-size:13px; color:#777;">
+            <span id="mensaje-guardado" style="display:none; color:#1a7a3a; font-weight:600;">✅ Registro guardado</span>
+        </div>
+        <div style="margin-top:12px;">
+            <button id="btn-finalizar-conteo" class="btn-warning">⏹️ Finalizar conteo</button>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAB 3: REGISTROS GUARDADOS -->
     <!-- ========================================================= -->
     <div id="tab-registros" class="tab-content">
         <div class="flex-between mb-1">
-            <span style="font-weight:600; font-size:15px;">Registros locales</span>
+            <span style="font-weight:600; font-size:15px;">Registros guardados</span>
             <span id="contador-registros" style="background:#013366; color:white; padding:2px 14px; border-radius:30px;">0</span>
         </div>
         <div class="toolbar">
-            <button id="btnExportarCSV" class="btn-secondary">📤 Exportar CSV</button>
-            <button id="btnEliminarTodos" class="btn-danger">🗑️ Borrar todo</button>
+            <button id="btn-exportar-csv" class="btn-secondary">📤 Exportar CSV</button>
+            <button id="btn-eliminar-todos" class="btn-danger">🗑️ Borrar todo</button>
         </div>
         <div class="registros-container" id="lista-registros">
-            <div class="empty-msg">Aún no hay registros guardados</div>
+            <div class="empty-msg">📭 No hay registros guardados</div>
         </div>
     </div>
 
 </div>
 
 <!-- ========================================================= -->
-<!-- JAVASCRIPT – LÓGICA COMPLETA + CONDICIONANTES -->
+<!-- JAVASCRIPT – LÓGICA COMPLETA -->
 <!-- ========================================================= -->
 <script>
     (function() {
         'use strict';
 
-        const form = document.getElementById('formRegistro');
+        // ===================================================================
+        // 1. CONFIGURACIÓN INICIAL Y DEPENDENCIAS
+        // ===================================================================
 
-        // ---- Configurar grupos de botones (vertical) ----
+        const $ = id => document.getElementById(id);
+
+        // ---- BASE DE DATOS DE ESPECIES ----
+        const especiesDB = {
+            'Gorriones': [
+                { id: 'passer_domesticus', nombre_comun: 'Gorrión casero', cientifico: 'Passer domesticus', emoji: '🐦' },
+                { id: 'spizella_atrogularis', nombre_comun: 'Gorrión mexicano', cientifico: 'Spizella atrogularis', emoji: '🐦' }
+            ],
+            'Palomas': [
+                { id: 'streptopelia_decaocto', nombre_comun: 'Paloma de collar', cientifico: 'Streptopelia decaocto', emoji: '🕊️' },
+                { id: 'zenaida_asiatica', nombre_comun: 'Paloma de alas blancas', cientifico: 'Zenaida asiatica', emoji: '🕊️' }
+            ],
+            'Rapaces': [
+                { id: 'buteo_jamaicensis', nombre_comun: 'Aguililla cola roja', cientifico: 'Buteo jamaicensis', emoji: '🦅' },
+                { id: 'falco_sparverius', nombre_comun: 'Cernícalo americano', cientifico: 'Falco sparverius', emoji: '🦅' }
+            ],
+            'Zorzales': [
+                { id: 'turdus_merula', nombre_comun: 'Mirlo común', cientifico: 'Turdus merula', emoji: '🐧' },
+                { id: 'catharus_occidentalis', nombre_comun: 'Zorzal pardo', cientifico: 'Catharus occidentalis', emoji: '🐧' }
+            ],
+            'Reinitas': [
+                { id: 'cardellina_pusilla', nombre_comun: 'Chipe corona negra', cientifico: 'Cardellina pusilla', emoji: '🐥' },
+                { id: 'setophaga_striata', nombre_comun: 'Reinita rayada', cientifico: 'Setophaga striata', emoji: '🐥' }
+            ],
+            'Cuervos': [
+                { id: 'corvus_corax', nombre_comun: 'Cuervo común', cientifico: 'Corvus corax', emoji: '🐦‍⬛' },
+                { id: 'calocitta_formosa', nombre_comun: 'Urraca pico amarillo', cientifico: 'Calocitta formosa', emoji: '🐦‍⬛' }
+            ],
+            'Pericos': [
+                { id: 'eupsittula_canicularis', nombre_comun: 'Perico frente naranja', cientifico: 'Eupsittula canicularis', emoji: '🦜' }
+            ],
+            'Colibríes': [
+                { id: 'cynanthus_latirostris', nombre_comun: 'Colibrí cola ancha', cientifico: 'Cynanthus latirostris', emoji: '🪶' },
+                { id: 'cynanthus_sordidus', nombre_comun: 'Colibrí pico ancho', cientifico: 'Cynanthus sordidus', emoji: '🪶' }
+            ],
+            'Carpinteros': [
+                { id: 'dryobates_scalaris', nombre_comun: 'Carpintero mexicano', cientifico: 'Dryobates scalaris', emoji: '🪹' },
+                { id: 'leuconotopicus_stricklandi', nombre_comun: 'Carpintero de pechera', cientifico: 'Leuconotopicus stricklandi', emoji: '🪹' }
+            ],
+            'Tucanes': [
+                { id: 'ramphastos_sulfuratus', nombre_comun: 'Tucán pico canoa', cientifico: 'Ramphastos sulfuratus', emoji: '🐧' },
+                { id: 'aulacorhynchus_prasinus', nombre_comun: 'Tucaneta esmeralda', cientifico: 'Aulacorhynchus prasinus', emoji: '🐧' }
+            ],
+            'Trogones': [
+                { id: 'trogon_ambiguus', nombre_comun: 'Trogón coppery-tailed', cientifico: 'Trogon ambiguus', emoji: '🐦' }
+            ]
+        };
+        const gruposList = [
+            { id: 'Gorriones', emoji: '🐦', nombre: 'Gorriones' },
+            { id: 'Palomas', emoji: '🕊️', nombre: 'Palomas' },
+            { id: 'Rapaces', emoji: '🦅', nombre: 'Rapaces' },
+            { id: 'Zorzales', emoji: '🐧', nombre: 'Zorzales' },
+            { id: 'Reinitas', emoji: '🐥', nombre: 'Reinitas' },
+            { id: 'Cuervos', emoji: '🐦‍⬛', nombre: 'Cuervos' },
+            { id: 'Pericos', emoji: '🦜', nombre: 'Pericos' },
+            { id: 'Colibríes', emoji: '🪶', nombre: 'Colibríes' },
+            { id: 'Carpinteros', emoji: '🪹', nombre: 'Carpinteros' },
+            { id: 'Tucanes', emoji: '🐧', nombre: 'Tucanes' },
+            { id: 'Trogones', emoji: '🐦', nombre: 'Trogones' }
+        ];
+
+        // ---- MAPA DE SUSTRATO ----
+        const sustratoMap = {
+            'Suelo': ['piso', 'roca'],
+            'Veg. muerta': ['zacate_seco', 'leña_muerta', 'tocón'],
+            'Veg. viva': ['zacate_vivo', 'fuste', 'rama_leñosa', 'rama_delgada', 'follaje', 'flor', 'fruto'],
+            'Infraestructura': ['carretera_terracería', 'vivienda', 'lineas_de_luz', 'torre_eléctrica'],
+            'Cuerpo de agua': ['charco', 'cisterna', 'olla captación agua', 'represa'],
+            'Volando': ['volando'],
+            'Otro': ['Otro (especifique)']
+        };
+
+        // ---- ESTADO GLOBAL ----
+        const state = {
+            rutas: [],
+            rutaActiva: null,
+            sitiosHistoricos: [],
+            registros: [],
+            conteoActivo: false,
+            tiempoRestante: 600,
+            duracionTotal: 600,
+            horaInicio: null,
+            timerInterval: null,
+            alarmaSonando: false,
+            fotoData: null,
+            gps: { lat: null, lon: null, accuracy: null, altitude: null },
+            inegiData: null,
+            ultimaLocalidad: null,
+            especieSeleccionada: null,
+            grupoSeleccionado: null,
+            radarEscala: 500,
+        };
+
+        // ===================================================================
+        // 2. FUNCIONES DE UTILIDAD
+        // ===================================================================
+
+        function haversine(lat1, lon1, lat2, lon2) {
+            const R = 6371000;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        }
+
+        function guardarDatos() {
+            try {
+                localStorage.setItem('avistR_rutas', JSON.stringify(state.rutas));
+                localStorage.setItem('avistR_sitios', JSON.stringify(state.sitiosHistoricos));
+                localStorage.setItem('avistamientos', JSON.stringify(state.registros));
+            } catch(e) { console.warn('Error guardando', e); }
+        }
+
+        function cargarDatos() {
+            try {
+                const rutas = localStorage.getItem('avistR_rutas');
+                if (rutas) state.rutas = JSON.parse(rutas);
+                const sitios = localStorage.getItem('avistR_sitios');
+                if (sitios) state.sitiosHistoricos = JSON.parse(sitios);
+                const regs = localStorage.getItem('avistamientos');
+                if (regs) state.registros = JSON.parse(regs);
+            } catch(e) { console.warn('Error cargando', e); }
+        }
+
+        function hoy() {
+            return new Date().toISOString().slice(0,10);
+        }
+
+        // ===================================================================
+        // 3. CONFIGURACIÓN DE BOTONES
+        // ===================================================================
+
         function setupButtonGroup(groupId, hiddenInputId) {
             const container = document.getElementById(groupId);
             if (!container) return;
-            const buttons = container.querySelectorAll('.option-btn');
+            const buttons = container.querySelectorAll('.opt-btn');
             const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
 
             buttons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const value = this.dataset.value;
-
-                    // Si es "otro"
                     if (value === 'otro' && hiddenInput) {
                         buttons.forEach(b => b.classList.remove('selected'));
-                        hiddenInput.style.display = 'block';
+                        hiddenInput.style.display = 'inline-block';
                         hiddenInput.focus();
-                        // Limpiar selección del hidden
                         return;
                     }
-
-                    // Si hay hidden input, ocultarlo
                     if (hiddenInput) {
                         hiddenInput.style.display = 'none';
                         hiddenInput.value = '';
                     }
-
-                    // Deseleccionar todos y seleccionar este
                     buttons.forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                 });
@@ -725,9 +1194,7 @@
 
             if (hiddenInput) {
                 hiddenInput.addEventListener('blur', function() {
-                    if (this.value.trim() === '') {
-                        this.style.display = 'none';
-                    }
+                    if (this.value.trim() === '') this.style.display = 'none';
                 });
                 hiddenInput.addEventListener('input', function() {
                     if (this.value.trim() !== '') {
@@ -737,31 +1204,670 @@
             }
         }
 
-        // Inicializar todos los grupos
-        setupButtonGroup('grupo-muestreo', 'muestreo_otro');
-        setupButtonGroup('grupo-municipio', 'municipio_otro');
-        setupButtonGroup('grupo-parcela', 'parcela_otro');
-        setupButtonGroup('grupo-punto', 'punto_otro');
-        setupButtonGroup('grupo-sistema', 'sistema_otro');
-        setupButtonGroup('grupo-individuos', 'individuos_otro');
-        setupButtonGroup('grupo-minuto', 'minuto_otro');
-        setupButtonGroup('grupo-distancia', 'distancia_otro');
-        setupButtonGroup('grupo-altura', 'altura_otro');
-        setupButtonGroup('grupo-sexo', null);
-        setupButtonGroup('grupo-edad', null);
-        setupButtonGroup('grupo-sustrato_tipo', null);
-        setupButtonGroup('grupo-sustrato_esp', 'sustrato_esp_otro');
-        setupButtonGroup('grupo-forma', null);
-        setupButtonGroup('grupo-vertical', null);
-        setupButtonGroup('grupo-horizontal', null);
-        setupButtonGroup('grupo-comportamiento', null);
-        setupButtonGroup('grupo-alimento', null);
+        function setupCircleGroup(groupId, hiddenInputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return;
+            const circles = container.querySelectorAll('.circle');
+            const hiddenInput = hiddenInputId ? document.getElementById(hiddenInputId) : null;
 
-        // ---- FUNCIONES DE UTILIDAD ----
+            circles.forEach(circle => {
+                circle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const value = this.dataset.value;
+                    if (value === 'otro' && hiddenInput) {
+                        circles.forEach(c => c.classList.remove('selected'));
+                        hiddenInput.style.display = 'inline-block';
+                        hiddenInput.focus();
+                        return;
+                    }
+                    if (hiddenInput) {
+                        hiddenInput.style.display = 'none';
+                        hiddenInput.value = '';
+                    }
+                    circles.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            if (hiddenInput) {
+                hiddenInput.addEventListener('blur', function() {
+                    if (this.value.trim() === '') this.style.display = 'none';
+                });
+                hiddenInput.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        circles.forEach(c => c.classList.remove('selected'));
+                    }
+                });
+            }
+        }
+
+        function initGrupos() {
+            setupButtonGroup('grupo-parcela', 'parcela_otro');
+            setupButtonGroup('grupo-sistema', null);
+            setupButtonGroup('grupo-sexo', null);
+            setupButtonGroup('grupo-edad', null);
+            setupButtonGroup('grupo-forma', null);
+            setupButtonGroup('grupo-vertical', null);
+            setupButtonGroup('grupo-horizontal', null);
+            setupButtonGroup('grupo-comportamiento', null);
+            setupButtonGroup('grupo-alimento', null);
+            setupCircleGroup('grupo-individuos', 'individuos_otro');
+        }
+
+        // ===================================================================
+        // 4. RUTAS
+        // ===================================================================
+
+        function renderRutas() {
+            const select = $('selector-ruta');
+            const current = select.value;
+            select.innerHTML = '<option value="">-- Seleccionar --</option>';
+            state.rutas.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.textContent = r.nombre;
+                select.appendChild(opt);
+            });
+            if (current && state.rutas.some(r => r.id === current)) {
+                select.value = current;
+                state.rutaActiva = current;
+            } else {
+                select.value = '';
+                state.rutaActiva = null;
+            }
+            actualizarInfoRuta();
+            validarInicioConteo();
+        }
+
+        function actualizarInfoRuta() {
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const info = $('info-ruta');
+            if (ruta) {
+                info.style.display = 'block';
+                $('ruta-nombre').textContent = ruta.nombre;
+            } else {
+                info.style.display = 'none';
+            }
+        }
+
+        function crearRuta() {
+            const nombre = prompt('Nombre de la ruta (ej. "Ruta Papantla"):');
+            if (!nombre) return;
+            const ruta = {
+                id: 'ruta_' + Date.now(),
+                nombre: nombre.trim()
+            };
+            state.rutas.push(ruta);
+            guardarDatos();
+            renderRutas();
+            $('selector-ruta').value = ruta.id;
+            state.rutaActiva = ruta.id;
+            actualizarInfoRuta();
+            validarInicioConteo();
+        }
+
+        function eliminarRuta() {
+            if (!state.rutaActiva) return;
+            if (!confirm('¿Eliminar la ruta activa?')) return;
+            state.rutas = state.rutas.filter(r => r.id !== state.rutaActiva);
+            state.rutaActiva = null;
+            guardarDatos();
+            renderRutas();
+            validarInicioConteo();
+        }
+
+        // ===================================================================
+        // 5. INEGI (con mensajes de depuración)
+        // ===================================================================
+
+        async function cargarINEGI() {
+            try {
+                console.log('⏳ Intentando cargar inegi.json...');
+                const resp = await fetch('inegi.json');
+                if (!resp.ok) {
+                    console.error('❌ Error al cargar inegi.json:', resp.status, resp.statusText);
+                    throw new Error('No se pudo cargar inegi.json');
+                }
+                state.inegiData = await resp.json();
+                console.log('✅ INEGI cargado correctamente. Número de estados:', Object.keys(state.inegiData).length);
+                // Mostrar un ejemplo de la estructura
+                const primerEstado = Object.keys(state.inegiData)[0];
+                console.log('📌 Estructura del JSON (primer estado):', primerEstado);
+                console.log('   Municipios en ese estado:', Object.keys(state.inegiData[primerEstado]).length);
+                const primerMunicipio = Object.keys(state.inegiData[primerEstado])[0];
+                console.log('   Primer municipio:', primerMunicipio);
+                console.log('   Número de localidades en ese municipio:', state.inegiData[primerEstado][primerMunicipio].length);
+                console.log('   Ejemplo de localidad:', state.inegiData[primerEstado][primerMunicipio][0]);
+            } catch(e) {
+                console.warn('❌ Error cargando INEGI:', e.message);
+                state.inegiData = null;
+                // Mostrar mensaje en la interfaz
+                document.querySelector('#tab-config .section:nth-child(4) .sitio-info')?.remove();
+                const section = document.querySelector('#tab-config .section:nth-child(4)');
+                if (section) {
+                    const msg = document.createElement('div');
+                    msg.className = 'sitio-info warning';
+                    msg.textContent = '⚠️ No se pudo cargar el archivo INEGI. Verifica que exista en el servidor.';
+                    section.appendChild(msg);
+                }
+            }
+        }
+
+        function buscarLocalidadMasCercana(lat, lon) {
+            if (!state.inegiData) {
+                console.warn('⚠️ INEGI no cargado, no se puede buscar localidad.');
+                return null;
+            }
+            console.log('🔍 Buscando localidad más cercana a:', lat, lon);
+            let mejor = null;
+            let distMin = Infinity;
+
+            // Iterar sobre todos los estados y municipios
+            for (const [estado, municipios] of Object.entries(state.inegiData)) {
+                for (const [municipio, localidades] of Object.entries(municipios)) {
+                    for (const loc of localidades) {
+                        // Asegurar que tiene lat y lon
+                        const latLoc = parseFloat(loc.lat ?? loc.LAT_DECIMAL ?? loc.LATITUD);
+                        const lonLoc = parseFloat(loc.lon ?? loc.LON_DECIMAL ?? loc.LONGITUD);
+                        if (isNaN(latLoc) || isNaN(lonLoc)) continue;
+                        const d = haversine(lat, lon, latLoc, lonLoc);
+                        if (d < distMin) {
+                            distMin = d;
+                            mejor = {
+                                estado: estado,
+                                municipio: municipio,
+                                localidad: loc.nombre ?? loc.NOM_LOC ?? loc.LOCALIDAD ?? 'Desconocida',
+                                altitud: loc.altitud ?? loc.ALTITUD ?? '',
+                                poblacion: loc.poblacion ?? loc.POB_TOTAL ?? '',
+                                viviendas: loc.viviendas ?? loc['TOTAL DE VIVIENDAS HABITADAS'] ?? '',
+                                distancia: d
+                            };
+                        }
+                    }
+                }
+            }
+
+            if (mejor) {
+                console.log('✅ Localidad encontrada:', mejor.localidad, 'en', mejor.municipio, ',', mejor.estado, 'distancia:', Math.round(mejor.distancia), 'm');
+            } else {
+                console.warn('⚠️ No se encontró ninguna localidad cercana.');
+            }
+            return mejor;
+        }
+
+        // ===================================================================
+        // 6. GPS
+        // ===================================================================
+
+        function obtenerGPS() {
+            if (!navigator.geolocation) {
+                alert('Tu dispositivo no soporta GPS');
+                return;
+            }
+            $('btn-gps').textContent = '📍 Obteniendo ubicación...';
+            $('btn-gps').disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    state.gps.lat = pos.coords.latitude;
+                    state.gps.lon = pos.coords.longitude;
+                    state.gps.accuracy = pos.coords.accuracy;
+                    state.gps.altitude = pos.coords.altitude; // altitud del GPS
+
+                    console.log('📍 GPS obtenido:', state.gps.lat, state.gps.lon);
+                    $('gps-lat').textContent = state.gps.lat.toFixed(6);
+                    $('gps-lon').textContent = state.gps.lon.toFixed(6);
+                    $('gps-accuracy').textContent = state.gps.accuracy ? `±${Math.round(state.gps.accuracy)}m` : '--';
+
+                    // Actualizar campos de INEGI
+                    if (state.inegiData) {
+                        const lugar = buscarLocalidadMasCercana(state.gps.lat, state.gps.lon);
+                        if (lugar) {
+                            // Altitud del punto: usar la del GPS si está disponible, sino la de INEGI
+                            const altPunto = state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || '--');
+                            $('altitud_punto').value = altPunto;
+                            $('localidad_auto').value = lugar.localidad;
+                            $('altitud_localidad').value = lugar.altitud || '--';
+                            $('municipio_auto').value = lugar.municipio;
+                            $('estado_auto').value = lugar.estado;
+                            state.ultimaLocalidad = lugar;
+                            // Mostrar mensaje de éxito
+                            const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
+                            if (info) {
+                                info.textContent = `✅ Localidad encontrada: ${lugar.localidad} (${Math.round(lugar.distancia)}m)`;
+                                info.className = 'sitio-info';
+                            }
+                        } else {
+                            $('altitud_punto').value = '--';
+                            $('localidad_auto').value = '--';
+                            $('altitud_localidad').value = '--';
+                            $('municipio_auto').value = '--';
+                            $('estado_auto').value = '--';
+                            state.ultimaLocalidad = null;
+                            const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
+                            if (info) {
+                                info.textContent = '⚠️ No se encontró localidad cercana.';
+                                info.className = 'sitio-info warning';
+                            }
+                        }
+                    } else {
+                        console.warn('⚠️ INEGI no cargado, no se pueden autocompletar los datos.');
+                        const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
+                        if (info) {
+                            info.textContent = '⚠️ INEGI no cargado. Verifica la conexión.';
+                            info.className = 'sitio-info warning';
+                        }
+                    }
+
+                    actualizarRadar();
+                    validarInicioConteo();
+
+                    $('btn-gps').textContent = '📍 Actualizar GPS';
+                    $('btn-gps').disabled = false;
+                },
+                (err) => {
+                    alert(`Error GPS: ${err.message}`);
+                    $('btn-gps').textContent = '📍 Actualizar GPS';
+                    $('btn-gps').disabled = false;
+                },
+                { enableHighAccuracy: true, timeout: 15000 }
+            );
+        }
+
+        // ===================================================================
+        // 7. RADAR
+        // ===================================================================
+
+        function actualizarRadar() {
+            const canvas = $('radarCanvas');
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width, h = canvas.height;
+            const centroX = w/2, centroY = h/2;
+            const escalaMax = state.radarEscala;
+
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = '#fafcff';
+            ctx.fillRect(0, 0, w, h);
+
+            for (let r = 0.2; r <= 1; r += 0.2) {
+                ctx.beginPath();
+                ctx.arc(centroX, centroY, r * w/2, 0, 2*Math.PI);
+                ctx.strokeStyle = '#d0d9e3';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.fillStyle = '#999';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(Math.round(r * escalaMax) + 'm', centroX, centroY - r * w/2 - 4);
+            }
+
+            const radio350 = (350 / escalaMax) * w/2;
+            if (radio350 < w/2) {
+                ctx.beginPath();
+                ctx.arc(centroX, centroY, radio350, 0, 2*Math.PI);
+                ctx.setLineDash([4, 6]);
+                ctx.strokeStyle = '#c0392b';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.fillStyle = 'rgba(192,57,43,0.08)';
+                ctx.fill();
+            }
+
+            if (state.gps.lat === null || state.gps.lon === null) {
+                ctx.fillStyle = '#999';
+                ctx.font = '16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('📍 Esperando GPS...', centroX, centroY);
+                $('radar-info').textContent = '📍 Esperando GPS...';
+                return;
+            }
+
+            const sitiosRuta = state.sitiosHistoricos.filter(s => s.rutaId === state.rutaActiva);
+            if (sitiosRuta.length === 0) {
+                ctx.fillStyle = '#999';
+                ctx.font = '16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('No hay sitios en esta ruta', centroX, centroY);
+                $('radar-info').textContent = '📌 No hay sitios en esta ruta';
+                return;
+            }
+
+            const hoyStr = hoy();
+            let sitioMasCercano = null;
+            let distMasCercana = Infinity;
+
+            sitiosRuta.forEach(sitio => {
+                const d = haversine(state.gps.lat, state.gps.lon, sitio.lat, sitio.lon);
+                if (d < distMasCercana) {
+                    distMasCercana = d;
+                    sitioMasCercano = sitio;
+                }
+
+                const dx = (sitio.lon - state.gps.lon) * (w/2 / (escalaMax / 111320));
+                const dy = -(sitio.lat - state.gps.lat) * (w/2 / (escalaMax / 111320));
+                const rx = centroX + dx;
+                const ry = centroY + dy;
+
+                if (Math.hypot(rx - centroX, ry - centroY) > w/2) return;
+
+                let color;
+                if (sitio.fecha === hoyStr) {
+                    color = (d < 350) ? '#c0392b' : '#2c3e50';
+                } else {
+                    color = '#27ae60';
+                }
+
+                ctx.beginPath();
+                ctx.arc(rx, ry, 6, 0, 2*Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.fillStyle = '#1f3a57';
+                ctx.font = '9px sans-serif';
+                ctx.textAlign = 'center';
+                const label = sitio.nombre || sitio.parcela;
+                ctx.fillText(label, rx, ry - 10);
+            });
+
+            if (sitioMasCercano) {
+                const msg = `📍 Sitio más cercano: ${sitioMasCercano.nombre || sitioMasCercano.parcela} · Distancia: ${Math.round(distMasCercana)}m`;
+                $('radar-info').textContent = msg;
+                if (distMasCercana < 350 && sitioMasCercano.fecha === hoyStr) {
+                    $('radar-info').className = 'sitio-info warning';
+                } else {
+                    $('radar-info').className = 'sitio-info';
+                }
+            } else {
+                $('radar-info').textContent = '📍 Sin sitios cercanos';
+                $('radar-info').className = 'sitio-info';
+            }
+
+            ctx.beginPath();
+            ctx.arc(centroX, centroY, 5, 0, 2*Math.PI);
+            ctx.fillStyle = '#013366';
+            ctx.fill();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function initRadarZoom() {
+            const slider = $('radar-escala');
+            const label = $('radar-escala-label');
+            slider.addEventListener('input', function() {
+                state.radarEscala = parseInt(this.value);
+                label.textContent = state.radarEscala + ' m';
+                actualizarRadar();
+            });
+
+            let lastDist = 0;
+            const canvas = $('radarCanvas');
+            canvas.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    const dx = e.touches[0].clientX - e.touches[1].clientX;
+                    const dy = e.touches[0].clientY - e.touches[1].clientY;
+                    lastDist = Math.hypot(dx, dy);
+                }
+            });
+            canvas.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const dx = e.touches[0].clientX - e.touches[1].clientX;
+                    const dy = e.touches[0].clientY - e.touches[1].clientY;
+                    const dist = Math.hypot(dx, dy);
+                    const delta = dist - lastDist;
+                    if (Math.abs(delta) > 10) {
+                        let newScale = state.radarEscala - delta * 2;
+                        newScale = Math.min(2000, Math.max(100, newScale));
+                        state.radarEscala = Math.round(newScale / 50) * 50;
+                        slider.value = state.radarEscala;
+                        $('radar-escala-label').textContent = state.radarEscala + ' m';
+                        actualizarRadar();
+                        lastDist = dist;
+                    }
+                }
+            });
+        }
+
+        // ===================================================================
+        // 8. REGISTRAR PUNTO DE AVISTAMIENTO
+        // ===================================================================
+
+        function registrarPunto() {
+            if (!state.rutaActiva) {
+                alert('⚠️ Seleccione o cree una ruta primero.');
+                return;
+            }
+            if (state.gps.lat === null || state.gps.lon === null) {
+                alert('⚠️ Obtenga su ubicación GPS primero.');
+                return;
+            }
+
+            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || 'PA-00';
+            const sistema = getSelectedValue('grupo-sistema', null) || '0';
+            const fecha = $('fecha').value;
+            const horaInicio = $('hora_inicio').value;
+
+            if (!fecha) { alert('Seleccione una fecha'); return; }
+            if (!horaInicio) { alert('Seleccione la hora de inicio'); return; }
+
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const lugar = state.ultimaLocalidad || {};
+
+            // Obtener altitud del punto (si está disponible en el GPS)
+            const altPunto = state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || '');
+
+            const sitio = {
+                id: 'sitio_' + Date.now(),
+                rutaId: state.rutaActiva,
+                fecha: fecha,
+                hora: horaInicio,
+                nombre: ruta ? ruta.nombre + '_' + parcela + '_' + sistema : 'sitio',
+                parcela: parcela,
+                sistema: sistema,
+                lat: state.gps.lat,
+                lon: state.gps.lon,
+                altitud_punto: altPunto,
+                localidad: lugar.localidad || '',
+                altitud_localidad: lugar.altitud || '',
+                municipio: lugar.municipio || '',
+                estado: lugar.estado || '',
+                poblacion: lugar.poblacion || '',
+                viviendas: lugar.viviendas || ''
+            };
+
+            state.sitiosHistoricos.push(sitio);
+            guardarDatos();
+
+            mostrarMensaje('✅ Punto registrado exitosamente', 'ok');
+            $('btn-registrar-punto').disabled = true;
+            $('btn-registrar-punto').textContent = '✅ Punto registrado';
+            $('btn-iniciar-conteo').disabled = false;
+
+            actualizarRadar();
+            validarInicioConteo();
+        }
+
+        // ===================================================================
+        // 9. TEMPORIZADOR Y CONTEO
+        // ===================================================================
+
+        function iniciarConteo() {
+            if (!state.rutaActiva) {
+                alert('Seleccione una ruta primero.');
+                return;
+            }
+
+            const ultimoSitio = state.sitiosHistoricos[state.sitiosHistoricos.length - 1];
+            if (!ultimoSitio) {
+                alert('Primero registre un punto de avistamiento.');
+                return;
+            }
+
+            const fecha = ultimoSitio.fecha;
+            const horaInicio = ultimoSitio.hora;
+            const duracion = parseInt($('duracion').value) || 10;
+
+            state.duracionTotal = duracion * 60;
+            state.tiempoRestante = state.duracionTotal;
+            state.horaInicio = horaInicio;
+            state.conteoActivo = true;
+
+            $('timer-container').style.display = 'block';
+            $('btn-iniciar-conteo').style.display = 'none';
+            $('btn-registrar-punto').disabled = true;
+
+            $('registro-fecha-hora').textContent = `Fecha: ${fecha} · Hora inicio: ${horaInicio}`;
+            $('registro-sitio').textContent = `${ultimoSitio.parcela} · ${ultimoSitio.sistema}`;
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            $('registro-ruta').textContent = `Ruta: ${ruta ? ruta.nombre : '--'}`;
+
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-tab="tab-registro"]').classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-registro').classList.add('active');
+
+            actualizarTimer();
+
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            state.timerInterval = setInterval(() => {
+                state.tiempoRestante--;
+                actualizarTimer();
+                if (state.tiempoRestante <= 0) {
+                    clearInterval(state.timerInterval);
+                    state.timerInterval = null;
+                    state.conteoActivo = false;
+                    sonarAlarma();
+                }
+            }, 1000);
+
+            actualizarMinutoActual();
+            actualizarRadar();
+            validarInicioConteo();
+        }
+
+        function actualizarTimer() {
+            const mins = Math.floor(state.tiempoRestante / 60);
+            const segs = state.tiempoRestante % 60;
+            const display = `${String(mins).padStart(2,'0')}:${String(segs).padStart(2,'0')}`;
+            const el = $('timer-display');
+            el.textContent = display;
+            $('registro-tiempo-restante').textContent = display;
+
+            if (state.tiempoRestante <= 30 && state.tiempoRestante > 0) {
+                el.classList.add('urgent');
+            } else {
+                el.classList.remove('urgent');
+            }
+            actualizarMinutoActual();
+        }
+
+        function actualizarMinutoActual() {
+            if (!state.horaInicio) return;
+            const ahora = new Date();
+            const [h, m] = state.horaInicio.split(':').map(Number);
+            const inicio = new Date();
+            inicio.setHours(h, m, 0, 0);
+            const diffSeg = Math.floor((ahora - inicio) / 1000);
+            const minuto = Math.min(Math.floor(diffSeg / 60) + 1, 10);
+            if (minuto >= 1 && minuto <= 10) {
+                $('registro-minuto-actual').innerHTML = `Minuto: <strong>${minuto}</strong>`;
+            } else if (minuto > 10) {
+                $('registro-minuto-actual').innerHTML = `Minuto: <strong>10+</strong>`;
+            } else {
+                $('registro-minuto-actual').innerHTML = `Minuto: <strong>--</strong>`;
+            }
+        }
+
+        function sonarAlarma() {
+            state.alarmaSonando = true;
+            $('timer-status').textContent = '🔔 ⏰ ¡TIEMPO FINALIZADO! ⏰ 🔔';
+            $('timer-display').classList.add('urgent');
+            $('btn-detener-alarma').style.display = 'block';
+
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 500]);
+
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.frequency.value = 800;
+                        gain.gain.value = 0.3;
+                        osc.start();
+                        setTimeout(() => osc.stop(), 300);
+                    }, i * 500);
+                }
+            } catch(e) {}
+
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('⏰ AvistaR', {
+                    body: '¡El tiempo de conteo ha finalizado!',
+                    icon: 'https://via.placeholder.com/64/013366/FFFFFF?text=AV'
+                });
+            }
+        }
+
+        function detenerAlarma() {
+            state.alarmaSonando = false;
+            $('btn-detener-alarma').style.display = 'none';
+            $('timer-status').textContent = '✅ Conteo finalizado';
+            $('timer-display').classList.remove('urgent');
+        }
+
+        function finalizarConteo() {
+            if (state.timerInterval) {
+                clearInterval(state.timerInterval);
+                state.timerInterval = null;
+            }
+            state.conteoActivo = false;
+            $('timer-container').style.display = 'none';
+            $('btn-iniciar-conteo').style.display = 'block';
+            $('btn-detener-alarma').style.display = 'none';
+            $('timer-status').textContent = '⏳ Conteo en progreso...';
+            $('timer-display').classList.remove('urgent');
+            $('registro-tiempo-restante').textContent = '--:--';
+            $('registro-minuto-actual').innerHTML = 'Minuto: <strong>--</strong>';
+            alert('Conteo finalizado. Puede iniciar uno nuevo desde Configuración.');
+        }
+
+        // ===================================================================
+        // 10. FUNCIONES DE OBTENCIÓN DE VALORES
+        // ===================================================================
+
         function getSelectedValue(groupId, inputId) {
             const container = document.getElementById(groupId);
             if (!container) return '';
-            const selected = container.querySelector('.option-btn.selected');
+            const selected = container.querySelector('.selected');
+            if (selected) {
+                const val = selected.dataset.value;
+                if (val === 'otro') {
+                    const inp = document.getElementById(inputId);
+                    if (inp) return inp.value.trim() || '';
+                    return '';
+                }
+                return val;
+            }
+            if (inputId) {
+                const inp = document.getElementById(inputId);
+                if (inp && inp.style.display !== 'none' && inp.value.trim() !== '') {
+                    return inp.value.trim();
+                }
+            }
+            return '';
+        }
+
+        function getSelectedCircle(groupId, inputId) {
+            const container = document.getElementById(groupId);
+            if (!container) return '';
+            const selected = container.querySelector('.circle.selected');
             if (selected) {
                 const val = selected.dataset.value;
                 if (val === 'otro') {
@@ -788,138 +1894,268 @@
             return '';
         }
 
-        // ---- CONDICIONANTES DINÁMICAS ----
-        function updateSustratoOptions(alturaVal) {
-            const btnVolando = document.getElementById('btn-volando');
-            if (!btnVolando) return;
-            const container = document.getElementById('grupo-sustrato_tipo');
-            if (!container) return;
-
-            // Si altura es 0 (número o string '0'), ocultar Volando
-            if (alturaVal === '0' || alturaVal === 0) {
-                btnVolando.classList.add('hidden');
-                // Si estaba seleccionado, deseleccionarlo
-                if (btnVolando.classList.contains('selected')) {
-                    btnVolando.classList.remove('selected');
-                }
-            } else {
-                btnVolando.classList.remove('hidden');
+        function getSustratoEspecifico() {
+            const espSelect = $('sustrato_esp');
+            const inputOtro = $('sustrato_otro_texto');
+            if (espSelect.value === 'otro_texto') {
+                return inputOtro.value.trim() || 'Otro (sin especificar)';
             }
+            return espSelect.value;
         }
 
-        function updateAlimentoStatus(comportamientoVal) {
-            const container = document.getElementById('grupo-alimento');
-            if (!container) return;
-            const buttons = container.querySelectorAll('.option-btn');
-            const isAlimentandose = (comportamientoVal === '1');
+        // ===================================================================
+        // 11. SELECTOR VISUAL DE ESPECIES
+        // ===================================================================
 
-            buttons.forEach(btn => {
-                if (isAlimentandose) {
-                    btn.classList.remove('disabled');
-                } else {
-                    btn.classList.add('disabled');
-                    btn.classList.remove('selected');
-                }
-            });
-            // Si no está alimentándose, limpiar el input "otro" de alimento
-            if (!isAlimentandose) {
-                const inp = document.getElementById('alimento_otro');
-                if (inp) { inp.value = ''; inp.style.display = 'none'; }
-            }
-        }
-
-        function updateFormaStatus(sustratoVal) {
-            const grupos = ['grupo-forma', 'grupo-vertical', 'grupo-horizontal'];
-            const isVegetacion = (sustratoVal === '2' || sustratoVal === '3');
-
-            grupos.forEach(gid => {
-                const container = document.getElementById(gid);
-                if (!container) return;
-                const buttons = container.querySelectorAll('.option-btn');
-                buttons.forEach(btn => {
-                    if (isVegetacion) {
-                        btn.classList.remove('disabled');
-                    } else {
-                        btn.classList.add('disabled');
-                        btn.classList.remove('selected');
-                        // Si el valor es "No aplica" (4 en forma, 4 en vertical, 3 en horizontal) lo seleccionamos automáticamente
-                        if (gid === 'grupo-forma' && btn.dataset.value === '4') {
-                            btn.classList.add('selected');
-                        } else if (gid === 'grupo-vertical' && btn.dataset.value === '4') {
-                            btn.classList.add('selected');
-                        } else if (gid === 'grupo-horizontal' && btn.dataset.value === '3') {
-                            btn.classList.add('selected');
-                        }
-                    }
+        function initSelectorEspecies() {
+            const grid = $('grupo-grid');
+            grid.innerHTML = '';
+            gruposList.forEach(grupo => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'grupo-btn';
+                btn.dataset.grupo = grupo.id;
+                btn.innerHTML = `<span class="emoji">${grupo.emoji}</span><span>${grupo.nombre}</span>`;
+                btn.addEventListener('click', function() {
+                    seleccionarGrupo(this.dataset.grupo);
                 });
+                grid.appendChild(btn);
+            });
+
+            $('btn-grupo-otro').addEventListener('click', function() {
+                seleccionarEspecieManual('otro');
+            });
+            $('btn-volver-grupos').addEventListener('click', function() {
+                mostrarPaso('grupos');
+                $('grupo-grid').querySelectorAll('.grupo-btn').forEach(b => b.classList.remove('selected'));
+            });
+            $('btn-especie-otro').addEventListener('click', function() {
+                seleccionarEspecieManual('otro');
+            });
+            $('btn-cambiar-especie').addEventListener('click', function() {
+                mostrarPaso('grupos');
+                $('grupo-grid').querySelectorAll('.grupo-btn').forEach(b => b.classList.remove('selected'));
+                limpiarEspecieSeleccionada();
             });
         }
 
-        // ---- ESCUCHAR CAMBIOS EN LOS GRUPOS ----
-        // 1. Altura
-        document.getElementById('grupo-altura').addEventListener('click', function(e) {
-            const btn = e.target.closest('.option-btn');
-            if (!btn) return;
-            // Esperar a que se actualice la selección (usamos setTimeout)
-            setTimeout(() => {
-                const val = getSelectedValue('grupo-altura', 'altura_otro');
-                updateSustratoOptions(val);
-            }, 50);
-        });
-        document.getElementById('altura_otro').addEventListener('input', function() {
-            const val = this.value.trim();
-            updateSustratoOptions(val);
-        });
+        function seleccionarGrupo(grupoId) {
+            state.grupoSeleccionado = grupoId;
+            $('grupo-grid').querySelectorAll('.grupo-btn').forEach(b => {
+                b.classList.toggle('selected', b.dataset.grupo === grupoId);
+            });
 
-        // 2. Comportamiento
-        document.getElementById('grupo-comportamiento').addEventListener('click', function(e) {
-            const btn = e.target.closest('.option-btn');
-            if (!btn) return;
-            setTimeout(() => {
-                const val = getSelectedValue('grupo-comportamiento', null);
-                updateAlimentoStatus(val);
-            }, 50);
-        });
+            const especies = especiesDB[grupoId] || [];
+            const grid = $('especie-grid');
+            grid.innerHTML = '';
+            if (especies.length === 0) {
+                grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1; text-align:center;">No hay especies registradas</p>';
+            } else {
+                especies.forEach(esp => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'especie-btn';
+                    btn.dataset.especie = JSON.stringify(esp);
+                    btn.innerHTML = `
+                        <div class="foto-placeholder">${esp.emoji || '🐦'}</div>
+                        <div class="nombre-comun">${esp.nombre_comun}</div>
+                        <div class="nombre-cientifico">${esp.cientifico}</div>
+                    `;
+                    btn.addEventListener('click', function() {
+                        const data = JSON.parse(this.dataset.especie);
+                        seleccionarEspecie(data);
+                    });
+                    grid.appendChild(btn);
+                });
+            }
+            mostrarPaso('especies');
+        }
 
-        // 3. Sustrato Tipo
-        document.getElementById('grupo-sustrato_tipo').addEventListener('click', function(e) {
-            const btn = e.target.closest('.option-btn');
-            if (!btn) return;
-            setTimeout(() => {
-                const val = getSelectedValue('grupo-sustrato_tipo', null);
-                updateFormaStatus(val);
-            }, 50);
-        });
+        function seleccionarEspecie(especie) {
+            state.especieSeleccionada = especie;
+            $('especie-grid').querySelectorAll('.especie-btn').forEach(b => b.classList.remove('selected'));
 
-        // ---- GUARDAR REGISTRO ----
+            $('especie-seleccionada-foto').textContent = especie.emoji || '🐦';
+            $('especie-seleccionada-nombre').textContent = especie.nombre_comun;
+            $('especie-seleccionada-cientifico').textContent = especie.cientifico;
+            $('especie-codigo').value = especie.id;
+            $('especie-nombre_comun').value = especie.nombre_comun;
+            $('especie-cientifico').value = especie.cientifico;
+
+            $('especie-seleccionada').classList.remove('hidden');
+            $('paso-especies').classList.add('hidden');
+        }
+
+        function seleccionarEspecieManual(tipo) {
+            const nombre = prompt('Ingrese el nombre común de la especie:');
+            if (!nombre) return;
+            const cientifico = prompt('Ingrese el nombre científico (opcional):') || 'No determinado';
+            const especie = {
+                id: `manual_${Date.now()}`,
+                nombre_comun: nombre,
+                cientifico: cientifico,
+                emoji: '🐦'
+            };
+            seleccionarEspecie(especie);
+        }
+
+        function mostrarPaso(paso) {
+            $('paso-grupos').classList.toggle('hidden', paso !== 'grupos');
+            $('paso-especies').classList.toggle('hidden', paso !== 'especies');
+        }
+
+        function limpiarEspecieSeleccionada() {
+            state.especieSeleccionada = null;
+            $('especie-seleccionada').classList.add('hidden');
+            $('especie-codigo').value = '';
+            $('especie-nombre_comun').value = '';
+            $('especie-cientifico').value = '';
+        }
+
+        // ===================================================================
+        // 12. SUSTRATO DINÁMICO
+        // ===================================================================
+
+        function initSustratoDinamico() {
+            const tipoSelect = $('sustrato_tipo');
+            const espSelect = $('sustrato_esp');
+            const inputOtro = $('sustrato_otro_texto');
+
+            tipoSelect.addEventListener('change', function() {
+                const tipo = this.value;
+                espSelect.innerHTML = '';
+                inputOtro.style.display = 'none';
+                inputOtro.value = '';
+
+                if (!tipo || !sustratoMap[tipo]) {
+                    espSelect.innerHTML = '<option value="">Primero seleccione un tipo</option>';
+                    return;
+                }
+
+                const opciones = sustratoMap[tipo];
+                opciones.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt;
+                    option.textContent = opt;
+                    espSelect.appendChild(option);
+                });
+
+                if (tipo === 'Otro') {
+                    const option = document.createElement('option');
+                    option.value = 'otro_texto';
+                    option.textContent = '✏️ Otro (escribir abajo)';
+                    espSelect.appendChild(option);
+                    inputOtro.style.display = 'block';
+                }
+            });
+
+            espSelect.addEventListener('change', function() {
+                if (this.value === 'otro_texto') {
+                    inputOtro.style.display = 'block';
+                    inputOtro.focus();
+                } else {
+                    inputOtro.style.display = 'none';
+                    inputOtro.value = '';
+                }
+            });
+
+            inputOtro.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    espSelect.value = 'otro_texto';
+                }
+            });
+        }
+
+        // ===================================================================
+        // 13. FOTO
+        // ===================================================================
+
+        function tomarFoto() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.capture = 'environment';
+
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    state.fotoData = event.target.result;
+                    $('foto-preview').src = state.fotoData;
+                    $('foto-preview-container').style.display = 'block';
+                    $('btn-tomar-foto').textContent = '📷 Reemplazar foto';
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+
+        function quitarFoto() {
+            state.fotoData = null;
+            $('foto-preview-container').style.display = 'none';
+            $('foto-preview').src = '';
+            $('btn-tomar-foto').textContent = '📷 Tomar fotografía';
+        }
+
+        // ===================================================================
+        // 14. GUARDAR REGISTRO
+        // ===================================================================
+
         function guardarRegistro() {
-            const fecha = document.getElementById('fecha').value;
-            const hora = document.getElementById('hora').value;
-            if (!fecha) { mostrarMensaje('⚠️ Seleccione fecha', 'error'); return; }
-            if (!hora) { mostrarMensaje('⚠️ Seleccione hora', 'error'); return; }
+            if (!state.conteoActivo) {
+                alert('⚠️ Debe iniciar un conteo primero (pestaña Configurar)');
+                return;
+            }
 
-            const codigo = document.getElementById('codigo').value.trim();
-            if (!codigo) { mostrarMensaje('⚠️ Ingrese el código de la especie', 'error'); return; }
+            const codigo = $('especie-codigo').value || '';
+            const nombreComun = $('especie-nombre_comun').value || '';
+            if (!codigo && !nombreComun) {
+                alert('⚠️ Seleccione una especie usando el selector visual');
+                return;
+            }
 
-            // Recolectar datos
+            let minuto = 0;
+            if (state.horaInicio) {
+                const ahora = new Date();
+                const [h, m] = state.horaInicio.split(':').map(Number);
+                const inicio = new Date();
+                inicio.setHours(h, m, 0, 0);
+                const diffSeg = Math.floor((ahora - inicio) / 1000);
+                minuto = Math.min(Math.floor(diffSeg / 60) + 1, 10);
+                if (minuto < 1) minuto = 1;
+            }
+
+            const ultimoSitio = state.sitiosHistoricos[state.sitiosHistoricos.length - 1] || {};
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+
             const registro = {
                 id: Date.now(),
-                fecha, hora,
-                muestreo: getSelectedValue('grupo-muestreo', 'muestreo_otro'),
-                municipio: getSelectedValue('grupo-municipio', 'municipio_otro'),
-                parcela: getSelectedValue('grupo-parcela', 'parcela_otro'),
-                punto: getSelectedValue('grupo-punto', 'punto_otro'),
-                sistema: getSelectedValue('grupo-sistema', 'sistema_otro'),
-                codigo,
-                nombre_comun: document.getElementById('nombre_comun').value.trim(),
-                individuos: getSelectedValue('grupo-individuos', 'individuos_otro'),
-                minuto: getSelectedValue('grupo-minuto', 'minuto_otro'),
-                distancia: getSelectedValue('grupo-distancia', 'distancia_otro'),
-                altura: getSelectedValue('grupo-altura', 'altura_otro'),
+                fecha: ultimoSitio.fecha || $('fecha').value,
+                hora_inicio: state.horaInicio,
+                minuto_observacion: minuto,
+                ruta: ruta ? ruta.nombre : '',
+                estado: ultimoSitio.estado || $('estado_auto').value,
+                municipio: ultimoSitio.municipio || $('municipio_auto').value,
+                localidad: ultimoSitio.localidad || $('localidad_auto').value,
+                altitud_punto: ultimoSitio.altitud_punto || $('altitud_punto').value,
+                altitud_localidad: ultimoSitio.altitud_localidad || $('altitud_localidad').value,
+                poblacion: ultimoSitio.poblacion || '',
+                viviendas: ultimoSitio.viviendas || '',
+                parcela: ultimoSitio.parcela || '',
+                sistema: ultimoSitio.sistema || '',
+                lat: ultimoSitio.lat || state.gps.lat,
+                lon: ultimoSitio.lon || state.gps.lon,
+                codigo: codigo,
+                nombre_comun: nombreComun,
+                cientifico: $('especie-cientifico').value,
+                individuos: getSelectedCircle('grupo-individuos', 'individuos_otro'),
+                distancia: $('reg-distancia').value.trim(),
+                altura: $('reg-altura').value.trim(),
                 sexo: getSelectedValue('grupo-sexo', null),
                 edad: getSelectedValue('grupo-edad', null),
-                sustrato_tipo: getSelectedValue('grupo-sustrato_tipo', null),
-                sustrato_esp: getSelectedValue('grupo-sustrato_esp', 'sustrato_esp_otro'),
+                sustrato_tipo: $('sustrato_tipo').value,
+                sustrato_esp: getSustratoEspecifico(),
                 forma: getSelectedValue('grupo-forma', null),
                 vertical: getSelectedValue('grupo-vertical', null),
                 horizontal: getSelectedValue('grupo-horizontal', null),
@@ -927,85 +2163,111 @@
                 alimento: (() => {
                     const val = getSelectedValue('grupo-alimento', null);
                     if (val === '6') {
-                        const otro = document.getElementById('alimento_otro').value.trim();
-                        return otro || '6';
+                        const otro = document.getElementById('alimento_otro');
+                        return otro ? otro.value.trim() || '6' : '6';
                     }
                     return val;
                 })(),
-                especie_vegetal: document.getElementById('especie_vegetal').value.trim(),
-                verificado: getCheckboxValue('verificado_si', 'verificado_no'),
-                foto: getCheckboxValue('foto_si', 'foto_no'),
-                notas: document.getElementById('notas').value.trim()
+                especie_vegetal: $('reg-especie_vegetal').value.trim(),
+                verificado: getCheckboxValue('reg-verificado_si', 'reg-verificado_no'),
+                foto: state.fotoData || '',
+                notas: $('reg-notas').value.trim()
             };
 
-            // Guardar en localStorage
-            let registros = [];
-            try {
-                const stored = localStorage.getItem('avistamientos');
-                registros = stored ? JSON.parse(stored) : [];
-            } catch (e) { registros = []; }
+            state.registros.push(registro);
+            guardarDatos();
 
-            registros.push(registro);
-            localStorage.setItem('avistamientos', JSON.stringify(registros));
-
-            mostrarMensaje('✅ Registro guardado correctamente', 'ok');
+            mostrarMensaje('✅ Registro guardado', 'ok');
             actualizarContadores();
-            limpiarFormulario();
+            limpiarRegistro();
+
+            document.getElementById('tab-registro').scrollTop = 0;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ---- LIMPIAR FORMULARIO ----
-        function limpiarFormulario() {
-            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-            const otros = [
-                'muestreo_otro', 'municipio_otro', 'parcela_otro', 'punto_otro',
-                'sistema_otro', 'individuos_otro', 'minuto_otro', 'distancia_otro',
-                'altura_otro', 'sustrato_esp_otro', 'alimento_otro'
-            ];
-            otros.forEach(id => {
+        function limpiarRegistro() {
+            document.querySelectorAll('#tab-registro .selected').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('#tab-registro .circle.selected').forEach(el => el.classList.remove('selected'));
+
+            ['reg-distancia', 'reg-altura', 'reg-especie_vegetal', 'reg-notas'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            ['individuos_otro', 'sustrato_otro_texto', 'alimento_otro'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) { el.value = ''; el.style.display = 'none'; }
             });
-            document.getElementById('codigo').value = '';
-            document.getElementById('nombre_comun').value = '';
-            document.getElementById('especie_vegetal').value = '';
-            document.getElementById('notas').value = '';
-            document.getElementById('verificado_si').checked = false;
-            document.getElementById('verificado_no').checked = false;
-            document.getElementById('foto_si').checked = false;
-            document.getElementById('foto_no').checked = false;
-            // Re-ejecutar condicionantes para estado inicial
-            updateSustratoOptions(''); // ocultar volando si altura no seleccionada
-            updateAlimentoStatus('');
-            updateFormaStatus('');
+
+            $('sustrato_tipo').value = '';
+            $('sustrato_esp').innerHTML = '<option value="">Primero seleccione un tipo</option>';
+
+            document.querySelectorAll('#tab-registro input[type="checkbox"]').forEach(cb => cb.checked = false);
+            quitarFoto();
+            limpiarEspecieSeleccionada();
+            mostrarPaso('grupos');
+            $('grupo-grid').querySelectorAll('.grupo-btn').forEach(b => b.classList.remove('selected'));
         }
 
-        // ---- MOSTRAR MENSAJE ----
         function mostrarMensaje(texto, tipo) {
-            const el = document.getElementById('mensaje-guardado');
+            const el = $('mensaje-guardado');
             el.textContent = texto;
             el.style.display = 'block';
             el.style.color = tipo === 'error' ? '#c0392b' : '#1a7a3a';
             setTimeout(() => { el.style.display = 'none'; }, 4000);
         }
 
-        // ---- ACTUALIZAR CONTADORES Y LISTA ----
-        function actualizarContadores() {
-            const registros = obtenerRegistros();
-            const count = registros.length;
-            document.getElementById('contador-badge').textContent = count;
-            document.getElementById('contador-registros').textContent = count;
-            renderizarLista(registros);
+        // ===================================================================
+        // 15. VALIDACIÓN DE INICIO DE CONTEO
+        // ===================================================================
+
+        function validarInicioConteo() {
+            const btn = $('btn-iniciar-conteo');
+            const msg = $('iniciar-mensaje');
+
+            if (!state.rutaActiva) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Seleccione o cree una ruta primero.';
+                return;
+            }
+
+            if (state.gps.lat === null || state.gps.lon === null) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Obtenga su ubicación GPS primero.';
+                return;
+            }
+
+            const hoyStr = hoy();
+            const puntoHoy = state.sitiosHistoricos.some(s =>
+                s.rutaId === state.rutaActiva && s.fecha === hoyStr
+            );
+
+            if (!puntoHoy) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Registre un punto de avistamiento primero (botón verde).';
+                return;
+            }
+
+            btn.disabled = false;
+            msg.style.display = 'none';
         }
 
-        function obtenerRegistros() {
-            try {
-                const stored = localStorage.getItem('avistamientos');
-                return stored ? JSON.parse(stored) : [];
-            } catch (e) { return []; }
+        // ===================================================================
+        // 16. LISTA DE REGISTROS Y EXPORTACIÓN
+        // ===================================================================
+
+        function actualizarContadores() {
+            const count = state.registros.length;
+            $('contador-badge').textContent = count;
+            $('contador-registros').textContent = count;
+            renderizarLista(state.registros);
         }
 
         function renderizarLista(registros) {
-            const container = document.getElementById('lista-registros');
+            const container = $('lista-registros');
             if (!registros || registros.length === 0) {
                 container.innerHTML = '<div class="empty-msg">📭 No hay registros guardados</div>';
                 return;
@@ -1013,17 +2275,19 @@
 
             let html = `<table>
                 <thead><tr>
-                    <th>#</th><th>Fecha</th><th>Hora</th><th>Código</th>
+                    <th>#</th><th>Fecha</th><th>Hora</th><th>Min</th><th>Especie</th>
                     <th>Ind.</th><th>Comport.</th><th>Acción</th>
                 </tr></thead><tbody>`;
 
             registros.slice().reverse().forEach((r, idx) => {
                 const num = registros.length - idx;
+                const nombre = r.nombre_comun || r.codigo || '--';
                 html += `<tr>
                     <td>${num}</td>
                     <td>${r.fecha || ''}</td>
-                    <td>${r.hora || ''}</td>
-                    <td><strong>${r.codigo || ''}</strong></td>
+                    <td>${r.hora_inicio || ''}</td>
+                    <td>${r.minuto_observacion || ''}</td>
+                    <td><strong>${nombre}</strong></td>
                     <td>${r.individuos || ''}</td>
                     <td>${r.comportamiento || ''}</td>
                     <td><button class="btn-danger" style="padding:4px 10px; font-size:11px;" data-id="${r.id}">✕</button></td>
@@ -1042,40 +2306,40 @@
         }
 
         function eliminarRegistro(id) {
-            let registros = obtenerRegistros();
-            registros = registros.filter(r => r.id !== id);
-            localStorage.setItem('avistamientos', JSON.stringify(registros));
+            state.registros = state.registros.filter(r => r.id !== id);
+            guardarDatos();
             actualizarContadores();
             mostrarMensaje('🗑️ Registro eliminado', 'ok');
         }
 
         function eliminarTodos() {
             if (!confirm('¿Eliminar TODOS los registros guardados?')) return;
-            localStorage.removeItem('avistamientos');
+            state.registros = [];
+            guardarDatos();
             actualizarContadores();
             mostrarMensaje('🗑️ Todos los registros eliminados', 'ok');
         }
 
-        // ---- EXPORTAR CSV ----
         function exportarCSV() {
-            const registros = obtenerRegistros();
-            if (registros.length === 0) {
+            if (state.registros.length === 0) {
                 alert('No hay registros para exportar');
                 return;
             }
 
             const columnas = [
-                'id','fecha','hora','muestreo','municipio','parcela','punto','sistema',
-                'codigo','nombre_comun','individuos','minuto','distancia','altura',
+                'id','fecha','hora_inicio','minuto_observacion','ruta','estado','municipio','localidad',
+                'altitud_punto','altitud_localidad','poblacion','viviendas','parcela','sistema','lat','lon',
+                'codigo','nombre_comun','cientifico','individuos','distancia','altura',
                 'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
                 'horizontal','comportamiento','alimento','especie_vegetal',
-                'verificado','foto','notas'
+                'verificado','notas','foto'
             ];
 
             let csv = columnas.join(',') + '\n';
-            registros.forEach(r => {
+            state.registros.forEach(r => {
                 const fila = columnas.map(col => {
                     let val = r[col] !== undefined ? r[col] : '';
+                    if (col === 'foto' && val.length > 100) val = '[FOTO]';
                     if (typeof val === 'string' && (val.includes(',') || val.includes('"'))) {
                         val = '"' + val.replace(/"/g, '""') + '"';
                     }
@@ -1088,7 +2352,7 @@
             const link = document.createElement('a');
             const url = URL.createObjectURL(blob);
             link.href = url;
-            link.setAttribute('download', `avistamientos_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute('download', `avistamientos_${hoy()}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -1096,10 +2360,14 @@
             mostrarMensaje('📤 CSV exportado', 'ok');
         }
 
-        // ---- TABS ----
+        // ===================================================================
+        // 17. TABS
+        // ===================================================================
+
         function initTabs() {
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = {
+                'tab-config': document.getElementById('tab-config'),
                 'tab-registro': document.getElementById('tab-registro'),
                 'tab-registros': document.getElementById('tab-registros')
             };
@@ -1119,30 +2387,60 @@
             });
         }
 
-        // ---- INICIALIZACIÓN ----
-        function init() {
-            const ahora = new Date();
-            document.getElementById('fecha').value = ahora.toISOString().slice(0,10);
-            document.getElementById('hora').value = ahora.toTimeString().slice(0,5);
+        // ===================================================================
+        // 18. INICIALIZACIÓN
+        // ===================================================================
 
+        async function init() {
+            console.log('🚀 Iniciando AvistaR v9...');
+            cargarDatos();
+            await cargarINEGI();
+
+            const ahora = new Date();
+            $('fecha').value = ahora.toISOString().slice(0,10);
+            $('hora_inicio').value = ahora.toTimeString().slice(0,5);
+
+            initGrupos();
+            initSelectorEspecies();
+            initSustratoDinamico();
+            initRadarZoom();
             initTabs();
+
+            renderRutas();
             actualizarContadores();
 
-            // Estado inicial de condicionantes
-            updateSustratoOptions('');
-            updateAlimentoStatus('');
-            updateFormaStatus('');
-
-            document.getElementById('btnGuardar').addEventListener('click', guardarRegistro);
-            document.getElementById('btnExportarCSV').addEventListener('click', exportarCSV);
-            document.getElementById('btnEliminarTodos').addEventListener('click', eliminarTodos);
-
-            form.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
-                    e.preventDefault();
-                    guardarRegistro();
-                }
+            $('btn-crear-ruta').addEventListener('click', crearRuta);
+            $('btn-eliminar-ruta').addEventListener('click', eliminarRuta);
+            $('selector-ruta').addEventListener('change', function() {
+                state.rutaActiva = this.value || null;
+                actualizarInfoRuta();
+                validarInicioConteo();
+                actualizarRadar();
             });
+
+            $('btn-gps').addEventListener('click', obtenerGPS);
+            $('btn-registrar-punto').addEventListener('click', registrarPunto);
+            $('btn-iniciar-conteo').addEventListener('click', iniciarConteo);
+            $('btn-detener-alarma').addEventListener('click', detenerAlarma);
+            $('btn-finalizar-conteo').addEventListener('click', finalizarConteo);
+
+            $('btn-tomar-foto').addEventListener('click', tomarFoto);
+            $('btn-quitar-foto').addEventListener('click', quitarFoto);
+
+            $('btn-guardar-registro').addEventListener('click', guardarRegistro);
+            $('btn-limpiar-registro').addEventListener('click', limpiarRegistro);
+
+            $('btn-exportar-csv').addEventListener('click', exportarCSV);
+            $('btn-eliminar-todos').addEventListener('click', eliminarTodos);
+
+            validarInicioConteo();
+
+            setInterval(() => {
+                if (state.gps.lat !== null && state.gps.lon !== null) {
+                    actualizarRadar();
+                    validarInicioConteo();
+                }
+            }, 5000);
         }
 
         if (document.readyState === 'loading') {
