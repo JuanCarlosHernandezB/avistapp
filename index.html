@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AvistaR · Conteo Visual</title>
+    <title>AvistaR · V1</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#013366">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        /* ===== RESET Y ESTILOS GLOBALES (igual que antes) ===== */
+        /* ===== RESET Y ESTILOS GLOBALES ===== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -25,7 +25,7 @@
             justify-content: center;
         }
         .app {
-            max-width: none;
+            max-width: 100%;
             width: 100%;
             background: #ffffff;
             border-radius: 0;
@@ -117,35 +117,7 @@
             color: #1f3a57;
             min-width: 75px;
         }
-        .inline-input {
-            border: none;
-            border-bottom: 2px solid #013366;
-            background: transparent;
-            font-size: 16px;
-            padding: 4px 6px;
-            min-width: 60px;
-            max-width: 100px;
-            font-weight: 500;
-            outline: none;
-        }
-        .inline-input:focus {
-            border-bottom-color: #FFB74D;
-        }
-        .inline-input-sm { min-width: 50px; max-width: 70px; }
-        .inline-input-lg { min-width: 100px; max-width: 160px; }
-        .inline-input-full { max-width: none; width: 100%; }
-        .inline-input-readonly {
-            background: #f0f4f8;
-            color: #013366;
-            font-weight: 600;
-            border-bottom: 2px solid #013366;
-            padding: 4px 6px;
-            font-size: 16px;
-            min-width: 60px;
-            max-width: 200px;
-            border: none;
-            border-bottom: 2px solid #013366;
-        }
+
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -210,6 +182,36 @@
             border-style: dashed;
             border-color: #888;
             background: #f0f0f0;
+        }
+
+        .inline-input {
+            border: none;
+            border-bottom: 2px solid #013366;
+            background: transparent;
+            font-size: 16px;
+            padding: 4px 6px;
+            min-width: 60px;
+            max-width: 100px;
+            font-weight: 500;
+            outline: none;
+        }
+        .inline-input:focus {
+            border-bottom-color: #FFB74D;
+        }
+        .inline-input-sm { min-width: 50px; max-width: 70px; }
+        .inline-input-lg { min-width: 100px; max-width: 160px; }
+        .inline-input-full { max-width: none; width: 100%; }
+        .inline-input-readonly {
+            background: #f0f4f8;
+            color: #013366;
+            font-weight: 600;
+            border-bottom: 2px solid #013366;
+            padding: 4px 6px;
+            font-size: 16px;
+            min-width: 60px;
+            max-width: 200px;
+            border: none;
+            border-bottom: 2px solid #013366;
         }
 
         .checkbox-group {
@@ -576,6 +578,7 @@
         .dot-red { background: #c0392b; }
         .dot-blue { background: #2c3e50; }
         .dot-green { background: #27ae60; }
+        .dot-yellow { background: #f39c12; }
 
         .sitio-info {
             font-size: 13px;
@@ -591,6 +594,11 @@
             background: #fdebd0;
             color: #c0392b;
             border: 1px solid #c0392b;
+        }
+        .sitio-info.success {
+            background: #d5f5e3;
+            color: #1a7a3a;
+            border: 1px solid #27ae60;
         }
 
         .hidden {
@@ -626,10 +634,10 @@
 
 <div class="app" id="app">
     <div class="flex-between">
-        <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">campo</span></h1>
-        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v9</span>
+        <h1>🐦 AvistaR <span style="font-size:14px; font-weight:400; color:#3a5a7a;">V1</span></h1>
+        <span style="font-size:12px; background:#013366; color:white; padding:4px 14px; border-radius:30px; font-weight:600;">v1</span>
     </div>
-    <div class="subhead">Configure la ruta · Obtenga GPS · Registre el punto · Inicie avistamientos</div>
+    <div class="subhead">Ruta → Punto → GPS → Radar → INEGI → Registrar punto</div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-config">⚙️ Configurar</button>
@@ -658,7 +666,30 @@
             </div>
         </div>
 
-        <!-- 2. ACTUALIZAR GPS + LAT/LON/PRECISIÓN -->
+        <!-- 2. PUNTO DE AVISTAMIENTO -->
+        <div class="section">
+            <div class="section-title">📍 PUNTO DE AVISTAMIENTO</div>
+            <div class="row">
+                <span class="label">Punto:</span>
+                <select id="selector-punto" style="flex:1; padding:10px 12px; border-radius:10px; border:2px solid #013366; font-size:16px; background:white; color:#013366; min-width:150px;">
+                    <option value="">-- Seleccionar --</option>
+                    <option value="nuevo">➕ Nuevo punto</option>
+                </select>
+                <button id="btn-editar-nombre" class="btn-secondary" style="flex:0 0 auto; padding:8px 14px;">✏️ Editar nombre</button>
+            </div>
+            <div id="info-punto" class="sitio-info" style="margin-top:4px; display:none;">
+                <span id="punto-nombre"></span> · <span id="punto-coords"></span>
+            </div>
+            <div id="nuevo-punto-nombre-container" style="display:none; margin-top:8px;">
+                <div class="row">
+                    <span class="label">Nombre del nuevo punto:</span>
+                    <input type="text" id="nuevo-punto-nombre" class="inline-input inline-input-lg" placeholder="Ej. Las Maravillas" style="max-width:250px;">
+                </div>
+                <button id="btn-confirmar-nuevo-punto" class="btn-success" style="margin-top:4px;">✅ Confirmar nuevo punto</button>
+            </div>
+        </div>
+
+        <!-- 3. GPS -->
         <div class="section">
             <div class="section-title">📡 UBICACIÓN GPS</div>
             <div class="row">
@@ -674,7 +705,7 @@
             </div>
         </div>
 
-        <!-- 3. RADAR DE SITIOS -->
+        <!-- 4. RADAR -->
         <div class="section">
             <div class="section-title">📡 RADAR DE SITIOS</div>
             <div class="radar-container" id="radar-container">
@@ -685,15 +716,14 @@
                     <span class="scale-label">Zoom</span>
                 </div>
                 <div class="radar-legend">
-                    <span><span class="dot dot-red"></span> Hoy (dentro de 350m)</span>
-                    <span><span class="dot dot-blue"></span> Hoy (fuera)</span>
-                    <span><span class="dot dot-green"></span> Días anteriores</span>
+                    <span><span class="dot dot-yellow"></span> Punto seleccionado</span>
+                    <span><span class="dot dot-red"></span> Puntos existentes</span>
                 </div>
                 <div id="radar-info" class="sitio-info">📍 Esperando GPS...</div>
             </div>
         </div>
 
-        <!-- 4. DATOS DE INEGI -->
+        <!-- 5. INEGI -->
         <div class="section">
             <div class="section-title">📍 DATOS DEL SITIO (INEGI)</div>
             <div class="row">
@@ -718,7 +748,7 @@
             </div>
         </div>
 
-        <!-- 5. SITIO (Sistema y Parcela) -->
+        <!-- 6. SITIO (Sistema y Parcela) -->
         <div class="section">
             <div class="section-title">🏷️ SITIO</div>
             <div class="row">
@@ -742,7 +772,7 @@
             </div>
         </div>
 
-        <!-- 6. TIEMPO -->
+        <!-- 7. TIEMPO -->
         <div class="section">
             <div class="section-title">⏱️ TIEMPO</div>
             <div class="row">
@@ -759,14 +789,14 @@
             </div>
         </div>
 
-        <!-- 7. BOTONES DE ACCIÓN -->
+        <!-- 8. BOTONES DE ACCIÓN -->
         <div style="display:flex; flex-direction:column; gap:10px; margin-top:6px;">
-            <button id="btn-registrar-punto" class="btn-success">📍 Registrar punto de avistamiento</button>
+            <button id="btn-registrar-punto" class="btn-success" disabled>📍 Registrar punto de avistamiento</button>
             <button id="btn-iniciar-conteo" class="btn-success" disabled>▶️ Iniciar avistamientos</button>
             <div id="iniciar-mensaje" class="sitio-info warning" style="display:none; margin-top:6px;"></div>
         </div>
 
-        <!-- Temporizador -->
+        <!-- Temporizador (mejorado con timestamp) -->
         <div id="timer-container" style="display:none; margin-top:12px;">
             <div class="timer-display" id="timer-display">10:00</div>
             <div class="text-center text-muted" id="timer-status">⏳ Conteo en progreso...</div>
@@ -791,6 +821,7 @@
             </div>
             <div style="font-size:12px; color:#555; margin-top:2px;" id="registro-fecha-hora">Fecha: -- · Hora inicio: --</div>
             <div style="font-size:12px; color:#555;" id="registro-ruta">Ruta: --</div>
+            <div style="font-size:12px; color:#555;" id="registro-punto">Punto: --</div>
         </div>
 
         <!-- SELECTOR VISUAL DE ESPECIES -->
@@ -1025,14 +1056,14 @@
 </div>
 
 <!-- ========================================================= -->
-<!-- JAVASCRIPT – LÓGICA COMPLETA -->
+<!-- JAVASCRIPT – LÓGICA COMPLETA (V1) -->
 <!-- ========================================================= -->
 <script>
     (function() {
         'use strict';
 
         // ===================================================================
-        // 1. CONFIGURACIÓN INICIAL Y DEPENDENCIAS
+        // 1. CONFIGURACIÓN INICIAL
         // ===================================================================
 
         const $ = id => document.getElementById(id);
@@ -1111,14 +1142,16 @@
         const state = {
             rutas: [],
             rutaActiva: null,
-            sitiosHistoricos: [],
+            puntos: [],
+            puntoSeleccionado: null,
             registros: [],
             conteoActivo: false,
-            tiempoRestante: 600,
             duracionTotal: 600,
-            horaInicio: null,
+            horaInicioTimestamp: null,
+            tiempoRestante: 600,
             timerInterval: null,
             alarmaSonando: false,
+            alarmaDisparada: false,
             fotoData: null,
             gps: { lat: null, lon: null, accuracy: null, altitude: null },
             inegiData: null,
@@ -1126,6 +1159,7 @@
             especieSeleccionada: null,
             grupoSeleccionado: null,
             radarEscala: 500,
+            puntoActualEnConteo: null,
         };
 
         // ===================================================================
@@ -1143,7 +1177,7 @@
         function guardarDatos() {
             try {
                 localStorage.setItem('avistR_rutas', JSON.stringify(state.rutas));
-                localStorage.setItem('avistR_sitios', JSON.stringify(state.sitiosHistoricos));
+                localStorage.setItem('avistR_puntos', JSON.stringify(state.puntos));
                 localStorage.setItem('avistamientos', JSON.stringify(state.registros));
             } catch(e) { console.warn('Error guardando', e); }
         }
@@ -1152,8 +1186,8 @@
             try {
                 const rutas = localStorage.getItem('avistR_rutas');
                 if (rutas) state.rutas = JSON.parse(rutas);
-                const sitios = localStorage.getItem('avistR_sitios');
-                if (sitios) state.sitiosHistoricos = JSON.parse(sitios);
+                const puntos = localStorage.getItem('avistR_puntos');
+                if (puntos) state.puntos = JSON.parse(puntos);
                 const regs = localStorage.getItem('avistamientos');
                 if (regs) state.registros = JSON.parse(regs);
             } catch(e) { console.warn('Error cargando', e); }
@@ -1161,6 +1195,13 @@
 
         function hoy() {
             return new Date().toISOString().slice(0,10);
+        }
+
+        function getUltimoNumeroPunto(rutaId) {
+            const puntosRuta = state.puntos.filter(p => p.rutaId === rutaId);
+            if (puntosRuta.length === 0) return 0;
+            const nums = puntosRuta.map(p => p.numero).filter(n => n !== undefined && n !== null);
+            return nums.length > 0 ? Math.max(...nums) : 0;
         }
 
         // ===================================================================
@@ -1276,6 +1317,7 @@
                 state.rutaActiva = null;
             }
             actualizarInfoRuta();
+            renderPuntos();
             validarInicioConteo();
         }
 
@@ -1303,21 +1345,170 @@
             $('selector-ruta').value = ruta.id;
             state.rutaActiva = ruta.id;
             actualizarInfoRuta();
+            renderPuntos();
             validarInicioConteo();
         }
 
         function eliminarRuta() {
             if (!state.rutaActiva) return;
-            if (!confirm('¿Eliminar la ruta activa?')) return;
+            if (!confirm('¿Eliminar la ruta activa y todos sus puntos?')) return;
+            state.puntos = state.puntos.filter(p => p.rutaId !== state.rutaActiva);
             state.rutas = state.rutas.filter(r => r.id !== state.rutaActiva);
             state.rutaActiva = null;
+            state.puntoSeleccionado = null;
             guardarDatos();
             renderRutas();
+            renderPuntos();
             validarInicioConteo();
         }
 
         // ===================================================================
-        // 5. INEGI (con mensajes de depuración)
+        // 5. PUNTOS DE AVISTAMIENTO
+        // ===================================================================
+
+        function renderPuntos() {
+            const select = $('selector-punto');
+            const current = select.value;
+            select.innerHTML = '<option value="">-- Seleccionar --</option>';
+
+            const puntosRuta = state.puntos.filter(p => p.rutaId === state.rutaActiva);
+            puntosRuta.sort((a, b) => (a.numero || 0) - (b.numero || 0));
+
+            puntosRuta.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                const nombreMostrar = p.nombre ? p.nombre : `Punto ${p.numero}`;
+                opt.textContent = `P${p.numero} - ${nombreMostrar}`;
+                select.appendChild(opt);
+            });
+
+            const optNuevo = document.createElement('option');
+            optNuevo.value = 'nuevo';
+            optNuevo.textContent = '➕ Nuevo punto';
+            select.appendChild(optNuevo);
+
+            if (current && state.puntos.some(p => p.id === current)) {
+                select.value = current;
+                state.puntoSeleccionado = current;
+            } else {
+                select.value = '';
+                state.puntoSeleccionado = null;
+            }
+
+            actualizarInfoPunto();
+            actualizarRadar();
+            validarRegistroPunto();
+        }
+
+        function actualizarInfoPunto() {
+            const punto = state.puntos.find(p => p.id === state.puntoSeleccionado);
+            const info = $('info-punto');
+            if (punto) {
+                info.style.display = 'block';
+                const nombre = punto.nombre ? punto.nombre : `Punto ${punto.numero}`;
+                $('punto-nombre').textContent = `P${punto.numero} - ${nombre}`;
+                $('punto-coords').textContent = `${punto.lat.toFixed(6)}, ${punto.lon.toFixed(6)}`;
+            } else {
+                info.style.display = 'none';
+            }
+            const nuevoContainer = $('nuevo-punto-nombre-container');
+            if ($('selector-punto').value === 'nuevo') {
+                nuevoContainer.style.display = 'block';
+            } else {
+                nuevoContainer.style.display = 'none';
+            }
+        }
+
+        function editarNombrePunto() {
+            const punto = state.puntos.find(p => p.id === state.puntoSeleccionado);
+            if (!punto) {
+                alert('Seleccione un punto existente para editar su nombre.');
+                return;
+            }
+            const nuevoNombre = prompt(`Editar nombre del punto P${punto.numero}:`, punto.nombre || '');
+            if (nuevoNombre !== null) {
+                punto.nombre = nuevoNombre.trim() || null;
+                guardarDatos();
+                renderPuntos();
+                $('selector-punto').value = punto.id;
+                state.puntoSeleccionado = punto.id;
+                actualizarInfoPunto();
+                actualizarRadar();
+            }
+        }
+
+        function confirmarNuevoPunto() {
+            if (!state.rutaActiva) {
+                alert('⚠️ Seleccione o cree una ruta primero.');
+                return;
+            }
+            if (state.gps.lat === null || state.gps.lon === null) {
+                alert('⚠️ Obtenga su ubicación GPS primero.');
+                return;
+            }
+
+            const nombre = $('nuevo-punto-nombre').value.trim() || null;
+
+            // Validación de distancia con todos los puntos de la ruta
+            const puntosRuta = state.puntos.filter(p => p.rutaId === state.rutaActiva);
+            for (const p of puntosRuta) {
+                const dist = haversine(state.gps.lat, state.gps.lon, p.lat, p.lon);
+                if (dist < 350) {
+                    alert(`⚠️ No se puede registrar el punto. Está a solo ${Math.round(dist)}m del punto existente P${p.numero} (${p.nombre || ''}). Distancia mínima requerida: 350m.`);
+                    return;
+                }
+            }
+
+            const ultimoNum = getUltimoNumeroPunto(state.rutaActiva);
+            const numero = ultimoNum + 1;
+
+            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
+            const lugar = state.ultimaLocalidad || {};
+
+            const punto = {
+                id: 'punto_' + Date.now(),
+                rutaId: state.rutaActiva,
+                numero: numero,
+                nombre: nombre,
+                fecha: $('fecha').value,
+                hora: $('hora_inicio').value,
+                lat: state.gps.lat,
+                lon: state.gps.lon,
+                altitud_punto: state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || ''),
+                localidad: lugar.localidad || '',
+                altitud_localidad: lugar.altitud || '',
+                municipio: lugar.municipio || '',
+                estado: lugar.estado || '',
+                poblacion: lugar.poblacion || '',
+                viviendas: lugar.viviendas || ''
+            };
+
+            state.puntos.push(punto);
+            guardarDatos();
+
+            mostrarMensaje(`✅ Punto P${numero} registrado exitosamente`, 'ok');
+            $('nuevo-punto-nombre').value = '';
+            $('nuevo-punto-nombre-container').style.display = 'none';
+            renderPuntos();
+            $('selector-punto').value = punto.id;
+            state.puntoSeleccionado = punto.id;
+            actualizarInfoPunto();
+            actualizarRadar();
+            validarRegistroPunto();
+            validarInicioConteo();
+        }
+
+        function validarRegistroPunto() {
+            const btn = $('btn-registrar-punto');
+            if ($('selector-punto').value === 'nuevo' && state.gps.lat !== null && state.gps.lon !== null && state.rutaActiva) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        // ===================================================================
+        // 6. INEGI
         // ===================================================================
 
         async function cargarINEGI() {
@@ -1329,74 +1520,43 @@
                     throw new Error('No se pudo cargar inegi.json');
                 }
                 state.inegiData = await resp.json();
-                console.log('✅ INEGI cargado correctamente. Número de estados:', Object.keys(state.inegiData).length);
-                // Mostrar un ejemplo de la estructura
-                const primerEstado = Object.keys(state.inegiData)[0];
-                console.log('📌 Estructura del JSON (primer estado):', primerEstado);
-                console.log('   Municipios en ese estado:', Object.keys(state.inegiData[primerEstado]).length);
-                const primerMunicipio = Object.keys(state.inegiData[primerEstado])[0];
-                console.log('   Primer municipio:', primerMunicipio);
-                console.log('   Número de localidades en ese municipio:', state.inegiData[primerEstado][primerMunicipio].length);
-                console.log('   Ejemplo de localidad:', state.inegiData[primerEstado][primerMunicipio][0]);
+                console.log('✅ INEGI cargado correctamente.');
             } catch(e) {
                 console.warn('❌ Error cargando INEGI:', e.message);
                 state.inegiData = null;
-                // Mostrar mensaje en la interfaz
-                document.querySelector('#tab-config .section:nth-child(4) .sitio-info')?.remove();
-                const section = document.querySelector('#tab-config .section:nth-child(4)');
-                if (section) {
-                    const msg = document.createElement('div');
-                    msg.className = 'sitio-info warning';
-                    msg.textContent = '⚠️ No se pudo cargar el archivo INEGI. Verifica que exista en el servidor.';
-                    section.appendChild(msg);
-                }
             }
         }
 
         function buscarLocalidadMasCercana(lat, lon) {
-            if (!state.inegiData) {
-                console.warn('⚠️ INEGI no cargado, no se puede buscar localidad.');
-                return null;
-            }
-            console.log('🔍 Buscando localidad más cercana a:', lat, lon);
+            if (!state.inegiData) return null;
             let mejor = null;
             let distMin = Infinity;
 
-            // Iterar sobre todos los estados y municipios
             for (const [estado, municipios] of Object.entries(state.inegiData)) {
                 for (const [municipio, localidades] of Object.entries(municipios)) {
                     for (const loc of localidades) {
-                        // Asegurar que tiene lat y lon
-                        const latLoc = parseFloat(loc.lat ?? loc.LAT_DECIMAL ?? loc.LATITUD);
-                        const lonLoc = parseFloat(loc.lon ?? loc.LON_DECIMAL ?? loc.LONGITUD);
-                        if (isNaN(latLoc) || isNaN(lonLoc)) continue;
-                        const d = haversine(lat, lon, latLoc, lonLoc);
+                        if (loc.lat == null || loc.lon == null) continue;
+                        const d = haversine(lat, lon, loc.lat, loc.lon);
                         if (d < distMin) {
                             distMin = d;
                             mejor = {
                                 estado: estado,
                                 municipio: municipio,
-                                localidad: loc.nombre ?? loc.NOM_LOC ?? loc.LOCALIDAD ?? 'Desconocida',
-                                altitud: loc.altitud ?? loc.ALTITUD ?? '',
-                                poblacion: loc.poblacion ?? loc.POB_TOTAL ?? '',
-                                viviendas: loc.viviendas ?? loc['TOTAL DE VIVIENDAS HABITADAS'] ?? '',
+                                localidad: loc.nombre,
+                                altitud: loc.altitud,
+                                poblacion: loc.poblacion,
+                                viviendas: loc.viviendas,
                                 distancia: d
                             };
                         }
                     }
                 }
             }
-
-            if (mejor) {
-                console.log('✅ Localidad encontrada:', mejor.localidad, 'en', mejor.municipio, ',', mejor.estado, 'distancia:', Math.round(mejor.distancia), 'm');
-            } else {
-                console.warn('⚠️ No se encontró ninguna localidad cercana.');
-            }
             return mejor;
         }
 
         // ===================================================================
-        // 6. GPS
+        // 7. GPS
         // ===================================================================
 
         function obtenerGPS() {
@@ -1412,31 +1572,22 @@
                     state.gps.lat = pos.coords.latitude;
                     state.gps.lon = pos.coords.longitude;
                     state.gps.accuracy = pos.coords.accuracy;
-                    state.gps.altitude = pos.coords.altitude; // altitud del GPS
+                    state.gps.altitude = pos.coords.altitude;
 
-                    console.log('📍 GPS obtenido:', state.gps.lat, state.gps.lon);
                     $('gps-lat').textContent = state.gps.lat.toFixed(6);
                     $('gps-lon').textContent = state.gps.lon.toFixed(6);
                     $('gps-accuracy').textContent = state.gps.accuracy ? `±${Math.round(state.gps.accuracy)}m` : '--';
 
-                    // Actualizar campos de INEGI
                     if (state.inegiData) {
                         const lugar = buscarLocalidadMasCercana(state.gps.lat, state.gps.lon);
-                        if (lugar) {
-                            // Altitud del punto: usar la del GPS si está disponible, sino la de INEGI
+                        if (lugar && lugar.distancia < 10000) {
                             const altPunto = state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || '--');
                             $('altitud_punto').value = altPunto;
-                            $('localidad_auto').value = lugar.localidad;
+                            $('localidad_auto').value = lugar.localidad || '--';
                             $('altitud_localidad').value = lugar.altitud || '--';
-                            $('municipio_auto').value = lugar.municipio;
-                            $('estado_auto').value = lugar.estado;
+                            $('municipio_auto').value = lugar.municipio || '--';
+                            $('estado_auto').value = lugar.estado || '--';
                             state.ultimaLocalidad = lugar;
-                            // Mostrar mensaje de éxito
-                            const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
-                            if (info) {
-                                info.textContent = `✅ Localidad encontrada: ${lugar.localidad} (${Math.round(lugar.distancia)}m)`;
-                                info.className = 'sitio-info';
-                            }
                         } else {
                             $('altitud_punto').value = '--';
                             $('localidad_auto').value = '--';
@@ -1444,22 +1595,11 @@
                             $('municipio_auto').value = '--';
                             $('estado_auto').value = '--';
                             state.ultimaLocalidad = null;
-                            const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
-                            if (info) {
-                                info.textContent = '⚠️ No se encontró localidad cercana.';
-                                info.className = 'sitio-info warning';
-                            }
-                        }
-                    } else {
-                        console.warn('⚠️ INEGI no cargado, no se pueden autocompletar los datos.');
-                        const info = document.querySelector('#tab-config .section:nth-child(4) .sitio-info');
-                        if (info) {
-                            info.textContent = '⚠️ INEGI no cargado. Verifica la conexión.';
-                            info.className = 'sitio-info warning';
                         }
                     }
 
                     actualizarRadar();
+                    validarRegistroPunto();
                     validarInicioConteo();
 
                     $('btn-gps').textContent = '📍 Actualizar GPS';
@@ -1475,7 +1615,7 @@
         }
 
         // ===================================================================
-        // 7. RADAR
+        // 8. RADAR
         // ===================================================================
 
         function actualizarRadar() {
@@ -1523,66 +1663,54 @@
                 return;
             }
 
-            const sitiosRuta = state.sitiosHistoricos.filter(s => s.rutaId === state.rutaActiva);
-            if (sitiosRuta.length === 0) {
+            const puntosRuta = state.puntos.filter(p => p.rutaId === state.rutaActiva);
+            if (puntosRuta.length === 0) {
                 ctx.fillStyle = '#999';
                 ctx.font = '16px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('No hay sitios en esta ruta', centroX, centroY);
-                $('radar-info').textContent = '📌 No hay sitios en esta ruta';
+                ctx.fillText('No hay puntos en esta ruta', centroX, centroY);
+                $('radar-info').textContent = '📌 No hay puntos en esta ruta';
                 return;
             }
 
-            const hoyStr = hoy();
-            let sitioMasCercano = null;
-            let distMasCercana = Infinity;
+            const puntoSeleccionado = state.puntos.find(p => p.id === state.puntoSeleccionado);
 
-            sitiosRuta.forEach(sitio => {
-                const d = haversine(state.gps.lat, state.gps.lon, sitio.lat, sitio.lon);
-                if (d < distMasCercana) {
-                    distMasCercana = d;
-                    sitioMasCercano = sitio;
-                }
-
-                const dx = (sitio.lon - state.gps.lon) * (w/2 / (escalaMax / 111320));
-                const dy = -(sitio.lat - state.gps.lat) * (w/2 / (escalaMax / 111320));
+            puntosRuta.forEach(punto => {
+                const dx = (punto.lon - state.gps.lon) * (w/2 / (escalaMax / 111320));
+                const dy = -(punto.lat - state.gps.lat) * (w/2 / (escalaMax / 111320));
                 const rx = centroX + dx;
                 const ry = centroY + dy;
 
                 if (Math.hypot(rx - centroX, ry - centroY) > w/2) return;
 
-                let color;
-                if (sitio.fecha === hoyStr) {
-                    color = (d < 350) ? '#c0392b' : '#2c3e50';
-                } else {
-                    color = '#27ae60';
-                }
+                const isSelected = puntoSeleccionado && punto.id === puntoSeleccionado.id;
+                const color = isSelected ? '#f39c12' : '#c0392b';
 
                 ctx.beginPath();
-                ctx.arc(rx, ry, 6, 0, 2*Math.PI);
+                ctx.arc(rx, ry, isSelected ? 8 : 6, 0, 2*Math.PI);
                 ctx.fillStyle = color;
                 ctx.fill();
                 ctx.strokeStyle = 'white';
-                ctx.lineWidth = 1.5;
+                ctx.lineWidth = 2;
                 ctx.stroke();
 
                 ctx.fillStyle = '#1f3a57';
                 ctx.font = '9px sans-serif';
                 ctx.textAlign = 'center';
-                const label = sitio.nombre || sitio.parcela;
-                ctx.fillText(label, rx, ry - 10);
+                ctx.fillText(`P${punto.numero}`, rx, ry - 12);
             });
 
-            if (sitioMasCercano) {
-                const msg = `📍 Sitio más cercano: ${sitioMasCercano.nombre || sitioMasCercano.parcela} · Distancia: ${Math.round(distMasCercana)}m`;
+            if (puntoSeleccionado) {
+                const d = haversine(state.gps.lat, state.gps.lon, puntoSeleccionado.lat, puntoSeleccionado.lon);
+                const msg = `📍 Punto seleccionado: P${puntoSeleccionado.numero} (${puntoSeleccionado.nombre || ''}) · Distancia: ${Math.round(d)}m`;
                 $('radar-info').textContent = msg;
-                if (distMasCercana < 350 && sitioMasCercano.fecha === hoyStr) {
+                if (d < 350) {
                     $('radar-info').className = 'sitio-info warning';
                 } else {
-                    $('radar-info').className = 'sitio-info';
+                    $('radar-info').className = 'sitio-info success';
                 }
             } else {
-                $('radar-info').textContent = '📍 Sin sitios cercanos';
+                $('radar-info').textContent = '📍 Seleccione un punto o cree uno nuevo';
                 $('radar-info').className = 'sitio-info';
             }
 
@@ -1634,97 +1762,54 @@
         }
 
         // ===================================================================
-        // 8. REGISTRAR PUNTO DE AVISTAMIENTO
+        // 9. REGISTRAR PUNTO (desde el botón)
         // ===================================================================
 
         function registrarPunto() {
-            if (!state.rutaActiva) {
-                alert('⚠️ Seleccione o cree una ruta primero.');
-                return;
-            }
-            if (state.gps.lat === null || state.gps.lon === null) {
-                alert('⚠️ Obtenga su ubicación GPS primero.');
-                return;
-            }
-
-            const parcela = getSelectedValue('grupo-parcela', 'parcela_otro') || 'PA-00';
-            const sistema = getSelectedValue('grupo-sistema', null) || '0';
-            const fecha = $('fecha').value;
-            const horaInicio = $('hora_inicio').value;
-
-            if (!fecha) { alert('Seleccione una fecha'); return; }
-            if (!horaInicio) { alert('Seleccione la hora de inicio'); return; }
-
-            const ruta = state.rutas.find(r => r.id === state.rutaActiva);
-            const lugar = state.ultimaLocalidad || {};
-
-            // Obtener altitud del punto (si está disponible en el GPS)
-            const altPunto = state.gps.altitude ? Math.round(state.gps.altitude) : (lugar.altitud || '');
-
-            const sitio = {
-                id: 'sitio_' + Date.now(),
-                rutaId: state.rutaActiva,
-                fecha: fecha,
-                hora: horaInicio,
-                nombre: ruta ? ruta.nombre + '_' + parcela + '_' + sistema : 'sitio',
-                parcela: parcela,
-                sistema: sistema,
-                lat: state.gps.lat,
-                lon: state.gps.lon,
-                altitud_punto: altPunto,
-                localidad: lugar.localidad || '',
-                altitud_localidad: lugar.altitud || '',
-                municipio: lugar.municipio || '',
-                estado: lugar.estado || '',
-                poblacion: lugar.poblacion || '',
-                viviendas: lugar.viviendas || ''
-            };
-
-            state.sitiosHistoricos.push(sitio);
-            guardarDatos();
-
-            mostrarMensaje('✅ Punto registrado exitosamente', 'ok');
-            $('btn-registrar-punto').disabled = true;
-            $('btn-registrar-punto').textContent = '✅ Punto registrado';
-            $('btn-iniciar-conteo').disabled = false;
-
-            actualizarRadar();
-            validarInicioConteo();
+            confirmarNuevoPunto();
         }
 
         // ===================================================================
-        // 9. TEMPORIZADOR Y CONTEO
+        // 10. INICIAR AVISTAMIENTOS (conteo mejorado con timestamp)
         // ===================================================================
 
         function iniciarConteo() {
-            if (!state.rutaActiva) {
-                alert('Seleccione una ruta primero.');
+            const puntoId = state.puntoSeleccionado;
+            const punto = state.puntos.find(p => p.id === puntoId);
+            if (!punto) {
+                alert('Seleccione un punto de avistamiento existente.');
                 return;
             }
 
-            const ultimoSitio = state.sitiosHistoricos[state.sitiosHistoricos.length - 1];
-            if (!ultimoSitio) {
-                alert('Primero registre un punto de avistamiento.');
-                return;
+            // Validar distancia a otros puntos
+            const puntosRuta = state.puntos.filter(p => p.rutaId === state.rutaActiva && p.id !== puntoId);
+            for (const p of puntosRuta) {
+                const dist = haversine(punto.lat, punto.lon, p.lat, p.lon);
+                if (dist < 350) {
+                    alert(`⚠️ El punto P${punto.numero} está a solo ${Math.round(dist)}m del punto P${p.numero} (${p.nombre || ''}). Distancia mínima requerida: 350m. No se puede iniciar el conteo.`);
+                    return;
+                }
             }
 
-            const fecha = ultimoSitio.fecha;
-            const horaInicio = ultimoSitio.hora;
             const duracion = parseInt($('duracion').value) || 10;
-
             state.duracionTotal = duracion * 60;
             state.tiempoRestante = state.duracionTotal;
-            state.horaInicio = horaInicio;
+            state.horaInicioTimestamp = Date.now(); // Guarda timestamp real
             state.conteoActivo = true;
+            state.alarmaDisparada = false;
+            state.puntoActualEnConteo = puntoId;
 
             $('timer-container').style.display = 'block';
             $('btn-iniciar-conteo').style.display = 'none';
             $('btn-registrar-punto').disabled = true;
 
+            const fecha = punto.fecha || $('fecha').value;
+            const horaInicio = punto.hora || $('hora_inicio').value;
             $('registro-fecha-hora').textContent = `Fecha: ${fecha} · Hora inicio: ${horaInicio}`;
-            $('registro-sitio').textContent = `${ultimoSitio.parcela} · ${ultimoSitio.sistema}`;
+            $('registro-sitio').textContent = `${punto.nombre || 'Punto ' + punto.numero}`;
             const ruta = state.rutas.find(r => r.id === state.rutaActiva);
             $('registro-ruta').textContent = `Ruta: ${ruta ? ruta.nombre : '--'}`;
+            $('registro-punto').textContent = `Punto: P${punto.numero} - ${punto.nombre || ''}`;
 
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelector('[data-tab="tab-registro"]').classList.add('active');
@@ -1732,17 +1817,9 @@
             document.getElementById('tab-registro').classList.add('active');
 
             actualizarTimer();
-
             if (state.timerInterval) clearInterval(state.timerInterval);
             state.timerInterval = setInterval(() => {
-                state.tiempoRestante--;
                 actualizarTimer();
-                if (state.tiempoRestante <= 0) {
-                    clearInterval(state.timerInterval);
-                    state.timerInterval = null;
-                    state.conteoActivo = false;
-                    sonarAlarma();
-                }
             }, 1000);
 
             actualizarMinutoActual();
@@ -1751,8 +1828,14 @@
         }
 
         function actualizarTimer() {
+            if (!state.horaInicioTimestamp) return;
+
+            const ahora = Date.now();
+            const elapsed = (ahora - state.horaInicioTimestamp) / 1000;
+            state.tiempoRestante = Math.max(0, state.duracionTotal - elapsed);
+
             const mins = Math.floor(state.tiempoRestante / 60);
-            const segs = state.tiempoRestante % 60;
+            const segs = Math.floor(state.tiempoRestante % 60);
             const display = `${String(mins).padStart(2,'0')}:${String(segs).padStart(2,'0')}`;
             const el = $('timer-display');
             el.textContent = display;
@@ -1763,16 +1846,25 @@
             } else {
                 el.classList.remove('urgent');
             }
+
+            if (state.tiempoRestante <= 0 && state.conteoActivo && !state.alarmaDisparada) {
+                state.alarmaDisparada = true;
+                state.conteoActivo = false;
+                if (state.timerInterval) {
+                    clearInterval(state.timerInterval);
+                    state.timerInterval = null;
+                }
+                sonarAlarma();
+                $('timer-status').textContent = '⏰ ¡Tiempo finalizado!';
+            }
+
             actualizarMinutoActual();
         }
 
         function actualizarMinutoActual() {
-            if (!state.horaInicio) return;
-            const ahora = new Date();
-            const [h, m] = state.horaInicio.split(':').map(Number);
-            const inicio = new Date();
-            inicio.setHours(h, m, 0, 0);
-            const diffSeg = Math.floor((ahora - inicio) / 1000);
+            if (!state.horaInicioTimestamp) return;
+            const ahora = Date.now();
+            const diffSeg = Math.floor((ahora - state.horaInicioTimestamp) / 1000);
             const minuto = Math.min(Math.floor(diffSeg / 60) + 1, 10);
             if (minuto >= 1 && minuto <= 10) {
                 $('registro-minuto-actual').innerHTML = `Minuto: <strong>${minuto}</strong>`;
@@ -1828,6 +1920,8 @@
                 state.timerInterval = null;
             }
             state.conteoActivo = false;
+            state.alarmaDisparada = false;
+            state.puntoActualEnConteo = null;
             $('timer-container').style.display = 'none';
             $('btn-iniciar-conteo').style.display = 'block';
             $('btn-detener-alarma').style.display = 'none';
@@ -1836,10 +1930,62 @@
             $('registro-tiempo-restante').textContent = '--:--';
             $('registro-minuto-actual').innerHTML = 'Minuto: <strong>--</strong>';
             alert('Conteo finalizado. Puede iniciar uno nuevo desde Configuración.');
+            validarInicioConteo();
         }
 
         // ===================================================================
-        // 10. FUNCIONES DE OBTENCIÓN DE VALORES
+        // 11. VALIDACIÓN DE INICIO DE CONTEO
+        // ===================================================================
+
+        function validarInicioConteo() {
+            const btn = $('btn-iniciar-conteo');
+            const msg = $('iniciar-mensaje');
+
+            if (!state.rutaActiva) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Seleccione o cree una ruta primero.';
+                return;
+            }
+
+            if (!state.puntoSeleccionado) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ Seleccione un punto de avistamiento existente.';
+                return;
+            }
+
+            const punto = state.puntos.find(p => p.id === state.puntoSeleccionado);
+            if (!punto) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ El punto seleccionado no existe.';
+                return;
+            }
+
+            const puntosRuta = state.puntos.filter(p => p.rutaId === state.rutaActiva && p.id !== punto.id);
+            let hayCercano = false;
+            for (const p of puntosRuta) {
+                const dist = haversine(punto.lat, punto.lon, p.lat, p.lon);
+                if (dist < 350) {
+                    hayCercano = true;
+                    break;
+                }
+            }
+
+            if (hayCercano) {
+                btn.disabled = true;
+                msg.style.display = 'block';
+                msg.textContent = '⚠️ El punto seleccionado está a menos de 350m de otro punto de la misma ruta. No se puede iniciar el conteo.';
+                return;
+            }
+
+            btn.disabled = false;
+            msg.style.display = 'none';
+        }
+
+        // ===================================================================
+        // 12. FUNCIONES DE OBTENCIÓN DE VALORES
         // ===================================================================
 
         function getSelectedValue(groupId, inputId) {
@@ -1904,7 +2050,7 @@
         }
 
         // ===================================================================
-        // 11. SELECTOR VISUAL DE ESPECIES
+        // 13. SELECTOR VISUAL DE ESPECIES (igual que antes)
         // ===================================================================
 
         function initSelectorEspecies() {
@@ -2013,7 +2159,7 @@
         }
 
         // ===================================================================
-        // 12. SUSTRATO DINÁMICO
+        // 14. SUSTRATO DINÁMICO
         // ===================================================================
 
         function initSustratoDinamico() {
@@ -2067,7 +2213,7 @@
         }
 
         // ===================================================================
-        // 13. FOTO
+        // 15. FOTO
         // ===================================================================
 
         function tomarFoto() {
@@ -2099,7 +2245,7 @@
         }
 
         // ===================================================================
-        // 14. GUARDAR REGISTRO
+        // 16. GUARDAR REGISTRO
         // ===================================================================
 
         function guardarRegistro() {
@@ -2116,36 +2262,33 @@
             }
 
             let minuto = 0;
-            if (state.horaInicio) {
-                const ahora = new Date();
-                const [h, m] = state.horaInicio.split(':').map(Number);
-                const inicio = new Date();
-                inicio.setHours(h, m, 0, 0);
-                const diffSeg = Math.floor((ahora - inicio) / 1000);
+            if (state.horaInicioTimestamp) {
+                const ahora = Date.now();
+                const diffSeg = Math.floor((ahora - state.horaInicioTimestamp) / 1000);
                 minuto = Math.min(Math.floor(diffSeg / 60) + 1, 10);
                 if (minuto < 1) minuto = 1;
             }
 
-            const ultimoSitio = state.sitiosHistoricos[state.sitiosHistoricos.length - 1] || {};
+            const punto = state.puntos.find(p => p.id === state.puntoActualEnConteo) || {};
             const ruta = state.rutas.find(r => r.id === state.rutaActiva);
 
             const registro = {
                 id: Date.now(),
-                fecha: ultimoSitio.fecha || $('fecha').value,
-                hora_inicio: state.horaInicio,
+                fecha: punto.fecha || $('fecha').value,
+                hora_inicio: state.horaInicioTimestamp ? new Date(state.horaInicioTimestamp).toTimeString().slice(0,5) : '',
                 minuto_observacion: minuto,
                 ruta: ruta ? ruta.nombre : '',
-                estado: ultimoSitio.estado || $('estado_auto').value,
-                municipio: ultimoSitio.municipio || $('municipio_auto').value,
-                localidad: ultimoSitio.localidad || $('localidad_auto').value,
-                altitud_punto: ultimoSitio.altitud_punto || $('altitud_punto').value,
-                altitud_localidad: ultimoSitio.altitud_localidad || $('altitud_localidad').value,
-                poblacion: ultimoSitio.poblacion || '',
-                viviendas: ultimoSitio.viviendas || '',
-                parcela: ultimoSitio.parcela || '',
-                sistema: ultimoSitio.sistema || '',
-                lat: ultimoSitio.lat || state.gps.lat,
-                lon: ultimoSitio.lon || state.gps.lon,
+                punto_numero: punto.numero || '',
+                punto_nombre: punto.nombre || '',
+                estado: punto.estado || $('estado_auto').value,
+                municipio: punto.municipio || $('municipio_auto').value,
+                localidad: punto.localidad || $('localidad_auto').value,
+                altitud_punto: punto.altitud_punto || $('altitud_punto').value,
+                altitud_localidad: punto.altitud_localidad || $('altitud_localidad').value,
+                poblacion: punto.poblacion || '',
+                viviendas: punto.viviendas || '',
+                lat: punto.lat || state.gps.lat,
+                lon: punto.lon || state.gps.lon,
                 codigo: codigo,
                 nombre_comun: nombreComun,
                 cientifico: $('especie-cientifico').value,
@@ -2218,45 +2361,7 @@
         }
 
         // ===================================================================
-        // 15. VALIDACIÓN DE INICIO DE CONTEO
-        // ===================================================================
-
-        function validarInicioConteo() {
-            const btn = $('btn-iniciar-conteo');
-            const msg = $('iniciar-mensaje');
-
-            if (!state.rutaActiva) {
-                btn.disabled = true;
-                msg.style.display = 'block';
-                msg.textContent = '⚠️ Seleccione o cree una ruta primero.';
-                return;
-            }
-
-            if (state.gps.lat === null || state.gps.lon === null) {
-                btn.disabled = true;
-                msg.style.display = 'block';
-                msg.textContent = '⚠️ Obtenga su ubicación GPS primero.';
-                return;
-            }
-
-            const hoyStr = hoy();
-            const puntoHoy = state.sitiosHistoricos.some(s =>
-                s.rutaId === state.rutaActiva && s.fecha === hoyStr
-            );
-
-            if (!puntoHoy) {
-                btn.disabled = true;
-                msg.style.display = 'block';
-                msg.textContent = '⚠️ Registre un punto de avistamiento primero (botón verde).';
-                return;
-            }
-
-            btn.disabled = false;
-            msg.style.display = 'none';
-        }
-
-        // ===================================================================
-        // 16. LISTA DE REGISTROS Y EXPORTACIÓN
+        // 17. LISTA DE REGISTROS Y EXPORTACIÓN
         // ===================================================================
 
         function actualizarContadores() {
@@ -2327,9 +2432,9 @@
             }
 
             const columnas = [
-                'id','fecha','hora_inicio','minuto_observacion','ruta','estado','municipio','localidad',
-                'altitud_punto','altitud_localidad','poblacion','viviendas','parcela','sistema','lat','lon',
-                'codigo','nombre_comun','cientifico','individuos','distancia','altura',
+                'id','fecha','hora_inicio','minuto_observacion','ruta','punto_numero','punto_nombre',
+                'estado','municipio','localidad','altitud_punto','altitud_localidad','poblacion','viviendas',
+                'lat','lon','codigo','nombre_comun','cientifico','individuos','distancia','altura',
                 'sexo','edad','sustrato_tipo','sustrato_esp','forma','vertical',
                 'horizontal','comportamiento','alimento','especie_vegetal',
                 'verificado','notas','foto'
@@ -2361,7 +2466,7 @@
         }
 
         // ===================================================================
-        // 17. TABS
+        // 18. TABS
         // ===================================================================
 
         function initTabs() {
@@ -2388,11 +2493,11 @@
         }
 
         // ===================================================================
-        // 18. INICIALIZACIÓN
+        // 19. INICIALIZACIÓN
         // ===================================================================
 
         async function init() {
-            console.log('🚀 Iniciando AvistaR v9...');
+            console.log('🚀 Iniciando AvistaR V1...');
             cargarDatos();
             await cargarINEGI();
 
@@ -2407,6 +2512,7 @@
             initTabs();
 
             renderRutas();
+            renderPuntos();
             actualizarContadores();
 
             $('btn-crear-ruta').addEventListener('click', crearRuta);
@@ -2414,13 +2520,33 @@
             $('selector-ruta').addEventListener('change', function() {
                 state.rutaActiva = this.value || null;
                 actualizarInfoRuta();
+                renderPuntos();
                 validarInicioConteo();
                 actualizarRadar();
             });
 
+            $('selector-punto').addEventListener('change', function() {
+                if (this.value === 'nuevo') {
+                    state.puntoSeleccionado = null;
+                    actualizarInfoPunto();
+                    validarRegistroPunto();
+                    actualizarRadar();
+                    validarInicioConteo();
+                } else {
+                    state.puntoSeleccionado = this.value || null;
+                    actualizarInfoPunto();
+                    validarRegistroPunto();
+                    actualizarRadar();
+                    validarInicioConteo();
+                }
+            });
+            $('btn-editar-nombre').addEventListener('click', editarNombrePunto);
+            $('btn-confirmar-nuevo-punto').addEventListener('click', confirmarNuevoPunto);
+
             $('btn-gps').addEventListener('click', obtenerGPS);
             $('btn-registrar-punto').addEventListener('click', registrarPunto);
             $('btn-iniciar-conteo').addEventListener('click', iniciarConteo);
+
             $('btn-detener-alarma').addEventListener('click', detenerAlarma);
             $('btn-finalizar-conteo').addEventListener('click', finalizarConteo);
 
@@ -2429,16 +2555,15 @@
 
             $('btn-guardar-registro').addEventListener('click', guardarRegistro);
             $('btn-limpiar-registro').addEventListener('click', limpiarRegistro);
-
             $('btn-exportar-csv').addEventListener('click', exportarCSV);
             $('btn-eliminar-todos').addEventListener('click', eliminarTodos);
 
+            validarRegistroPunto();
             validarInicioConteo();
 
             setInterval(() => {
                 if (state.gps.lat !== null && state.gps.lon !== null) {
                     actualizarRadar();
-                    validarInicioConteo();
                 }
             }, 5000);
         }
